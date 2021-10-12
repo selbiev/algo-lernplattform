@@ -3,9 +3,12 @@ import Home from '../views/Home.vue'
 import SfErkennen_leicht from '../views/SfErkennen_leicht.vue'
 import SfErkennen_schwer from '../views/SfErkennen_schwer.vue'
 import SfErstellen from '../views/SfErstellen.vue'
-import SfErgaenzen from '../views/SfErgaenzen.vue'
+import SfErgaenzen_leicht from '../views/SfErgaenzen_leicht.vue'
+import SfErgaenzen_mittel from '../views/SfErgaenzen_mittel.vue'
+import SfErgaenzen_schwer from '../views/SfErgaenzen_schwer.vue'
 import SfAbstaende from '../views/SfAbstaende.vue'
-import SfAnzahlLoesungen from '../views/SfAnzahlLoesungen.vue'
+import SfAnzahlLoesungen_schwer from '../views/SfAnzahlLoesungen_schwer.vue'
+import SfAnzahlLoesungen_leicht from '../views/SfAnzahlLoesungen_leicht.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -29,9 +32,19 @@ const routes: Array<RouteRecordRaw> = [
     component: SfErstellen
   },
   {
-    path: '/codes-ergaenzen',
-    name: 'SfErgaenzen',
-    component: SfErgaenzen
+    path: '/codes-ergaenzen-leicht',
+    name: 'SfErgaenzen_leicht',
+    component: SfErgaenzen_leicht
+  },
+  {
+    path: '/codes-ergaenzen-mittel',
+    name: 'SfErgaenzen_mittel',
+    component: SfErgaenzen_mittel
+  },
+  {
+    path: '/codes-ergaenzen-schwer',
+    name: 'SfErgaenzen_schwer',
+    component: SfErgaenzen_schwer
   },
   {
     path: '/codes-abstaende',
@@ -39,9 +52,14 @@ const routes: Array<RouteRecordRaw> = [
     component: SfAbstaende
   },
   {
-    path: '/codes-anz-loesungen',
-    name: 'SfAnzahlLoesungen',
-    component: SfAnzahlLoesungen
+    path: '/codes-anz-loesungen-schwer',
+    name: 'SfAnzahlLoesungen_schwer',
+    component: SfAnzahlLoesungen_schwer
+  },
+  {
+    path: '/codes-anz-loesungen-leicht',
+    name: 'SfAnzahlLoesungen_leicht',
+    component: SfAnzahlLoesungen_leicht
   }
 ]
 

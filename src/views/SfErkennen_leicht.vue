@@ -280,8 +280,7 @@ export default defineComponent({
     }
 
     .auswahl {
-      display: flex !important;
-      padding: 0 0 0 38%;
+      display: block !important;
     }
 
     .codes {
@@ -296,15 +295,8 @@ export default defineComponent({
     .zeichenfolge {
       display: flex !important;
       flex-wrap: wrap;
-      padding: 0 0 0 31% !important;
+      padding: 0 0 0 35% !important;
     }
 
-    .btn {
-      margin: 0 0 0 -10% !important;
-    }
-
-    .ans {
-      margin: 0 0 0 -10% !important
-    }
 
 </style>

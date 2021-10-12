@@ -54,7 +54,7 @@
       </div>
       
       
-      <br /> Finde heraus, um wie viele Stellen sich die beiden nachfolgenden Kodierungen unterscheiden.
+      <br /> Finde heraus, um wie viele Stellen sich die beiden nachfolgenden Kodierungen unterscheiden. Klicke dazu auf die Pfeile.
       <div class="kodierungen">
         <div class="erste-reihe-kodierungen" >
           <div class="codes">
@@ -75,24 +75,34 @@
             </div>
           </div>
         </div>
-        <div class="eingabe">
-          <div>
-            <input v-model="answer" class="eingabe" type="number"> &nbsp; &nbsp;
-            <p>
-              <button @click="submitAnswer()"
-                type="button"
-              >
-              Prüfe Antwort
-              </button>
-            </p>
+
+        <div class="abstaende" >
+          <div class="codes">
+            <div v-for='index in 5' :key='index' id="index">
+              <img v-if="ans_abst[index-1] == true" src="../assets/abstand_1.png" @click="toggleAbst($event, index-1)" />
+              <img v-else-if="ans_abst[index-1] == false" src="../assets/kein_abstand_1.png" @click="toggleAbst($event, index-1)" />
+            </div>
           </div>
         </div>
+
+        
       </div>
     
+      <form @submit.prevent="submitAnswer()">
+        <!-- <input v-model="prop_1" type="number" />
+        <input v-model="prop_2" type="number" />
+        <input v-model="prop_3" type="number" />
+        -->
+        <p>
+          <button class="btn" @click="submitAnswer()"
+            type="button"
+          >
+          Prüfe Antwort
+          </button>
+        </p>
+      </form>
 
-      
-      <!--<img id="remove" src="../assets/remove.png" @dragover="allowDrop($event)" @drop="drop($event, '1')" width="336" height="69">-->
-    <p v-if="submitted">Die Antwort ist {{result}}</p>
+      <p class="ans" v-if="submitted">Die Antwort ist {{result}}</p>
     </div>
 </template>
 
@@ -107,7 +117,8 @@ export default defineComponent({
       anz_tage: 3,
       answer: 0,
       submitted: false as boolean,
-      result: "falsch."
+      result: "falsch.",
+      ans_abst: [false,false,false,false,false],
     }
   },
   created: function(){
@@ -122,17 +133,25 @@ export default defineComponent({
       this.submitted = true
       this.checkAnswer()
     },
+    toggleAbst(ev: any, pos: number){
+      console.log("%d clicked",pos+1)
+      this.ans_abst[pos] = !(this.ans_abst[pos])
+    },
     checkAnswer(){
-      var diff = 0
-      for(let i = 0; i < 5; i++){
-        if(this.numbers[0][i]!=this.numbers[1][i]){
-          diff++
+      var all_good = true;
+      for(let i = 0; i < this.ans_abst.length; i++){
+        var i_good = false
+        var same = this.numbers[0][i] == this.numbers[1][i]
+        if(same != this.ans_abst[i]){
+          i_good = true;
         }
+        all_good = all_good && i_good
       }
-      if(this.answer != diff){
-        this.result = "falsch.";
+
+      if(all_good){
+        this.result = "richtig.";
       } else {
-        this.result = "richtig."
+        this.result = "falsch."
       }
     },
     
@@ -183,7 +202,7 @@ export default defineComponent({
       align-items: left;
       text-align: left;*/
       display: flex;
-      padding: 10px 0 0 17%;
+      padding: 10px 0 0 20%;
     }
 
     .beschreibung {
@@ -234,6 +253,10 @@ export default defineComponent({
       min-height: 30px;
       border: 1px solid black;
       margin: 0 auto;
+    }
+
+    .abstaende{
+      cursor: pointer;
     }
 
 </style>
