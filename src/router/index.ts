@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Home from '../views/Home.vue'
-import SfErkennen from '../views/SfErkennen.vue'
+import SfErkennen_leicht from '../views/SfErkennen_leicht.vue'
+import SfErkennen_schwer from '../views/SfErkennen_schwer.vue'
 import SfErstellen from '../views/SfErstellen.vue'
 import SfErgaenzen from '../views/SfErgaenzen.vue'
 import SfAbstaende from '../views/SfAbstaende.vue'
@@ -13,9 +14,14 @@ const routes: Array<RouteRecordRaw> = [
     component: Home
   },
   {
-    path: '/codes-erkennen',
-    name: 'SfErkennen',
-    component: SfErkennen
+    path: '/codes-erkennen-leicht',
+    name: 'SfErkennen_leicht',
+    component: SfErkennen_leicht
+  },
+  {
+    path: '/codes-erkennen-schwer',
+    name: 'SfErkennen_schwer',
+    component: SfErkennen_schwer
   },
   {
     path: '/codes-erstellen',
