@@ -1,7 +1,7 @@
 <template>
-    <div class="CodesAnzahlLoesungen">
+    <div class="CodesAnzahlLoesungen">  
       <router-link to="/">Hauptmenü</router-link> <br> <br>
-      (schwer) Biber Bob sendet folgende Rauchzeichen, um das Wetter für einen Tag vorauszusagen. <br>
+      Biber Bob sendet folgende Rauchzeichen, um das Wetter für einen Tag vorauszusagen. <br>
         <!-- Automatisierte Version, man muss einfach den css noch anpassen -->
         
       
@@ -51,8 +51,8 @@
       </div>
       
       
-      <br />Bob hat heute die nachfolgenden Rauchzeichen für die nächsten {{ anz_tage }} Tage gesendet. 
-      Leider hat der Wind einige der Zeichen unkenntlich gemacht. Kann es sein, dass es mehr als eine Möglichkeit gibt, die Zeichenfolge auszufüllen? <br /> <br />
+      <br />Bob hat das Wetter für morgen mit den nachfolgenden Zeichen vorausgesagt. 
+      Welches Wetter könnte Bob gemeint haben? Kreuze eins oder mehrere an. <br /> <br />
 
       <div class="zeichenfolge">
         <!--<img v-if="seq_numbers[0][0] == 0" src="../assets/small-cloud.png" />
@@ -63,27 +63,15 @@
           <img v-else-if="seq_numbers[0][i-1] == 1 && number_seq_set[0][i-1]" src="../assets/big-cloud.png" />
           <div v-else droppable="true" class="drop-slot" id="drop-slot-1"  @dragover="allowDrop($event)"/>
         </div>
-
-        <div v-for="i in 5" :key="i">
-          <img v-if="seq_numbers[1][i-1] == 0 && number_seq_set[1][i-1]" src="../assets/small-cloud.png" />
-          <img v-else-if="seq_numbers[1][i-1] == 1 && number_seq_set[1][i-1]" src="../assets/big-cloud.png" />
-          <div v-else droppable="true" class="drop-slot" id="drop-slot-2"  @dragover="allowDrop($event)"/>
-        </div>
-
-        <div v-for="i in 5" :key="i">
-          <img v-if="seq_numbers[2][i-1] == 0 && number_seq_set[2][i-1]" src="../assets/small-cloud.png" />
-          <img v-else-if="seq_numbers[2][i-1] == 1 && number_seq_set[2][i-1]" src="../assets/big-cloud.png" />
-          <div v-else droppable="true" class="drop-slot" id="drop-slot-3"  @dragover="allowDrop($event)"/>
-        </div>
       </div>
 
       <p class="antwort">
-        <input type="radio" id="one" value="eins" name="antwort" v-model="antwort">
-        <label for="one">Nur eine Lösung möglich</label>
-        <br>
-        <input type="radio" id="two" value="mehrere" name="antwort" v-model="antwort">
-        <label for="two">Mehrere Lösungen möglich</label>
-        <br>
+        <input type="checkbox" id="sonne" value="Jack" v-model="ans_wetter[0]">
+        <label for="sonne">Es wird sonnig.</label> <br>
+        <input type="checkbox" id="regen" value="John" v-model="ans_wetter[1]">
+        <label for="regen">Es wird regnen.</label> <br>
+        <input type="checkbox" id="schnee" value="Mike" v-model="ans_wetter[2]">
+        <label for="schnee">Es wird schneien.</label> <br>
       </p>
 
        <p>
@@ -108,20 +96,17 @@ export default defineComponent({
       seq_numbers: [] as number[][],
       number_set: [] as boolean[][],
       number_seq_set: [] as boolean[][],
-      zahlen: [0,0,0] as number[],
-      zahl_1: 0,
-      zahl_2: 0,
-      zahl_3: 0,
+      /* ans_wetter enthält die auswahl des wetters durch den benutzer, welches wetter auf die sequenz zutreffen kann */
+      ans_wetter: [] as boolean[],  //0 für sonne, 1 für regen, 2 für schnee
+      gew_kodierung_seq: 0,   //als sequenz habe ich numbers[gew_kodierung_seq], falls eindeutige lösung.
       antwort: "",
-      gaps: [0,0,0] as number[],
-      special_gap: 0,
-      similar_pair_idx: 0,
-      gap_position: 0,
+      special_gap: 0,   //die stelle in der sequenz, die als lücke erscheint und die die mehrdeutigkeit hervorruft
+      normal_gap: 0, //die stelle, die auf die anzahl lösungen keinen einfluss hat
+      normal_gap_2: 0,  //falls eindeutig=false, brauchts auch eine weitere stelle, die nicht special_gap ist
+      idx_k: 0, //falls nicht eindeutige lösung, dann kommen idx_k und idx_l zum einsatz. siehe notizen bei checkAnswer() für mehr infos
+      idx_l: 0,
       submitted: false as boolean,
       result: "falsch.",
-      selected_1: "",
-      selected_2: "",
-      selected_3: "",
       eindeutig: true
     }
   },
@@ -150,9 +135,6 @@ export default defineComponent({
     
     
   },
-  props: {
-    msg: String
-  },
   methods : {
     translate_ans(answer: string){
       if(answer.charAt(0)=='s'){
@@ -161,14 +143,71 @@ export default defineComponent({
         return 1
       }
     },
+    
     submitAnswer(){
       this.submitted = true;
       this.checkAnswer();
     },
+    get_numbers_from_ans_wetter(){
+      var arr = []
+      for(let i = 0; i < 3; i++){
+        if(this.ans_wetter[i]){
+          arr.push(i)
+        }
+      }
+      return arr
+    },
+    sort_arr(arr: number[]){
+      if(arr.length<=1){
+        return arr
+      } else{
+        var sorted_arr = []
+        if(arr[0] > arr[1]){
+          sorted_arr.push(arr[1])
+          sorted_arr.push(arr[0])
+        } else {
+          sorted_arr.push(arr[0])
+          sorted_arr.push(arr[1])
+        }
+        return sorted_arr
+      }
+      
+    },
+    compare_arrays(arr1: number[], arr2: number[]){   //returns true if arr1 is same as arr2, false otherwise
+      if(arr1.length != arr2.length){
+        return false;
+      } else{
+        arr1 = this.sort_arr(arr1)
+        arr2 = this.sort_arr(arr2)
+        var all_good = true;
+        for(let i = 0; i < arr1.length; i++){
+          all_good = all_good && (arr1[i]==arr2[i])     //of each element of arr1 and arr2 is the same, then all_good will stay true
+        }
+        return all_good
+      }
+    },
+    /**
+     * gew_kodierung_seq ist die nummer der gewählten kodierung für die sequenz, wobei 0 für sonnig, 1 für regen, 2 für schnee,
+     * falls die lösung eindeutig ist. wenn sie nicht eindeutig ist, ist die lösung idx_k und idx_l. beispielsweise idx_k = 0, idx_l = 2,
+     * das würde der situation entsprechen, dass es sonne oder schnee haben kann. natürlich wird sichergestellt (bei create_numbers unten)
+     * dass dann auch beide darauf passen.
+     * was wir hier bei checkAnswer() tun ist: 
+     */
     checkAnswer(){
-      if(this.antwort=="eins" && this.eindeutig){
-        this.result = "richtig."
-      } else if (this.antwort=="mehrere" && (!this.eindeutig)) {
+      console.log(this.ans_wetter)
+      var ausgew_antworten = this.get_numbers_from_ans_wetter()
+      console.log(ausgew_antworten)
+      var richtige_antworten = []
+      if(this.eindeutig){
+        richtige_antworten.push(this.gew_kodierung_seq)
+      } else{
+        richtige_antworten.push(this.idx_k)
+        richtige_antworten.push(this.idx_l)
+      }
+
+      var correct = this.compare_arrays(ausgew_antworten,richtige_antworten)
+
+      if(correct){
         this.result = "richtig."
       } else {
         this.result = "falsch."
@@ -200,7 +239,7 @@ export default defineComponent({
       //fine_1 ist true, wenn code 1 und 2 sich an mind. mindestAbstand stelle unterscheiden
       //fine_2 ist true, wenn code 1 und 3 sich an mind. mindestAbstand stelle unterscheiden
       //fine_3 ist true, wenn code 2 und 3 sich an mind. mindestAbstand stelle unterscheiden
-      var mindestAbstand = 2
+      var mindestAbstand = 3
 
       let fine_1 = false
       let fine_2 = false
@@ -226,6 +265,7 @@ export default defineComponent({
       //zuerst wollen wir das array "numbers" befüllen
       let new_array_o: number[][]
       do {          //solange die codes nicht verschieden sind, wiederhole folgendes
+      console.log("codes neu generiert")
         new_array_o = []
         for(let i = 0; i < 3; i++){
           let new_array = []
@@ -247,7 +287,8 @@ export default defineComponent({
         while(k == l){
           k = Math.floor((Math.random()*3))
           l = Math.floor((Math.random()*3))
-          this.similar_pair_idx = k
+          this.idx_k = k
+          this.idx_l = l
         }
         console.assert(k != l)
         console.log("folgende Codes sind ähnlich")
@@ -255,6 +296,10 @@ export default defineComponent({
         console.log("unterscheiden sich an folgender stelle:")
         this.special_gap = Math.floor((Math.random()*5))
         console.log(this.special_gap+1)
+        this.normal_gap = Math.floor((Math.random()*5))
+        while(this.special_gap == this.normal_gap){     //normal_gap soll ein anderes gap sein als special_gap
+          this.normal_gap = Math.floor((Math.random()*5))
+        }
 
         this.copyArray(this.numbers[k],this.numbers[l])
         if(this.numbers[k][this.special_gap]==1){
@@ -292,34 +337,28 @@ export default defineComponent({
       }
       this.number_seq_set = new_array_s_s
 
-      
-
-      this.gaps[0] = Math.floor((Math.random()*5))
-      this.gaps[1] = Math.floor((Math.random()*5))
-      this.gaps[2] = Math.floor((Math.random()*5))
-
-      let p = 0
-      if(!this.eindeutig){
-        p = Math.floor((Math.random()*3))
-        this.gaps[p] = this.special_gap
-        this.gap_position = p
+      if(this.eindeutig){
+        this.number_seq_set[0][this.normal_gap] = false
+        this.normal_gap_2 = Math.floor((Math.random()*5))
+        while(this.normal_gap == this.normal_gap_2){
+          this.normal_gap_2 = Math.floor((Math.random()*5))
+        }
+        this.number_seq_set[0][this.normal_gap_2] = false
+      } else {
+        this.number_seq_set[0][this.special_gap] = false
+        this.number_seq_set[0][this.normal_gap] = false
       }
-
-      this.number_seq_set[0][this.gaps[0]] = false
-      this.number_seq_set[1][this.gaps[1]] = false
-      this.number_seq_set[2][this.gaps[2]] = false
+      
+      
     },
     createRandomSequence(){
-      this.zahlen[0] = Math.floor((Math.random()*3))
-      this.zahlen[1] = Math.floor((Math.random()*3))
-      this.zahlen[2] = Math.floor((Math.random()*3))
+      this.gew_kodierung_seq = Math.floor((Math.random()*3))
 
       if(!this.eindeutig){
-        this.zahlen[this.gap_position] = this.similar_pair_idx
+        this.gew_kodierung_seq = this.idx_k
       } 
-      this.seq_numbers.push(this.numbers[this.zahlen[0]])
-      this.seq_numbers.push(this.numbers[this.zahlen[1]])
-      this.seq_numbers.push(this.numbers[this.zahlen[2]])
+      
+      this.seq_numbers.push(this.numbers[this.gew_kodierung_seq])
     },
     copyArray(arr1: number[], arr2: number[]){
       for(let i = 0; i < arr1.length; i++){
@@ -394,7 +433,7 @@ export default defineComponent({
     .zeichenfolge {
       display: flex !important;
       flex-wrap: wrap;
-      padding: 0 0 0 10% !important;
+      padding: 0 0 0 37% !important;
     }
 
     .drop-slot {
@@ -402,6 +441,7 @@ export default defineComponent({
       width: 60px;
       padding: 0 7px 10px 7px;
       border: 1px solid black;
+      margin: 0 2px 0 0;
     }
 
     .start-area{

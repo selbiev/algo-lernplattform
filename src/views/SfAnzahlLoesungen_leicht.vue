@@ -1,7 +1,7 @@
 <template>
     <div class="CodesAnzahlLoesungen">  
       <router-link to="/">Hauptmenü</router-link> <br> <br>
-      (leicht) Biber Bob sendet folgende Rauchzeichen, um das Wetter für einen Tag vorauszusagen. <br>
+      Biber Bob sendet folgende Rauchzeichen, um das Wetter für einen Tag vorauszusagen. <br>
         <!-- Automatisierte Version, man muss einfach den css noch anpassen -->
         
       
@@ -96,24 +96,15 @@ export default defineComponent({
       seq_numbers: [] as number[][],
       number_set: [] as boolean[][],
       number_seq_set: [] as boolean[][],
-      zahlen: [0,0,0] as number[],
+      /* ans_wetter enthält die auswahl des wetters durch den benutzer, welches wetter auf die sequenz zutreffen kann */
       ans_wetter: [] as boolean[],  //0 für sonne, 1 für regen, 2 für schnee
-      gew_kodierung_seq: 0,   //als sequenz habe ich numbers[gew_kodierung_seq].
-      zahl_1: 0,
-      zahl_2: 0,
-      zahl_3: 0,
+      gew_kodierung_seq: 0,   //als sequenz habe ich numbers[gew_kodierung_seq], falls eindeutige lösung.
       antwort: "",
-      //gaps: [0,0,0] as number[],
-      gap: 0,
-      special_gap: 0,
-      idx_k: 0,
+      special_gap: 0,   //die stelle in der sequenz, die als lücke erscheint
+      idx_k: 0, //falls nicht eindeutige lösung, dann kommen idx_k und idx_l zum einsatz. siehe notizen bei checkAnswer() für mehr infos
       idx_l: 0,
-      gap_position: 0,
       submitted: false as boolean,
       result: "falsch.",
-      selected_1: "",
-      selected_2: "",
-      selected_3: "",
       eindeutig: true
     }
   },
@@ -185,7 +176,7 @@ export default defineComponent({
         return false;
       } else{
         arr1 = this.sort_arr(arr1)
-        arr2 = this.sort_arr(arr1)
+        arr2 = this.sort_arr(arr2)
         var all_good = true;
         for(let i = 0; i < arr1.length; i++){
           all_good = all_good && (arr1[i]==arr2[i])     //of each element of arr1 and arr2 is the same, then all_good will stay true
@@ -193,6 +184,13 @@ export default defineComponent({
         return all_good
       }
     },
+    /**
+     * gew_kodierung_seq ist die nummer der gewählten kodierung für die sequenz, wobei 0 für sonnig, 1 für regen, 2 für schnee,
+     * falls die lösung eindeutig ist. wenn sie nicht eindeutig ist, ist die lösung idx_k und idx_l. beispielsweise idx_k = 0, idx_l = 2,
+     * das würde der situation entsprechen, dass es sonne oder schnee haben kann. natürlich wird sichergestellt (bei create_numbers unten)
+     * dass dann auch beide darauf passen.
+     * was wir hier bei checkAnswer() tun ist: 
+     */
     checkAnswer(){
       console.log(this.ans_wetter)
       var ausgew_antworten = this.get_numbers_from_ans_wetter()
@@ -332,13 +330,12 @@ export default defineComponent({
       }
       this.number_seq_set = new_array_s_s
 
+      if(this.eindeutig){
+        this.number_seq_set[0][Math.floor((Math.random()*5))] = false
+      } else {
+        this.number_seq_set[0][this.special_gap] = false
+      }
       
-      this.gap = Math.floor((Math.random()*3))      //wenn eindeutig, dann ist gap die ausgewählte kodierung (aus sonne,regen,schnee)
-      //this.gaps[0] = Math.floor((Math.random()*5))  //wenn nicht eindeutig, dann sind es k und l
-      //this.gaps[1] = Math.floor((Math.random()*5))
-      //this.gaps[2] = Math.floor((Math.random()*5))
-
-      this.number_seq_set[0][this.special_gap] = false
     },
     createRandomSequence(){
       this.gew_kodierung_seq = Math.floor((Math.random()*3))

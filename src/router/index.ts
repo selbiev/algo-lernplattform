@@ -2,13 +2,15 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Home from '../views/Home.vue'
 import SfErkennen_leicht from '../views/SfErkennen_leicht.vue'
 import SfErkennen_schwer from '../views/SfErkennen_schwer.vue'
-import SfErstellen from '../views/SfErstellen.vue'
 import SfErgaenzen_leicht from '../views/SfErgaenzen_leicht.vue'
 import SfErgaenzen_mittel from '../views/SfErgaenzen_mittel.vue'
 import SfErgaenzen_schwer from '../views/SfErgaenzen_schwer.vue'
 import SfAbstaende from '../views/SfAbstaende.vue'
 import SfAnzahlLoesungen_schwer from '../views/SfAnzahlLoesungen_schwer.vue'
 import SfAnzahlLoesungen_leicht from '../views/SfAnzahlLoesungen_leicht.vue'
+import SfErstellen_leicht from '../views/SfErstellen_leicht.vue'
+import SfErstellen_schwer from '../views/SfErstellen_schwer.vue'
+import SfFehlerhafteFolge from '../views/SfFehlerhafteFolge.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -27,9 +29,14 @@ const routes: Array<RouteRecordRaw> = [
     component: SfErkennen_schwer
   },
   {
-    path: '/codes-erstellen',
-    name: 'SfErstellen',
-    component: SfErstellen
+    path: '/codes-erstellen-leicht',
+    name: 'SfErstellen_leicht',
+    component: SfErstellen_leicht
+  },
+  {
+    path: '/codes-erstellen-schwer',
+    name: 'SfErstellen_schwer',
+    component: SfErstellen_schwer
   },
   {
     path: '/codes-ergaenzen-leicht',
@@ -60,6 +67,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/codes-anz-loesungen-leicht',
     name: 'SfAnzahlLoesungen_leicht',
     component: SfAnzahlLoesungen_leicht
+  },
+  {
+    path: '/codes-fehlerhafte-folge',
+    name: 'SfFehlerhafteFolge',
+    component: SfFehlerhafteFolge
   }
 ]
 
