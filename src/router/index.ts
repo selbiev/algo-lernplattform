@@ -11,6 +11,7 @@ import SfAnzahlLoesungen_leicht from '../views/SfAnzahlLoesungen_leicht.vue'
 import SfErstellen_leicht from '../views/SfErstellen_leicht.vue'
 import SfErstellen_schwer from '../views/SfErstellen_schwer.vue'
 import SfFehlerhafteFolge from '../views/SfFehlerhafteFolge.vue'
+import TopSortErkennen from '../views/TopSortErkennen.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -72,6 +73,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/codes-fehlerhafte-folge',
     name: 'SfFehlerhafteFolge',
     component: SfFehlerhafteFolge
+  },
+  {
+    path: '/topsort-erkennen',
+    name: 'TopSortErkennen',
+    component: TopSortErkennen
   }
 ]
 

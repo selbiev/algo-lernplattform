@@ -6,6 +6,7 @@
     Signalfolgen Anzahl Lösungen | <router-link :to="{name: 'SfAnzahlLoesungen_leicht'}">leicht</router-link> | <router-link :to="{name: 'SfAnzahlLoesungen_schwer'}">schwer</router-link> <br> <br> 
     Fehlerhafte Signalfolge korrigieren <router-link :to="{name: 'SfFehlerhafteFolge'}">mittel</router-link> <br> <br>
     Eigene Signalfolgen Erstellen <router-link :to="{name: 'SfErstellen_leicht'}">leicht</router-link> | <router-link :to="{name: 'SfErstellen_schwer'}">schwer</router-link> <br> <br>
+    Topologische Sortierung erkennen <router-link :to="{name: 'TopSortErkennen'}">mittel</router-link> <br> <br>
   </div>
 </template>
 
