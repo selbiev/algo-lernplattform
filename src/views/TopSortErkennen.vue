@@ -38,6 +38,7 @@ export default defineComponent({
       submitted: false,
       Q: [],
       canvas: null,
+      korrekte_sortierung: true,
       ctx: null,
       message: "Hello Vue!",
       vueCanvas: null,
@@ -89,18 +90,23 @@ export default defineComponent({
         {id: 0, from_node: 10, to_node: 9},
         {id: 0, from_node: 5, to_node: 8},
       ],
+      nodes_part: [],   //weil wir immer einen zufälligen teilgraphen ausgeben, haben wir nodes_part und edges_part
+      edges_part: []
     }
   },
   mounted() {
+    //initialisierung des graphen
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
     this.vueCanvas = ctx;
-    //this.fillRect();
-    
     this.connect_nodes()
     this.draw_nodes()
-    
-    
+
+    //mit 50% wahrscheinlichkeit geben wir eine korrekte topologische sortierung
+    //und mit 50% geben wir eine zufällige sortierung (vllt richtig vllt falsch) aus
+    //warum so? weil wenn wir immer eine zufällige sortierung ausgeben, habe ich das gefühl
+    //dass sie meistens falsch sein wird.
+    this.korrekte_sortierung = (Math.round(Math.random())==1)? true : false
   },
   props: {
 
@@ -125,6 +131,11 @@ export default defineComponent({
         ctx.stroke()
       }
     },
+    make_edge(ctx, u, v){
+      ctx.beginPath()
+      this.canvas_arrow(ctx, u.posX, u.posY, v.posX, v.posY);
+      ctx.stroke()
+    },
     connect_nodes(){
       var ctx = this.vueCanvas
 
@@ -136,22 +147,34 @@ export default defineComponent({
         var u = this.nodes[(e.from_node)]
         var v = this.nodes[(e.to_node)]
         if(u.active && v.active){
-          ctx.beginPath()
-          this.canvas_arrow(ctx, u.posX, u.posY, v.posX, v.posY);
-          ctx.stroke()
+          this.make_edge(ctx,u,v)
+          
         }
       }
     },
+    /**
+     * 
+     */
     define_ratio(dx, dy){
       var len = Math.abs(dx)+Math.abs(dy)
       if(len>=400){
         return 0.96
       } else {
-        return ((0.0005*len) + 0.7625)
+        return ((0.0005*len) + 0.77)
       }
-      
     },
 
+    /**
+     * das meiste von diesem code habe ich aus stackoverflow
+     * https://stackoverflow.com/questions/808826/draw-arrow-on-canvas-tag
+     * die erste antwort. weil ich aber wollte, dass die pfeile nicht bis
+     * zur mitte der knoten gehen (sieht nicht gut aus) habe ich noch
+     * einen faktor (ratio) definiert, der die pfeile kürzer macht.
+     * weil das nicht gleich funktioniert für lange und kurze pfeile, habe ich
+     * zwei extreme grössen (lange und kurzer pfeil) genommen und geschaut,
+     * welche faktoren für sie eignen und dann den rest interpoliert.
+     * die lineare funktion davon ist in define_ratio().
+     */
     canvas_arrow(ctx, fromx, fromy, tox, toy) {
       var dX = tox-fromx
       var dY = toy-fromy
@@ -159,7 +182,7 @@ export default defineComponent({
       console.log(ratio)
       tox = fromx + ((ratio)*dX)
       toy = fromy + ((ratio)*dY)
-      var headlen = 10; // length of head in pixels
+      var headlen = 10; // length of head in pixels     ab hier code aus internet, bis hier eigener code
       var dx = tox - fromx;
       var dy = toy - fromy;
       var angle = Math.atan2(dy, dx);
