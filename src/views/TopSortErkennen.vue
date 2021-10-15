@@ -80,6 +80,7 @@ export default defineComponent({
       ],
       node_size: 15,
       edges: [
+        /**brauchts id überhaupt??? */
         {id: 0, from_node: 0, to_node: 7},
         {id: 0, from_node: 4, to_node: 0},
         {id: 0, from_node: 1, to_node: 2},
@@ -90,8 +91,8 @@ export default defineComponent({
         {id: 0, from_node: 10, to_node: 9},
         {id: 0, from_node: 5, to_node: 8},
       ],
-      nodes_part: [],   //weil wir immer einen zufälligen teilgraphen ausgeben, haben wir nodes_part und edges_part
-      edges_part: []
+      adj_list: [],   //klassische adjazenzliste, d.h. adj_list[i] = liste von nachbarsknoten von knoten i
+      transitive_edges: []
     }
   },
   mounted() {
@@ -99,14 +100,22 @@ export default defineComponent({
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
     this.vueCanvas = ctx;
+    this.create_adj_list()
+    this.take_subset_of_nodes()   //nimm zufällige teilmenge der nodes
+    this.keep_trans_relation()
     this.connect_nodes()
+    this.draw_trans_edges()
     this.draw_nodes()
+    /*this.check_order()*/
+    
 
     //mit 50% wahrscheinlichkeit geben wir eine korrekte topologische sortierung
     //und mit 50% geben wir eine zufällige sortierung (vllt richtig vllt falsch) aus
     //warum so? weil wenn wir immer eine zufällige sortierung ausgeben, habe ich das gefühl
     //dass sie meistens falsch sein wird.
     this.korrekte_sortierung = (Math.round(Math.random())==1)? true : false
+
+    
   },
   props: {
 
@@ -127,13 +136,14 @@ export default defineComponent({
         ctx.fill();
         ctx.font = "12px Georgia";
         ctx.fillStyle = "black";
-        ctx.fillText(curr_node.text,curr_node.posX-18,curr_node.posY+30)
+        ctx.fillText(curr_node.id + ": " + curr_node.text,curr_node.posX-18,curr_node.posY+30)
         ctx.stroke()
       }
     },
     make_edge(ctx, u, v){
       ctx.beginPath()
       this.canvas_arrow(ctx, u.posX, u.posY, v.posX, v.posY);
+      //console.log("edge (%d,%d) made",u.id, v.id)
       ctx.stroke()
     },
     connect_nodes(){
@@ -148,13 +158,107 @@ export default defineComponent({
         var v = this.nodes[(e.to_node)]
         if(u.active && v.active){
           this.make_edge(ctx,u,v)
-          
         }
       }
     },
+    create_adj_list(){
+      for(let i = 0; i < this.nodes.length; i++){
+        this.adj_list.push([])    //initiale, leere nachbarsliste von jedem knoten
+      }
+
+      for(let i = 0; i < this.edges.length; i++){
+        var e = this.edges[i]
+        var u = this.nodes[e.from_node]
+        var v = this.nodes[e.to_node]
+        this.adj_list[u.id].push(v.id)
+      }
+    },
+    make_trans_edge(u,v){
+      if(!this.trans_edges_contains(u,v) && !this.edges_contains(u,v)){
+        this.transitive_edges.push([u,v])
+      }
+    },
+    trans_edges_contains(u, v){
+      for(let i = 0; i < this.transitive_edges.length; i++){
+        if(this.transitive_edges[i][0]==u && this.transitive_edges[i][1]==v){
+          return true
+        }
+      }
+      return false
+    },
+    edges_contains(u,v){
+      for(let i = 0; i < this.edges.length; i++){
+        if(this.edges[i].from_node==u && this.edges[i].to_node==v){
+          return true
+        }
+      }
+      return false
+    },
     /**
-     * 
+     * diese funktion hat zum ziel, dass wenn z.B. (a) -> (b) -> (c) abhängigkeiten bestehen und (b)
+     * nicht aktiviert wurde, dass trotzdem die relation (a) -> (c) beibehalten wird, für den ganzen graphen
+     * den algorithmus habe ich woanders dokumentiert, ich erkläre ihn hier nicht
      */
+    keep_trans_relation(){
+      for(let i = 0; i < this.edges.length; i++){
+        var e = this.edges[i]
+        var u = e.from_node
+        var v = e.to_node
+        if((this.nodes[u].active) && !(this.nodes[v].active)){
+            
+          //bzgl. push() und pop() funktioniert der array wie ein stack. das kommt uns gelegen,
+          //weil wir eine tiefensuche machen möchten
+          var Q = []  
+          var neighbours = this.adj_list[this.nodes[u].id]
+          for(let j = 0; j < neighbours.length; j++){
+            Q.push(neighbours[j])
+          }
+          while(!(Q.length <= 0)){
+            var node = Q.pop()
+            if(this.nodes[node].active){
+              this.make_trans_edge(u,node)
+            } else {
+              var neighbours_node = this.adj_list[node]
+              for(let j = 0; j < neighbours_node.length; j++){
+                Q.push(neighbours_node[j])
+              }
+            }
+          }
+        }
+      }
+    },
+    draw_trans_edges(){
+      for(let i = 0; i < this.transitive_edges.length; i++){
+        var u = this.transitive_edges[i][0]
+        var v = this.transitive_edges[i][1]
+        this.make_edge(this.vueCanvas,this.nodes[u],this.nodes[v])
+      }
+    },
+    take_subset_of_nodes(){
+      for(let i = 0; i < this.nodes.length; i++){
+        
+        //aktiviere den knoten mit 50% wahrscheinlichkeit
+        this.nodes[i].active = (Math.round(Math.random())==1)? true : false
+      }
+      this.keep_trans_relation()  //stelle sicher, dass transitive abhängigkeiten bewahrt werden
+    },
+    /**
+     * nimmt eine topologische sortierung und gibt true zurück, wenn sie korrekt ist und false andernfalls
+     */
+    /*check_order(order){
+      var in_degrees = []
+      for(let i = 0; i < this.nodes.length; i++){
+        in_degrees.push(0)
+      }
+      for(let i = 0; i < this.edges.length; i++){
+        var u = this.edges[i].from_node;
+        var v = this.edges[i].to_node;
+        if(this.nodes[u].active){
+
+        }
+      }
+      console.log(in_degrees)
+    },*/
     define_ratio(dx, dy){
       var len = Math.abs(dx)+Math.abs(dy)
       if(len>=400){
@@ -179,7 +283,6 @@ export default defineComponent({
       var dX = tox-fromx
       var dY = toy-fromy
       var ratio = this.define_ratio(dX,dY)
-      console.log(ratio)
       tox = fromx + ((ratio)*dX)
       toy = fromy + ((ratio)*dY)
       var headlen = 10; // length of head in pixels     ab hier code aus internet, bis hier eigener code
