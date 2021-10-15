@@ -92,7 +92,6 @@ export default defineComponent({
         {id: 0, from_node: 5, to_node: 8},
       ],
       adj_list: [],   //klassische adjazenzliste, d.h. adj_list[i] = liste von nachbarsknoten von knoten i
-      transitive_edges: []
     }
   },
   mounted() {
@@ -110,9 +109,7 @@ export default defineComponent({
     
     var o = this.create_random_ordering()
     var r = this.check_ordering(o)
-    console.log(o)
-    console.log("resultat ist:")
-    console.log(r)
+    this.create_valid_ordering()
     
 
     //mit 50% wahrscheinlichkeit geben wir eine korrekte topologische sortierung
@@ -149,7 +146,7 @@ export default defineComponent({
     make_edge(ctx, u, v){
       ctx.beginPath()
       this.canvas_arrow(ctx, u.posX, u.posY, v.posX, v.posY);
-      console.log("edge (%d,%d) made",u.id, v.id)
+      //console.log("edge (%d,%d) made",u.id, v.id)
       ctx.stroke()
     },
     connect_nodes(){
@@ -167,15 +164,10 @@ export default defineComponent({
         }
       }
     },
-    create_valid_ordering(){
-
-    },
     create_adj_list(){
       for(let i = 0; i < this.nodes.length; i++){
         this.adj_list.push([])    //initiale, leere nachbarsliste von jedem knoten
       }
-      console.log("graph jetzt")
-        console.log(this.nodes)
 
       for(let i = 0; i < this.edges.length; i++){
         var e = this.edges[i]
@@ -221,8 +213,8 @@ export default defineComponent({
             if(this.nodes[node].active){
               if(!this.edges_contains(u,node)){
                 this.edges.push({id:0, from_node: u, to_node: node})
-                //this.make_edge(this.vueCanvas,this.nodes[u],this.nodes[node])
-                
+                this.adj_list[u].push(node)
+
               }
               //this.make_trans_edge(u,node)
             } else {
@@ -252,10 +244,7 @@ export default defineComponent({
       }
       return ordering
     },
-    /**
-     * nimmt eine topologische sortierung und gibt true zurück, wenn sie korrekt ist und false andernfalls
-     */
-    check_ordering(ordering){
+    create_in_degrees(){
       var in_degrees = []
       for(let i = 0; i < this.nodes.length; i++){
         in_degrees.push(0)
@@ -267,29 +256,66 @@ export default defineComponent({
           in_degrees[v]++
         }
       }
-      console.log("in_degrees und adj_list jetzt")
-      console.log(in_degrees)
-      console.log(this.adj_list)
+      return in_degrees
+    },
+    /**
+     * nimmt eine topologische sortierung und gibt true zurück, wenn sie korrekt ist und false andernfalls
+     */
+    check_ordering(ordering){
+      var in_degrees = this.create_in_degrees
+      //console.log("in_degrees und adj_list jetzt")
+      //console.log(in_degrees)
+      //console.log(this.adj_list)
       
       for(let i = 0; i < ordering.length; i++){
         var node = ordering[i]
-        console.log("%d wird angeschaut", node)
+        //console.log("%d wird angeschaut", node)
         if(in_degrees[node]>0){   //wenns eine kante auf sich zeigen hat, darf knoten noch nicht genommen werden
-          console.log("in_degrees[%d] > 0, returne false",node)
+          //console.log("in_degrees[%d] > 0, returne false",node)
           return false
         }
-        console.log("in_degrees[%d] <= 0, mache weiter",node)
-        console.log("jetzt schauen wir die nachbarn von %d an",node)
+        //console.log("in_degrees[%d] <= 0, mache weiter",node)
+        //console.log("jetzt schauen wir die nachbarn von %d an",node)
         for(let j = 0; j < this.adj_list[node].length; j++){
           var neighbour = this.adj_list[node][j]
-          console.log("nachbar %d gefunden. dessen degree ist zuerst %d",neighbour,in_degrees[neighbour])
+          //console.log("nachbar %d gefunden. dessen degree ist zuerst %d",neighbour,in_degrees[neighbour])
           in_degrees[neighbour]--
-          console.log("in_degrees[%d] ist jetzt %d", neighbour, in_degrees[neighbour])
+          //console.log("in_degrees[%d] ist jetzt %d", neighbour, in_degrees[neighbour])
         }
       }
 
       return true
     },
+
+    create_valid_ordering(){
+      var num_active_nodes = 0
+      for(let i = 0; i < this.nodes.length; i++){
+        if(this.nodes[i].active){
+          num_active_nodes++
+        }
+      }
+      var in_degrees = this.create_in_degrees()
+      var top_ordering = []
+      for(let k = 0; k < num_active_nodes; k++){
+        for(let i = 0; i < in_degrees.length; i++){
+          var node = i
+          if(this.nodes[node].active && in_degrees[i]==0){
+            top_ordering.push(node)
+            in_degrees[i] = -1
+
+            for(let j = 0; j < this.adj_list[node].length; j++){
+              var neighbour = this.adj_list[node][j]
+              //console.log("nachbar %d gefunden. dessen degree ist zuerst %d",neighbour,in_degrees[neighbour])
+              in_degrees[neighbour]--
+              //console.log("in_degrees[%d] ist jetzt %d", neighbour, in_degrees[neighbour])
+            }
+          }
+        }
+      }
+      console.log(top_ordering)
+    },
+
+
     define_ratio(dx, dy){
       var len = Math.abs(dx)+Math.abs(dy)
       if(len>=400){
