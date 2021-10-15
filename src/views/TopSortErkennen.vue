@@ -102,11 +102,17 @@ export default defineComponent({
     this.vueCanvas = ctx;
     this.create_adj_list()
     this.take_subset_of_nodes()   //nimm zufällige teilmenge der nodes
+    
+    
     this.keep_trans_relation()
     this.connect_nodes()
-    this.draw_trans_edges()
     this.draw_nodes()
-    /*this.check_order()*/
+    
+    var o = this.create_random_ordering()
+    var r = this.check_ordering(o)
+    console.log(o)
+    console.log("resultat ist:")
+    console.log(r)
     
 
     //mit 50% wahrscheinlichkeit geben wir eine korrekte topologische sortierung
@@ -143,7 +149,7 @@ export default defineComponent({
     make_edge(ctx, u, v){
       ctx.beginPath()
       this.canvas_arrow(ctx, u.posX, u.posY, v.posX, v.posY);
-      //console.log("edge (%d,%d) made",u.id, v.id)
+      console.log("edge (%d,%d) made",u.id, v.id)
       ctx.stroke()
     },
     connect_nodes(){
@@ -161,30 +167,27 @@ export default defineComponent({
         }
       }
     },
+    create_valid_ordering(){
+
+    },
     create_adj_list(){
       for(let i = 0; i < this.nodes.length; i++){
         this.adj_list.push([])    //initiale, leere nachbarsliste von jedem knoten
       }
+      console.log("graph jetzt")
+        console.log(this.nodes)
 
       for(let i = 0; i < this.edges.length; i++){
         var e = this.edges[i]
         var u = this.nodes[e.from_node]
         var v = this.nodes[e.to_node]
-        this.adj_list[u.id].push(v.id)
-      }
-    },
-    make_trans_edge(u,v){
-      if(!this.trans_edges_contains(u,v) && !this.edges_contains(u,v)){
-        this.transitive_edges.push([u,v])
-      }
-    },
-    trans_edges_contains(u, v){
-      for(let i = 0; i < this.transitive_edges.length; i++){
-        if(this.transitive_edges[i][0]==u && this.transitive_edges[i][1]==v){
-          return true
+        
+        
+        if(u.active && v.active){
+          this.adj_list[u.id].push(v.id)
         }
+        
       }
-      return false
     },
     edges_contains(u,v){
       for(let i = 0; i < this.edges.length; i++){
@@ -216,7 +219,12 @@ export default defineComponent({
           while(!(Q.length <= 0)){
             var node = Q.pop()
             if(this.nodes[node].active){
-              this.make_trans_edge(u,node)
+              if(!this.edges_contains(u,node)){
+                this.edges.push({id:0, from_node: u, to_node: node})
+                //this.make_edge(this.vueCanvas,this.nodes[u],this.nodes[node])
+                
+              }
+              //this.make_trans_edge(u,node)
             } else {
               var neighbours_node = this.adj_list[node]
               for(let j = 0; j < neighbours_node.length; j++){
@@ -227,25 +235,27 @@ export default defineComponent({
         }
       }
     },
-    draw_trans_edges(){
-      for(let i = 0; i < this.transitive_edges.length; i++){
-        var u = this.transitive_edges[i][0]
-        var v = this.transitive_edges[i][1]
-        this.make_edge(this.vueCanvas,this.nodes[u],this.nodes[v])
-      }
-    },
     take_subset_of_nodes(){
       for(let i = 0; i < this.nodes.length; i++){
         
         //aktiviere den knoten mit 50% wahrscheinlichkeit
         this.nodes[i].active = (Math.round(Math.random())==1)? true : false
       }
-      this.keep_trans_relation()  //stelle sicher, dass transitive abhängigkeiten bewahrt werden
+      //this.keep_trans_relation()  //stelle sicher, dass transitive abhängigkeiten bewahrt werden
+    },
+    create_random_ordering(){
+      var ordering = []
+      for(let i = 0; i < this.nodes.length; i++){
+        if(this.nodes[i].active){
+          ordering.push(this.nodes[i].id)
+        }
+      }
+      return ordering
     },
     /**
      * nimmt eine topologische sortierung und gibt true zurück, wenn sie korrekt ist und false andernfalls
      */
-    /*check_order(order){
+    check_ordering(ordering){
       var in_degrees = []
       for(let i = 0; i < this.nodes.length; i++){
         in_degrees.push(0)
@@ -253,12 +263,33 @@ export default defineComponent({
       for(let i = 0; i < this.edges.length; i++){
         var u = this.edges[i].from_node;
         var v = this.edges[i].to_node;
-        if(this.nodes[u].active){
-
+        if(this.nodes[u].active && this.nodes[v].active){
+          in_degrees[v]++
         }
       }
+      console.log("in_degrees und adj_list jetzt")
       console.log(in_degrees)
-    },*/
+      console.log(this.adj_list)
+      
+      for(let i = 0; i < ordering.length; i++){
+        var node = ordering[i]
+        console.log("%d wird angeschaut", node)
+        if(in_degrees[node]>0){   //wenns eine kante auf sich zeigen hat, darf knoten noch nicht genommen werden
+          console.log("in_degrees[%d] > 0, returne false",node)
+          return false
+        }
+        console.log("in_degrees[%d] <= 0, mache weiter",node)
+        console.log("jetzt schauen wir die nachbarn von %d an",node)
+        for(let j = 0; j < this.adj_list[node].length; j++){
+          var neighbour = this.adj_list[node][j]
+          console.log("nachbar %d gefunden. dessen degree ist zuerst %d",neighbour,in_degrees[neighbour])
+          in_degrees[neighbour]--
+          console.log("in_degrees[%d] ist jetzt %d", neighbour, in_degrees[neighbour])
+        }
+      }
+
+      return true
+    },
     define_ratio(dx, dy){
       var len = Math.abs(dx)+Math.abs(dy)
       if(len>=400){
