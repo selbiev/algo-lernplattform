@@ -1,24 +1,50 @@
 <template>
   <div class="CodesErstellen">
     <router-link to="/">Hauptmenü</router-link> <br> <br>
-    <img src="../assets/small-cloud.png" id="img" style="display: none"/>
-    <canvas
-      id="canvas" width="600" height="400" style="border:1px solid #d3d3d3;"
-    ></canvas>
+    <img src="../assets/kleider/Hose.png" id="Hose" style="display: none;"/>
+    <img src="../assets/kleider/Socken.png" id="Socken" style="display: none"/>
+    <img src="../assets/kleider/Schuhe.png" id="Schuhe" style="display: none"/>
+    <img src="../assets/kleider/T-Shirt.png" id="T-Shirt" style="display: none"/>
+    <img src="../assets/kleider/Unterhose.png" id="Unterhose" style="display: none"/>
+    <img src="../assets/kleider/Jacke.png" id="Jacke" style="display: none"/>
+    <img src="../assets/kleider/Mütze.png" id="Mütze" style="display: none"/>
+    <img src="../assets/kleider/Gürtel.png" id="Gürtel" style="display: none"/>
+    <img src="../assets/kleider/Handschuhe.png" id="Handschuhe" style="display: none"/>
+    <img src="../assets/kleider/Sonnenbrille.png" id="Sonnenbrille" style="display: none"/>
+    <img src="../assets/kleider/Pullover.png" id="Pullover" style="display: none"/>
 
-      <form @submit.prevent="submitAnswer() ">
-        <!-- <input v-model="prop_1" type="number" />
-        <input v-model="prop_2" type="number" />
-        <input v-model="prop_3" type="number" />
-        -->
-        <p>
-          <button @click="submitAnswer()"
-            type="button"
-          >
-          Prüfe Antwort
-          </button>
-        </p>
-      </form>
+    <canvas id="canvas" width="600" height="400" style="border:1px solid #d3d3d3;"></canvas> <br><br>
+    Petra möchte ihre Kleider in der folgenden Reihenfolge anziehen. Kann sie das? <br><br>
+    <div class="kleider">
+      <div v-for='index in (top_ordering.length)' :key='index'>
+        <img v-if="top_ordering[index-1]==0" src="../assets/kleider/Hose.png" />
+        <img v-if="top_ordering[index-1]==1" src="../assets/kleider/Socken.png" />
+        <img v-if="top_ordering[index-1]==2" src="../assets/kleider/Schuhe.png" />
+        <img v-if="top_ordering[index-1]==3" src="../assets/kleider/T-Shirt.png" />
+        <img v-if="top_ordering[index-1]==4" src="../assets/kleider/Unterhose.png" />
+        <img v-if="top_ordering[index-1]==5" src="../assets/kleider/Jacke.png" />
+        <img v-if="top_ordering[index-1]==6" src="../assets/kleider/Mütze.png" />
+        <img v-if="top_ordering[index-1]==7" src="../assets/kleider/Gürtel.png" />
+        <img v-if="top_ordering[index-1]==8" src="../assets/kleider/Handschuhe.png" />
+        <img v-if="top_ordering[index-1]==9" src="../assets/kleider/Sonnenbrille.png" />
+        <img v-if="top_ordering[index-1]==10" src="../assets/kleider/Pullover.png" />
+      </div>
+    </div>
+    
+
+    <form @submit.prevent="submitAnswer() ">
+      <!-- <input v-model="prop_1" type="number" />
+      <input v-model="prop_2" type="number" />
+      <input v-model="prop_3" type="number" />
+      -->
+      <p>
+        <button @click="submitAnswer()"
+          type="button"
+        >
+        Prüfe Antwort
+        </button>
+      </p>
+    </form>
 
       <p v-if="submitted">Die Antwort ist {{result}}</p>
 
@@ -38,45 +64,25 @@ export default defineComponent({
       submitted: false,
       Q: [],
       canvas: null,
-      korrekte_sortierung: true,
+      ordering_correct: true,
+      top_ordering: [],
       ctx: null,
       message: "Hello Vue!",
       vueCanvas: null,
       painting: false,
+      images: [],
       nodes: [
-        {
-          id: 0, posX: 130, posY: 85, active: true, text: "Hose"
-        },
-        {
-          id: 1, posX: 390, posY: 170, active: true, text: "Socken"
-        },
-        {
-          id: 2, posX: 490, posY: 70, active: true, text: "Schuhe"
-        },
-        {
-          id: 3, posX: 550, posY: 210, active: true, text: "T-Shirt"
-        },
-        {
-          id: 4, posX: 45, posY: 170, active: true, text: "Unterhose"
-        },
-        {
-          id: 5, posX: 240, posY: 200, active: true, text: "Jacke"
-        },
-        {
-          id: 6, posX: 210, posY: 350, active: true, text: "Mütze"
-        },
-        {
-          id: 7, posX: 290, posY: 30, active: true, text: "Gürtel"
-        },
-        {
-          id: 8, posX: 90, posY: 310, active: true, text: "Handschuhe"
-        },
-        {
-          id: 9, posX: 500, posY: 340, active: true, text: "Sonnenbrille"
-        },
-        {
-          id: 10, posX: 350, posY: 300, active: true, text: "Pullover"
-        }
+        {id: 0, posX: 130, posY: 85, active: true, text: "Hose"},
+        {id: 1, posX: 390, posY: 170, active: true, text: "Socken"},
+        {id: 2, posX: 490, posY: 70, active: true, text: "Schuhe"},
+        {id: 3, posX: 550, posY: 210, active: true, text: "T-Shirt"},
+        {id: 4, posX: 45, posY: 170, active: true, text: "Unterhose"},
+        {id: 5, posX: 240, posY: 200, active: true, text: "Jacke"},
+        {id: 6, posX: 210, posY: 350, active: true, text: "Mütze"},
+        {id: 7, posX: 290, posY: 30, active: true, text: "Gürtel"},
+        {id: 8, posX: 90, posY: 310, active: true, text: "Handschuhe"},
+        {id: 9, posX: 500, posY: 340, active: true, text: "Sonnenbrille"},
+        {id: 10, posX: 350, posY: 300, active: true, text: "Pullover"}
       ],
       node_size: 15,
       edges: [
@@ -105,29 +111,138 @@ export default defineComponent({
     
     this.keep_trans_relation()
     this.connect_nodes()
-    this.draw_nodes()
-    
-    var o = this.create_valid_ordering()
-    var r = this.check_ordering(o)
-    console.log(r)
-    console.log(o)
     
     
-
     //mit 50% wahrscheinlichkeit geben wir eine korrekte topologische sortierung
     //und mit 50% geben wir eine zufällige sortierung (vllt richtig vllt falsch) aus
     //warum so? weil wenn wir immer eine zufällige sortierung ausgeben, habe ich das gefühl
     //dass sie meistens falsch sein wird.
-    this.korrekte_sortierung = (Math.round(Math.random())==1)? true : false
+    this.ordering_correct = (Math.round(Math.random())==1)? true : false
+    
+    if(this.ordering_correct){
+      this.create_valid_ordering()
+    } else {
+      this.create_random_ordering()
+    }
 
+    console.log(this.ordering_correct)
+    console.log(this.top_ordering)
+    //this.top_ordering = (this.ordering_correct)? this.create_valid_ordering() : this.create_random_ordering()
+    this.draw_nodes()
+    this.prepare_image_names()
+
+    
     
   },
   props: {
 
   },
   methods : {
+    prepare_image_names(){
+      //console.log("top ord len")
+      //console.log(this.top_ordering)
+      for(let i = 0; i < this.top_ordering.length; i++){
+        var node = this.top_ordering[i]
+        //console.log(node)
+        var node_name = this.nodes[node].text + ".png"
+        this.images.push(node_name)
+      }
+    },
+    draw_node(image, curr_node){
+
+    },
+    contained_in_to(node_number){
+      console.log("%d is contained", node_number)
+      for(let i = 0; i < this.top_ordering.length; i++){
+        
+        if(this.top_ordering[i]==node_number){
+          
+          return true
+        }
+      }
+      return false
+    },
     draw_nodes(){
       var ctx = this.vueCanvas
+      console.log(this.top_ordering)
+      var image1 = document.getElementById('Hose');
+      var image2 = document.getElementById('Socken')
+      var image3 = document.getElementById('Schuhe')
+      var image4 = document.getElementById('T-Shirt')
+      var image5 = document.getElementById('Unterhose')
+      var image6 = document.getElementById('Jacke')
+      var image7 = document.getElementById('Mütze')
+      var image8 = document.getElementById('Gürtel')
+      var image9 = document.getElementById('Handschuhe')
+      var image10 = document.getElementById('Sonnenbrille')
+      var image11 = document.getElementById('Pullover')
+      console.log("ssadfasdf")
+      if(this.contained_in_to(0)){
+        image1.addEventListener('load', e => {
+          ctx.drawImage(image1, this.nodes[0].posX-30, this.nodes[0].posY-40);
+        });
+      } 
+
+      if(this.contained_in_to(1)){
+        image2.addEventListener('load', e => {
+          ctx.drawImage(image2, this.nodes[1].posX-30, this.nodes[1].posY-40);
+        });
+      }
+
+      if(this.contained_in_to(2)){
+        image3.addEventListener('load', e => {
+          ctx.drawImage(image3, this.nodes[2].posX-30, this.nodes[2].posY-40);
+        });
+      }
+
+      if(this.contained_in_to(3)){
+        image4.addEventListener('load', e => {
+          ctx.drawImage(image4, this.nodes[3].posX-30, this.nodes[3].posY-40);
+        });
+      }
+
+      if(this.contained_in_to(4)){
+        image5.addEventListener('load', e => {
+          ctx.drawImage(image5, this.nodes[4].posX-30, this.nodes[4].posY-40);
+        });
+      }
+
+      if(this.contained_in_to(5)){
+        image6.addEventListener('load', e => {
+          ctx.drawImage(image6, this.nodes[5].posX-30, this.nodes[5].posY-40);
+        });
+      }
+
+      if(this.contained_in_to(6)){
+        image7.addEventListener('load', e => {
+          ctx.drawImage(image7, this.nodes[6].posX-30, this.nodes[6].posY-40);
+        });
+      }
+
+      if(this.contained_in_to(7)){
+        image8.addEventListener('load', e => {
+          ctx.drawImage(image8, this.nodes[7].posX, this.nodes[7].posY-40);
+        });
+      }
+
+      if(this.contained_in_to(8)){
+        image9.addEventListener('load', e => {
+          ctx.drawImage(image9, this.nodes[8].posX, this.nodes[8].posY-40);
+        });
+      }
+
+      if(this.contained_in_to(9)){
+        image10.addEventListener('load', e => {
+          ctx.drawImage(image10, this.nodes[9].posX, this.nodes[9].posY-40);
+        });
+      }
+
+      if(this.contained_in_to(10)){
+        image11.addEventListener('load', e => {
+          ctx.drawImage(image11, this.nodes[10].posX, this.nodes[10].posY-40);
+        });
+      }
+
       var n = this.nodes.length
       //var asdf = this.nodes.push({id: 16, posX: 1360, posY: 1330})
       for(let i = 0; i < n; i++){
@@ -135,14 +250,19 @@ export default defineComponent({
         if(!curr_node.active){
           continue
         }
-        ctx.beginPath()
+        /*var image = document.getElementById(curr_node.text)
+        console.log(image)
+        image.addEventListener('load', e => {
+          ctx.drawImage(image, curr_node.posX, curr_node.posY);
+        });*/
+        /*ctx.beginPath()
         ctx.arc(curr_node.posX, curr_node.posY, this.node_size, 0, 2 * Math.PI)
         ctx.fillStyle = "#1490a3";
         ctx.fill();
         ctx.font = "12px Georgia";
         ctx.fillStyle = "black";
         ctx.fillText(curr_node.id + ": " + curr_node.text,curr_node.posX-18,curr_node.posY+30)
-        ctx.stroke()
+        ctx.stroke()*/
       }
     },
     make_edge(ctx, u, v){
@@ -301,8 +421,8 @@ export default defineComponent({
           already_taken[next_in_ordering] = true
         }
       }
-      console.log(ordering)
-      return ordering
+      //console.log(ordering)
+      this.top_ordering = ordering
     },
 
     create_valid_ordering(){
@@ -330,16 +450,16 @@ export default defineComponent({
           }
         }
       }
-      return top_ordering
+      this.top_ordering = top_ordering
     },
 
 
     define_ratio(dx, dy){
       var len = Math.abs(dx)+Math.abs(dy)
       if(len>=400){
-        return 0.96
+        return 0.75
       } else {
-        return ((0.0005*len) + 0.77)
+        return ((0.0005*len) + 0.63)
       }
     },
 
@@ -446,6 +566,12 @@ export default defineComponent({
       display: flex !important;
       flex-wrap: wrap;
       padding: 0 0 0 10% !important;
+    }
+
+    .kleider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
 </style>
