@@ -107,9 +107,11 @@ export default defineComponent({
     this.connect_nodes()
     this.draw_nodes()
     
-    var o = this.create_random_ordering()
+    var o = this.create_valid_ordering()
     var r = this.check_ordering(o)
-    this.create_valid_ordering()
+    console.log(r)
+    console.log(o)
+    
     
 
     //mit 50% wahrscheinlichkeit geben wir eine korrekte topologische sortierung
@@ -235,15 +237,6 @@ export default defineComponent({
       }
       //this.keep_trans_relation()  //stelle sicher, dass transitive abhängigkeiten bewahrt werden
     },
-    create_random_ordering(){
-      var ordering = []
-      for(let i = 0; i < this.nodes.length; i++){
-        if(this.nodes[i].active){
-          ordering.push(this.nodes[i].id)
-        }
-      }
-      return ordering
-    },
     create_in_degrees(){
       var in_degrees = []
       for(let i = 0; i < this.nodes.length; i++){
@@ -262,10 +255,10 @@ export default defineComponent({
      * nimmt eine topologische sortierung und gibt true zurück, wenn sie korrekt ist und false andernfalls
      */
     check_ordering(ordering){
-      var in_degrees = this.create_in_degrees
+      var in_degrees = this.create_in_degrees()
       //console.log("in_degrees und adj_list jetzt")
       //console.log(in_degrees)
-      //console.log(this.adj_list)
+      //console.log(ordering)
       
       for(let i = 0; i < ordering.length; i++){
         var node = ordering[i]
@@ -285,6 +278,31 @@ export default defineComponent({
       }
 
       return true
+    },
+
+    create_random_ordering(){
+      var ordering = []
+      var num_active_nodes = 0
+      var active_nodes = []
+      var already_taken = []
+      for(let i = 0; i < this.nodes.length; i++){
+        if(this.nodes[i].active){
+          num_active_nodes++
+          active_nodes.push(i)
+        }
+        already_taken.push(false)
+      }
+      while(ordering.length < num_active_nodes){
+        var n = this.nodes.length
+        var next_in_ordering = Math.floor(Math.random()*n)
+        next_in_ordering = (next_in_ordering>=n)? next_in_ordering-1 : next_in_ordering    //in rare situations, Math.random() might be exactly 1
+        if(this.nodes[next_in_ordering].active && !already_taken[next_in_ordering]){
+          ordering.push(next_in_ordering)
+          already_taken[next_in_ordering] = true
+        }
+      }
+      console.log(ordering)
+      return ordering
     },
 
     create_valid_ordering(){
@@ -312,7 +330,7 @@ export default defineComponent({
           }
         }
       }
-      console.log(top_ordering)
+      return top_ordering
     },
 
 
