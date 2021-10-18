@@ -1,20 +1,22 @@
 <template>
   <div class="CodesErstellen">
     <router-link to="/">Hauptmenü</router-link> <br> <br>
-    <img src="../assets/kleider/Hose.png" id="Hose" style="display: none;"/>
-    <img src="../assets/kleider/Socken.png" id="Socken" style="display: none"/>
-    <img src="../assets/kleider/Schuhe.png" id="Schuhe" style="display: none"/>
-    <img src="../assets/kleider/T-Shirt.png" id="T-Shirt" style="display: none"/>
-    <img src="../assets/kleider/Unterhose.png" id="Unterhose" style="display: none"/>
-    <img src="../assets/kleider/Jacke.png" id="Jacke" style="display: none"/>
-    <img src="../assets/kleider/Mütze.png" id="Mütze" style="display: none"/>
-    <img src="../assets/kleider/Gürtel.png" id="Gürtel" style="display: none"/>
-    <img src="../assets/kleider/Handschuhe.png" id="Handschuhe" style="display: none"/>
-    <img src="../assets/kleider/Sonnenbrille.png" id="Sonnenbrille" style="display: none"/>
-    <img src="../assets/kleider/Pullover.png" id="Pullover" style="display: none"/>
+    <img src="../assets/kleider/ohne_rand/Hose.png" id="Hose" style="display: none;" lenx="333" leny="111"/>
+    <img src="../assets/kleider/ohne_rand/Socken.png" id="Socken" style="display: none"/>
+    <img src="../assets/kleider/ohne_rand/Schuhe.png" id="Schuhe" style="display: none"/>
+    <img src="../assets/kleider/ohne_rand/T-Shirt.png" id="T-Shirt" style="display: none"/>
+    <img src="../assets/kleider/ohne_rand/Unterhose.png" id="Unterhose" style="display: none"/>
+    <img src="../assets/kleider/ohne_rand/Jacke.png" id="Jacke" style="display: none"/>
+    <img src="../assets/kleider/ohne_rand/Mütze.png" id="Mütze" style="display: none"/>
+    <img src="../assets/kleider/ohne_rand/Gürtel.png" id="Gürtel" style="display: none"/>
+    <img src="../assets/kleider/ohne_rand/Handschuhe.png" id="Handschuhe" style="display: none"/>
+    <img src="../assets/kleider/ohne_rand/Sonnenbrille.png" id="Sonnenbrille" style="display: none"/>
+    <img src="../assets/kleider/ohne_rand/Pullover.png" id="Pullover" style="display: none"/>
 
+    Wenn du dir Kleider anziehst, musst du die Reihenfolge beachten. <br>
+    Zum Beispiel T-Shirt &rarr; Jacke bedeutet: Zuerst muss das T-Shirt und erst dann die Jacke angezogen werden.<br> <br>
     <canvas id="canvas" width="600" height="400" style="border:1px solid #d3d3d3;"></canvas> <br><br>
-    Petra möchte ihre Kleider in der folgenden Reihenfolge anziehen. Kann sie das? <br><br>
+    Petra möchte ihre Kleider in der folgenden Reihenfolge anziehen. Ist das möglich?  <br><br>
     <div class="kleider">
       <div v-for='index in (top_ordering.length)' :key='index'>
         <img v-if="top_ordering[index-1]==0" src="../assets/kleider/Hose.png" />
@@ -30,8 +32,13 @@
         <img v-if="top_ordering[index-1]==10" src="../assets/kleider/Pullover.png" />
       </div>
     </div>
-    
-
+    <br>
+    <input type="radio" id="true" value="True" name="answer_" v-model="answer">
+    <label for="true">Ja</label>
+    <br>
+    <input type="radio" id="false" value="False" name="answer_" v-model="answer">
+    <label for="false">Nein</label>
+    <br>
     <form @submit.prevent="submitAnswer() ">
       <!-- <input v-model="prop_1" type="number" />
       <input v-model="prop_2" type="number" />
@@ -61,7 +68,9 @@ export default defineComponent({
   },
   data() {
     return {
+      answer: false,
       submitted: false,
+      result: "falsch.",
       Q: [],
       canvas: null,
       ordering_correct: true,
@@ -125,8 +134,7 @@ export default defineComponent({
       this.create_random_ordering()
     }
 
-    console.log(this.ordering_correct)
-    console.log(this.top_ordering)
+    console.log("Die Sortierung ist %s", this.ordering_correct? "korrekt" : "möglicherweise inkorrekt")
     //this.top_ordering = (this.ordering_correct)? this.create_valid_ordering() : this.create_random_ordering()
     this.draw_nodes()
     this.prepare_image_names()
@@ -138,6 +146,19 @@ export default defineComponent({
 
   },
   methods : {
+    submitAnswer(){
+      var solution = this.check_ordering(this.top_ordering)
+      console.log(this.answer)
+      console.log(solution)
+      if(solution==true && this.answer=="True"){
+        this.result = "korrekt."
+      } else if(solution==false && this.answer=="False"){
+        this.result = "korrekt."
+      } else {
+        this.result = "falsch."
+      }
+      this.submitted = true
+    },
     prepare_image_names(){
       //console.log("top ord len")
       //console.log(this.top_ordering)
@@ -152,7 +173,6 @@ export default defineComponent({
 
     },
     contained_in_to(node_number){
-      console.log("%d is contained", node_number)
       for(let i = 0; i < this.top_ordering.length; i++){
         
         if(this.top_ordering[i]==node_number){
@@ -164,7 +184,7 @@ export default defineComponent({
     },
     draw_nodes(){
       var ctx = this.vueCanvas
-      console.log(this.top_ordering)
+      //console.log(this.top_ordering)
       var image1 = document.getElementById('Hose');
       var image2 = document.getElementById('Socken')
       var image3 = document.getElementById('Schuhe')
@@ -176,70 +196,72 @@ export default defineComponent({
       var image9 = document.getElementById('Handschuhe')
       var image10 = document.getElementById('Sonnenbrille')
       var image11 = document.getElementById('Pullover')
-      console.log("ssadfasdf")
+
+      var x_offset = -20
+      var y_offset = -25
       if(this.contained_in_to(0)){
         image1.addEventListener('load', e => {
-          ctx.drawImage(image1, this.nodes[0].posX-30, this.nodes[0].posY-40);
+          ctx.drawImage(image1, this.nodes[0].posX + x_offset, this.nodes[0].posY + y_offset);
         });
       } 
 
       if(this.contained_in_to(1)){
         image2.addEventListener('load', e => {
-          ctx.drawImage(image2, this.nodes[1].posX-30, this.nodes[1].posY-40);
+          ctx.drawImage(image2, this.nodes[1].posX + x_offset, this.nodes[1].posY + y_offset);
         });
       }
 
       if(this.contained_in_to(2)){
         image3.addEventListener('load', e => {
-          ctx.drawImage(image3, this.nodes[2].posX-30, this.nodes[2].posY-40);
+          ctx.drawImage(image3, this.nodes[2].posX + x_offset, this.nodes[2].posY + y_offset);
         });
       }
 
       if(this.contained_in_to(3)){
         image4.addEventListener('load', e => {
-          ctx.drawImage(image4, this.nodes[3].posX-30, this.nodes[3].posY-40);
+          ctx.drawImage(image4, this.nodes[3].posX + x_offset, this.nodes[3].posY + y_offset);
         });
       }
 
       if(this.contained_in_to(4)){
         image5.addEventListener('load', e => {
-          ctx.drawImage(image5, this.nodes[4].posX-30, this.nodes[4].posY-40);
+          ctx.drawImage(image5, this.nodes[4].posX + x_offset, this.nodes[4].posY + y_offset);
         });
       }
 
       if(this.contained_in_to(5)){
         image6.addEventListener('load', e => {
-          ctx.drawImage(image6, this.nodes[5].posX-30, this.nodes[5].posY-40);
+          ctx.drawImage(image6, this.nodes[5].posX + x_offset, this.nodes[5].posY + y_offset);
         });
       }
 
       if(this.contained_in_to(6)){
         image7.addEventListener('load', e => {
-          ctx.drawImage(image7, this.nodes[6].posX-30, this.nodes[6].posY-40);
+          ctx.drawImage(image7, this.nodes[6].posX + x_offset, this.nodes[6].posY + y_offset);
         });
       }
 
       if(this.contained_in_to(7)){
         image8.addEventListener('load', e => {
-          ctx.drawImage(image8, this.nodes[7].posX, this.nodes[7].posY-40);
+          ctx.drawImage(image8, this.nodes[7].posX + x_offset, this.nodes[7].posY + y_offset);
         });
       }
 
       if(this.contained_in_to(8)){
         image9.addEventListener('load', e => {
-          ctx.drawImage(image9, this.nodes[8].posX, this.nodes[8].posY-40);
+          ctx.drawImage(image9, this.nodes[8].posX + x_offset, this.nodes[8].posY + y_offset);
         });
       }
 
       if(this.contained_in_to(9)){
         image10.addEventListener('load', e => {
-          ctx.drawImage(image10, this.nodes[9].posX, this.nodes[9].posY-40);
+          ctx.drawImage(image10, this.nodes[9].posX + x_offset, this.nodes[9].posY + y_offset);
         });
       }
 
       if(this.contained_in_to(10)){
         image11.addEventListener('load', e => {
-          ctx.drawImage(image11, this.nodes[10].posX, this.nodes[10].posY-40);
+          ctx.drawImage(image11, this.nodes[10].posX + x_offset, this.nodes[10].posY + y_offset);
         });
       }
 
@@ -457,9 +479,9 @@ export default defineComponent({
     define_ratio(dx, dy){
       var len = Math.abs(dx)+Math.abs(dy)
       if(len>=400){
-        return 0.75
+        return 0.86
       } else {
-        return ((0.0005*len) + 0.63)
+        return (0.0012*len + 0.46)
       }
     },
 
@@ -573,5 +595,21 @@ export default defineComponent({
       align-items: center;
       justify-content: center;
     }
+
+    /*.ans_button {
+      background-color: #33CCFF;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 0 2px 0 0;
+    }
+
+    .ans_button:focus-within {     
+      background-color: #9130FF;    
+    }*/
 
 </style>
