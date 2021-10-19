@@ -280,7 +280,7 @@ export default defineComponent({
       this.shuffleNumbers()
 
       console.log("k: %d;   l: %d", k, l)
-      console.log("codes %d und %d unterscheiden sich an 2 stellen", this.code_1, this.code_2)
+      console.log("codes %d und %d unterscheiden sich an 2 stellen", this.code_1+1, this.code_2+1)
       console.log(this.numbers)
       console.log(this.faulty_array)
     },

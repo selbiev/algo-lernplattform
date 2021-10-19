@@ -1,44 +1,35 @@
 <template>
   <div class="CodesErstellen">
     <router-link to="/">Hauptmenü</router-link> <br> <br>
-    <img src="../assets/kleider/ohne_rand/Hose.png" id="Hose" style="display: none;" lenx="333" leny="111"/>
-    <img src="../assets/kleider/ohne_rand/Socken.png" id="Socken" style="display: none"/>
-    <img src="../assets/kleider/ohne_rand/Schuhe.png" id="Schuhe" style="display: none"/>
-    <img src="../assets/kleider/ohne_rand/T-Shirt.png" id="T-Shirt" style="display: none"/>
-    <img src="../assets/kleider/ohne_rand/Unterhose.png" id="Unterhose" style="display: none"/>
-    <img src="../assets/kleider/ohne_rand/Jacke.png" id="Jacke" style="display: none"/>
-    <img src="../assets/kleider/ohne_rand/Mütze.png" id="Mütze" style="display: none"/>
-    <img src="../assets/kleider/ohne_rand/Gürtel.png" id="Gürtel" style="display: none"/>
-    <img src="../assets/kleider/ohne_rand/Handschuhe.png" id="Handschuhe" style="display: none"/>
-    <img src="../assets/kleider/ohne_rand/Sonnenbrille.png" id="Sonnenbrille" style="display: none"/>
-    <img src="../assets/kleider/ohne_rand/Pullover.png" id="Pullover" style="display: none"/>
 
     Wenn du dir Kleider anziehst, musst du die Reihenfolge beachten. <br>
     Zum Beispiel T-Shirt &rarr; Jacke bedeutet: Zuerst muss das T-Shirt und erst dann die Jacke angezogen werden.<br> <br>
     <canvas id="canvas" width="500" height="330" style="border:1px solid #d3d3d3;"></canvas> <br><br>
-    Du möchtest die Kleider in der folgenden Reihenfolge anziehen. Ist das möglich?  <br><br>
-    <div class="kleider">
-      <div v-for='index in (top_ordering.length)' :key='index'>
-        <img v-if="top_ordering[index-1]==0" src="../assets/kleider/Hose.png" />
-        <img v-if="top_ordering[index-1]==1" src="../assets/kleider/Socken.png" />
-        <img v-if="top_ordering[index-1]==2" src="../assets/kleider/Schuhe.png" />
-        <img v-if="top_ordering[index-1]==3" src="../assets/kleider/T-Shirt.png" />
-        <img v-if="top_ordering[index-1]==4" src="../assets/kleider/Unterhose.png" />
-        <img v-if="top_ordering[index-1]==5" src="../assets/kleider/Jacke.png" />
-        <img v-if="top_ordering[index-1]==6" src="../assets/kleider/Mütze.png" />
-        <img v-if="top_ordering[index-1]==7" src="../assets/kleider/Gürtel.png" />
-        <img v-if="top_ordering[index-1]==8" src="../assets/kleider/Handschuhe.png" />
-        <img v-if="top_ordering[index-1]==9" src="../assets/kleider/Sonnenbrille.png" />
-        <img v-if="top_ordering[index-1]==10" src="../assets/kleider/Pullover.png" />
+    In welcher Reihenfolge kannst du diese Kleider anziehen? Ziehe die Kleider in die Lücken. Um die Wahl rückgängig zu machen, ziehe die Kleider zurück.
+    <br> <br>
+
+    <div class="drop-slots">
+      <div v-for="i in top_ordering.length" :key="i">
+        <div class="drop-slot" droppable="true" :id=(i-1) @drop="drop($event)" @dragover="allowDrop($event)"/>
       </div>
     </div>
     <br>
-    <input type="radio" id="true" value="True" name="answer_" v-model="answer">
-    <label for="true">Ja</label>
-    <br>
-    <input type="radio" id="false" value="False" name="answer_" v-model="answer">
-    <label for="false">Nein</label>
-    <br>
+
+    <div class="start-area" id="start-area" @dragover="allowDrop($event)" @drop="drop($event)">
+      <img v-if="nodes[8].active" id="Handschuhe" src="../assets/kleider/Handschuhe.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[1].active" id="Socken" src="../assets/kleider/Socken.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[7].active" id="Gürtel" src="../assets/kleider/Gürtel.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[2].active" id="Schuhe" src="../assets/kleider/Schuhe.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[5].active" id="Jacke" src="../assets/kleider/Jacke.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[6].active" id="Mütze" src="../assets/kleider/Mütze.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[10].active" id="Pullover" src="../assets/kleider/Pullover.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[4].active" id="Unterhose" src="../assets/kleider/Unterhose.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[0].active" id="Hose" src="../assets/kleider/Hose.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[9].active" id="Sonnenbrille" src="../assets/kleider/Sonnenbrille.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[3].active" id="T-Shirt" src="../assets/kleider/T-Shirt.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+    </div>
+    
+    
     <form @submit.prevent="submitAnswer() ">
       <!-- <input v-model="prop_1" type="number" />
       <input v-model="prop_2" type="number" />
@@ -68,13 +59,13 @@ export default defineComponent({
   },
   data() {
     return {
-      answer: false,
       submitted: false,
       result: "falsch.",
       Q: [],
       canvas: null,
       ordering_correct: true,
       top_ordering: [],
+      answers: [],
       ctx: null,
       message: "Hello Vue!",
       vueCanvas: null,
@@ -88,7 +79,7 @@ export default defineComponent({
         {id: 4, posX: 45, posY: 125, active: true, text: "Unterhose"},
         {id: 5, posX: 170, posY: 160, active: true, text: "Jacke"},
         {id: 6, posX: 175, posY: 260, active: true, text: "Mütze"},
-        {id: 7, posX: 290, posY: 30, active: true, text: "Gürtel"},
+        {id: 7, posX: 290, posY: 25, active: true, text: "Gürtel"},
         {id: 8, posX: 55, posY: 200, active: true, text: "Handschuhe"},
         {id: 9, posX: 420, posY: 280, active: true, text: "Sonnenbrille"},
         {id: 10, posX: 290, posY: 200, active: true, text: "Pullover"}
@@ -134,7 +125,7 @@ export default defineComponent({
       this.create_random_ordering()
     }
 
-    console.log("Die Sortierung ist %s", this.ordering_correct? "korrekt" : "möglicherweise inkorrekt")
+    //console.log("Die Sortierung ist %s", this.ordering_correct? "korrekt" : "möglicherweise inkorrekt")
     //this.top_ordering = (this.ordering_correct)? this.create_valid_ordering() : this.create_random_ordering()
     this.draw_nodes()
     this.prepare_image_names()
@@ -147,17 +138,44 @@ export default defineComponent({
   },
   methods : {
     submitAnswer(){
-      var solution = this.check_ordering(this.top_ordering)
-      console.log(this.answer)
-      console.log(solution)
-      if(solution==true && this.answer=="True"){
-        this.result = "korrekt."
-      } else if(solution==false && this.answer=="False"){
+      if(this.check_ordering(this.answers) && this.all_slots_used()){
         this.result = "korrekt."
       } else {
         this.result = "falsch."
       }
       this.submitted = true
+    },
+    all_slots_used(){
+      if(this.answers.length < this.top_ordering.length){
+        return false
+      } else {
+        return true
+      }
+    },
+    drag(event){
+      event.dataTransfer.setData("text", event.target.id);
+    },
+    drop(event) {
+      event.preventDefault();
+      var data = event.dataTransfer.getData("text");
+      //var node = document.getElementById(data)
+      event.target.appendChild(document.getElementById(data));
+      var slot = parseInt(event.toElement.id)
+      var cloth_name = event.dataTransfer.getData("text")
+      this.answers[slot] = this.get_id_by_name(cloth_name)
+      //console.log(this.answers)
+      
+    },
+    allowDrop(event) {
+      event.preventDefault();
+    },
+    get_id_by_name(name){
+      for(let i = 0; i < this.nodes.length; i++){
+        if(this.nodes[i].text==name){
+          return i
+        }
+      }
+      return -1
     },
     prepare_image_names(){
       //console.log("top ord len")
@@ -197,7 +215,7 @@ export default defineComponent({
       var image10 = document.getElementById('Sonnenbrille')
       var image11 = document.getElementById('Pullover')
 
-      var x_offset = -20
+      var x_offset = -30
       var y_offset = -25
       if(this.contained_in_to(0)){
         image1.addEventListener('load', e => {
@@ -528,7 +546,7 @@ export default defineComponent({
     .CodesErstellen{
         background-color: #FFE5B2;
         padding: 20px 20px 20px 20px;
-        width: 85%;
+        /*width: 85%;*/
         height: auto;
         border-color: black;
         border-width: 5px;
@@ -596,20 +614,24 @@ export default defineComponent({
       justify-content: center;
     }
 
-    /*.ans_button {
-      background-color: #33CCFF;
-      border: none;
-      color: white;
-      padding: 15px 32px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 16px;
-      margin: 0 2px 0 0;
+    .drop-slots {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .ans_button:focus-within {     
-      background-color: #9130FF;    
-    }*/
+    .drop-slot {
+      height: 40px;
+      width: 60px;
+      padding: 0 7px 10px 7px;
+      border: 1px solid black;
+    }
+
+    .start-area{
+      width: 60%;
+      min-height: 30px;
+      border: 1px solid black;
+      margin: 0 auto;
+    }
 
 </style>

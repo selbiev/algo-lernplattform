@@ -13,6 +13,7 @@ import SfErstellen_schwer from '../views/SfErstellen_schwer.vue'
 import SfFehlerhafteFolge from '../views/SfFehlerhafteFolge.vue'
 import TopSortErkennen_schwer from '../views/TopSortErkennen_schwer.vue'
 import TopSortErkennen_leicht from '../views/TopSortErkennen_leicht.vue'
+import TopSortErstellen_schwer from '../views/TopSortErstellen_schwer.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -84,6 +85,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/topsort-erkennen-schwer',
     name: 'TopSortErkennen_schwer',
     component: TopSortErkennen_schwer
+  },
+  {
+    path: '/topsort-erstellen-schwer',
+    name: 'TopSortErstellen_schwer',
+    component: TopSortErstellen_schwer
   }
 ]
 

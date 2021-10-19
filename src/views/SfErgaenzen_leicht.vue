@@ -8,7 +8,7 @@
       <div class="kodierungen">
         <div class="erste-reihe-kodierungen" >
           <div class="codes">
-            <div v-for='index in 5' :key='index'>
+            <div v-for='index in 4' :key='index'>
               <img v-if="numbers[0][index-1] == 0 && number_set[0][index-1]" src="../assets/small-cloud.png" />
               <img v-else-if="numbers[0][index-1] == 1 && number_set[0][index-1]" src="../assets/big-cloud.png" />
               <img v-else src="../assets/empty.png" />
@@ -23,7 +23,7 @@
 
         <div class="zweite-reihe-kodierungen">
           <div class="codes">
-            <div v-for='index in 5' :key='index'>
+            <div v-for='index in 4' :key='index'>
               <img v-if="numbers[1][index-1] == 0 && number_set[1][index-1]" src="../assets/small-cloud.png" />
               <img v-else-if="numbers[1][index-1] == 1 && number_set[1][index-1]" src="../assets/big-cloud.png" />
               <img v-else src="../assets/empty.png" />
@@ -37,7 +37,7 @@
 
         <div class="dritte-reihe-kodierungen">
           <div class="codes">
-            <div v-for='index in 5' :key='index'>
+            <div v-for='index in 4' :key='index'>
               <img v-if="numbers[2][index-1] == 0 && number_set[2][index-1]" src="../assets/small-cloud.png" />
               <img v-else-if="numbers[2][index-1] == 1 && number_set[2][index-1]" src="../assets/big-cloud.png" />
               <img v-else src="../assets/empty.png" />
@@ -58,7 +58,7 @@
         <!--<img v-if="seq_numbers[0][0] == 0" src="../assets/small-cloud.png" />
         <img v-if="seq_numbers[0][0] == 1" src="../assets/big-cloud.png" /> -->
 
-        <div v-for="i in 5" :key="i">
+        <div v-for="i in 4" :key="i">
           <img v-if="seq_numbers[0][i-1] == 0 && number_seq_set[0][i-1]" src="../assets/small-cloud.png" />
           <img v-else-if="seq_numbers[0][i-1] == 1 && number_seq_set[0][i-1]" src="../assets/big-cloud.png" />
           <div v-else droppable="true" class="drop-slot" id="drop-slot-1" @drop="drop($event,'2')" @dragover="allowDrop($event)"/>
@@ -195,7 +195,7 @@ export default defineComponent({
     },
     checkAbstand(arr1: number[], arr2: number[]){
       let countAbstand = 0
-      for(let i = 0; i < 5; i++){
+      for(let i = 0; i < arr1.length; i++){
         if((arr1[i] != arr2[i])){
           countAbstand ++
         }
@@ -237,7 +237,7 @@ export default defineComponent({
         new_array_o = []
         for(let i = 0; i < 3; i++){
           let new_array = []
-          for(let i = 0; i < 5; i++){
+          for(let i = 0; i < 4; i++){
             new_array.push(Math.round(Math.random()))
           }
           new_array_o.push(new_array)
@@ -250,7 +250,7 @@ export default defineComponent({
       let new_array_s: boolean[][] = []
       for(let i = 0; i < 3; i++){
         let new_array_ss = []
-        for(let i = 0; i < 5; i++){
+        for(let i = 0; i < 4; i++){
           new_array_ss.push(true)
         }
         new_array_s.push(new_array_ss)
@@ -262,13 +262,13 @@ export default defineComponent({
       let new_array_s_s: boolean[][] = []
       for(let i = 0; i < 3; i++){
         let new_array_ss_s = []
-        for(let i = 0; i < 5; i++){
+        for(let i = 0; i < 4; i++){
           new_array_ss_s.push(true)
         }
         new_array_s_s.push(new_array_ss_s)
       }
       this.number_seq_set = new_array_s_s
-      this.gap_1 = Math.floor((Math.random()*5))
+      this.gap_1 = Math.floor((Math.random()*4))
       this.number_seq_set[0][this.gap_1] = false
       console.log(this.gap_1)
     },
@@ -343,9 +343,9 @@ export default defineComponent({
     }
 
     .zeichenfolge {
-      display: flex !important;
-      flex-wrap: wrap;
-      padding: 0 0 0 37% !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .drop-slot {

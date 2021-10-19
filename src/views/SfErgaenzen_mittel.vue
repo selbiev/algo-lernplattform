@@ -342,9 +342,9 @@ export default defineComponent({
     }
 
     .zeichenfolge {
-      display: flex !important;
-      flex-wrap: wrap;
-      padding: 0 0 0 37% !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .drop-slot {
