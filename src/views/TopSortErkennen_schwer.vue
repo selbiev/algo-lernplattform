@@ -15,8 +15,8 @@
 
     Wenn du dir Kleider anziehst, musst du die Reihenfolge beachten. <br>
     Zum Beispiel T-Shirt &rarr; Jacke bedeutet: Zuerst muss das T-Shirt und erst dann die Jacke angezogen werden.<br> <br>
-    <canvas id="canvas" width="600" height="400" style="border:1px solid #d3d3d3;"></canvas> <br><br>
-    Petra möchte ihre Kleider in der folgenden Reihenfolge anziehen. Ist das möglich?  <br><br>
+    <canvas id="canvas" width="500" height="300" style="border:1px solid #d3d3d3;"></canvas> <br><br>
+    Du möchtest die Kleider in der folgenden Reihenfolge anziehen. Ist das möglich?  <br><br>
     <div class="kleider">
       <div v-for='index in (top_ordering.length)' :key='index'>
         <img v-if="top_ordering[index-1]==0" src="../assets/kleider/Hose.png" />
@@ -81,17 +81,17 @@ export default defineComponent({
       painting: false,
       images: [],
       nodes: [
-        {id: 0, posX: 130, posY: 85, active: true, text: "Hose"},
-        {id: 1, posX: 390, posY: 170, active: true, text: "Socken"},
-        {id: 2, posX: 490, posY: 70, active: true, text: "Schuhe"},
-        {id: 3, posX: 550, posY: 210, active: true, text: "T-Shirt"},
-        {id: 4, posX: 45, posY: 170, active: true, text: "Unterhose"},
-        {id: 5, posX: 240, posY: 200, active: true, text: "Jacke"},
-        {id: 6, posX: 210, posY: 350, active: true, text: "Mütze"},
+        {id: 0, posX: 130, posY: 60, active: true, text: "Hose"},
+        {id: 1, posX: 270, posY: 130, active: true, text: "Socken"},
+        {id: 2, posX: 450, posY: 70, active: true, text: "Schuhe"},
+        {id: 3, posX: 440, posY: 185, active: true, text: "T-Shirt"},
+        {id: 4, posX: 45, posY: 125, active: true, text: "Unterhose"},
+        {id: 5, posX: 170, posY: 160, active: true, text: "Jacke"},
+        {id: 6, posX: 175, posY: 260, active: true, text: "Mütze"},
         {id: 7, posX: 290, posY: 30, active: true, text: "Gürtel"},
-        {id: 8, posX: 90, posY: 310, active: true, text: "Handschuhe"},
-        {id: 9, posX: 500, posY: 340, active: true, text: "Sonnenbrille"},
-        {id: 10, posX: 350, posY: 300, active: true, text: "Pullover"}
+        {id: 8, posX: 55, posY: 200, active: true, text: "Handschuhe"},
+        {id: 9, posX: 420, posY: 280, active: true, text: "Sonnenbrille"},
+        {id: 10, posX: 290, posY: 200, active: true, text: "Pullover"}
       ],
       node_size: 15,
       edges: [
