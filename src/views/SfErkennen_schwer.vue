@@ -1,7 +1,7 @@
 <template>
     <div class="CodesErkennen">
       <router-link to="/">Hauptmenü</router-link> <br> <br>
-      Biber Bob sendet folgende Rauchzeichen, um das Wetter für einen Tag vorauszusagen. <br>
+      Biber Bob entscheidet sich, das Wetter mit folgenden Rauchzeichen zu kodieren: <br>
         <!-- Automatisierte Version, man muss einfach den css noch anpassen -->
         
       
@@ -51,8 +51,7 @@
       </div>
       
       
-      <br />Bob hat heute die nachfolgenden Rauchzeichen für die nächsten {{ anz_tage }} Tage gesendet. 
-      Welches Wetter sagt er für die nächsten {{anz_tage}} Tage voraus? <br /> <br />
+      <br />Um das Wetter für morgen vorauszusagen, sendet Bob die folgenden Zeichen. Wie wird das Wetter morgen? <br /> <br />
 
       <div class="zeichenfolge">
         <!--<img v-if="seq_numbers[0][0] == 0" src="../assets/small-cloud.png" />
@@ -330,8 +329,9 @@ export default defineComponent({
     }
 
     .auswahl {
-      display: flex !important;
-      padding: 3px 3px 3px 25%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .codes {
@@ -344,9 +344,9 @@ export default defineComponent({
     }
 
     .zeichenfolge {
-      display: flex !important;
-      flex-wrap: wrap;
-      padding: 0 0 0 10% !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
 </style>

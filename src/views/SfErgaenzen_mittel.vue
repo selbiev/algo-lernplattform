@@ -50,9 +50,7 @@
         </div>
       </div>
       
-      
-      <br />Bob hat heute die nachfolgenden Rauchzeichen für die nächsten {{ anz_tage }} Tage gesendet. 
-      Leider hat der Wind einige der Zeichen unkenntlich gemacht. Nutze die obigen Kodierungen, um Bobs Nachricht zu vervollständigen. <br /> <br />
+      <br> Um das Wetter für morgen vorauszusagen, sendet Bob die folgenden Zeichen. Der Wind hat leider einige Zeichen verwischt. Ergänze sie! <br> <br>
 
       <div class="zeichenfolge">
         <!--<img v-if="seq_numbers[0][0] == 0" src="../assets/small-cloud.png" />
@@ -65,16 +63,7 @@
         </div>
       </div>
 
-      <br> Ziehe die unteren Rauchzeichen mit der Maus in die entsprechenden Lücken, um Bobs Nachricht zu vervollständigen. Um es zu löschen, ziehe es wieder zurück. <br> <br>
-      <!--<img class="drag-el" draggable="true" @dragstart="drag($event)" src="../assets/small-cloud.png" />
-      <img src="../assets/big-cloud.png" draggable="true"/>
-
-      <br /> 
-
-      <div class="drop-zone" @dragover="allowDrop($event)" @drop="drop($event)" >Drop-Zone</div>
-      <div class="drop-zone">Drop-Zone</div>-->
-
-      <!--<div id="div1" @drop="drop($event)" @dragover="allowDrop($event)"></div>-->
+      <br> Ziehe die Rauchzeichen in die Lücken. Um zu korrigieren, ziehe sie wieder zurück. <br> <br>
 
       <div class="start-area" id="start-area" @dragover="allowDrop($event)" @drop="drop($event, 1)">
         <img id="big-cloud-1" src="../assets/big-cloud.png" draggable="true" @dragstart="drag($event)" width="336" height="69">

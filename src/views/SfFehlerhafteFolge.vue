@@ -63,8 +63,8 @@
         </div>
       </div>
       
-      <br> Als du Bobs Signale angeschaut hast, hast du eines der Rauchzeichen verwechselt und somit ist die untere Zeichenfolge fehlerhaft. Welche Kodierungen von oben könnte damit gemeint sein? <br> <br>
-
+      <br> Bei folgender Zeichenfolge ist ein Fehler aufgetreten. Eine Wolke wurde falsch gelesen. Kannst du trotzdem herausfinden, welches Wetter Bob voraussagt? <br><br>
+      
       <div class="zeichenfolge">
         <!--<img v-if="seq_numbers[0][0] == 0" src="../assets/small-cloud.png" />
         <img v-if="seq_numbers[0][0] == 1" src="../assets/big-cloud.png" /> -->

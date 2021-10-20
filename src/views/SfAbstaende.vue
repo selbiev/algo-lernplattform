@@ -54,7 +54,7 @@
       </div>
       
       
-      <br /> Finde heraus, um wie viele Stellen sich die beiden nachfolgenden Kodierungen unterscheiden. Klicke dazu auf die Pfeile.
+      <br /> Finde heraus, bei welchen Stellen sich die unteren Kodierungen unterscheiden. Klicke dazu auf die Pfeile.
       <div class="kodierungen">
         <div class="erste-reihe-kodierungen" >
           <div class="codes">

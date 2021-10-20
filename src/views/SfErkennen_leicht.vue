@@ -1,7 +1,7 @@
 <template>
     <div class="CodesErkennen">
       <router-link to="/">Hauptmenü</router-link> <br> <br>
-      Biber Bob entscheidet sich, das Wetter mit folgenden Zeichenfolgen zu kodieren: <br>
+      Biber Bob entscheidet sich, das Wetter mit folgenden Rauchzeichen zu kodieren: <br>
         
       
       <div class="kodierungen">

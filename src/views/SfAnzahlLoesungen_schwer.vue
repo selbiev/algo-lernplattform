@@ -51,8 +51,7 @@
       </div>
       
       
-      <br />Bob hat das Wetter für morgen mit den nachfolgenden Zeichen vorausgesagt. 
-      Welches Wetter könnte Bob gemeint haben? Kreuze eins oder mehrere an. <br /> <br />
+      <br />Welches Wetter könnte Bob mit diesen Zeichenfolgen gemeint haben? Kreuze eins oder mehrere an. <br /> <br />
 
       <div class="zeichenfolge">
         <!--<img v-if="seq_numbers[0][0] == 0" src="../assets/small-cloud.png" />
