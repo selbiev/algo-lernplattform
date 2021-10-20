@@ -10,8 +10,8 @@ git init
 
 git add -A
 
-git commit -m 'New Deployment'
+git commit -m 'deploy'
 
-git push -f git@github.com:selbiev/algo-lernplattform.git main
+git push -f git@github.com:selbiev/algo-lernplattform.git main:gh-pages
 
 cd -
