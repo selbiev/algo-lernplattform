@@ -2,7 +2,7 @@
 
 set -e 
 
-nmp run build
+npm run build
 
 cd dist
 
@@ -12,4 +12,6 @@ git add -A
 
 git commit -m 'New Deployment'
 
-git push -f 
+git push -f git@github.com:selbiev/algo-lernplattform.git main
+
+cd -
