@@ -182,7 +182,7 @@ export default defineComponent({
       var data = event.dataTransfer.getData("text");
       var node = document.getElementById(data)
       event.target.appendChild(node);
-      var slot = event.toElement.id
+      var slot = event.target.id
       var cloud = event.dataTransfer.getData("text")
       if(slot=="drop-slot-1"){
         this.auswahl_1 = cloud
