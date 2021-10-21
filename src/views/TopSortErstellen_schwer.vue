@@ -1,6 +1,7 @@
 <template>
   <div class="CodesErstellen">
     <router-link to="/">Hauptmenü</router-link> <br> <br>
+    <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
 
     Wenn du dir Kleider anziehst, musst du die Reihenfolge beachten. <br>
     Zum Beispiel T-Shirt &rarr; Jacke bedeutet: Zuerst muss das T-Shirt und erst dann die Jacke angezogen werden.<br> <br>
@@ -137,6 +138,9 @@ export default defineComponent({
 
   },
   methods : {
+    reloadPage(){
+      this.$router.go(0)
+    },
     submitAnswer(){
       if(this.check_ordering(this.answers) && this.all_slots_used()){
         this.result = "korrekt."
@@ -145,6 +149,7 @@ export default defineComponent({
       }
       this.submitted = true
     },
+    
     all_slots_used(){
       if(this.answers.length < this.top_ordering.length){
         return false

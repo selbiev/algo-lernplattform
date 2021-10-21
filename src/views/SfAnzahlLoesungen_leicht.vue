@@ -1,6 +1,8 @@
 <template>
     <div class="CodesAnzahlLoesungen">  
       <router-link to="/">Hauptmenü</router-link> <br> <br>
+      <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
+
       Biber Bob sendet folgende Rauchzeichen, um das Wetter für einen Tag vorauszusagen. <br>
         <!-- Automatisierte Version, man muss einfach den css noch anpassen -->
         
@@ -168,6 +170,9 @@ export default defineComponent({
         return sorted_arr
       }
       
+    },
+    reloadPage(){
+      this.$router.go(0)
     },
     compare_arrays(arr1: number[], arr2: number[]){   //returns true if arr1 is same as arr2, false otherwise
       if(arr1.length != arr2.length){

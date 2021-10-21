@@ -1,6 +1,7 @@
 <template>
     <div class="CodesAnzahlLoesungen">  
       <router-link to="/">Hauptmenü</router-link> <br> <br>
+      <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
       Biber Bob sendet folgende Rauchzeichen, um das Wetter für einen Tag vorauszusagen. <br>
         <!-- Automatisierte Version, man muss einfach den css noch anpassen -->
         
@@ -141,6 +142,9 @@ export default defineComponent({
       } else if(answer.charAt(0)=='b'){
         return 1
       }
+    },
+    reloadPage(){
+      this.$router.go(0)
     },
     
     submitAnswer(){

@@ -1,6 +1,7 @@
 <template>
     <div class="CodesErkennen">
       <router-link to="/">Hauptmenü</router-link> <br> <br>
+      <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
       Biber Bob entscheidet sich, das Wetter mit folgenden Rauchzeichen zu kodieren: <br>
         
       
@@ -120,6 +121,9 @@ export default defineComponent({
     this.createRandomSequence()
   },
   methods : {
+    reloadPage(){
+      this.$router.go(0)
+    },
     submitAnswer(){
       this.submitted = true
       this.checkAnswer()

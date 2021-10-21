@@ -1,6 +1,7 @@
 <template>
   <div class="CodesErstellen">
     <router-link to="/">Hauptmenü</router-link> <br> <br>
+    <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
     <img src="../assets/kleider/ohne_rand/Hose.png" id="Hose" style="display: none;" lenx="333" leny="111"/>
     <img src="../assets/kleider/ohne_rand/Socken.png" id="Socken" style="display: none"/>
     <img src="../assets/kleider/ohne_rand/Schuhe.png" id="Schuhe" style="display: none"/>
@@ -146,6 +147,9 @@ export default defineComponent({
 
   },
   methods : {
+    reloadPage(){
+      this.$router.go(0)
+    },
     submitAnswer(){
       var solution = this.check_ordering(this.top_ordering)
       console.log(this.answer)

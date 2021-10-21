@@ -1,7 +1,7 @@
 <template>
   <div class="CodesErstellen">
     <router-link to="/">Hauptmenü</router-link> <br> <br>
-    CodesErstellen schwer: 
+    <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
       Erstelle für jedes Wetter eine Kodierung, sodass es zwischen jedem Paar von Kodierungen ein Abstand von mindestens {{abstand}} Stellen gibt.
       
         <!-- Automatisierte Version, man muss einfach den css noch anpassen -->
@@ -110,6 +110,9 @@ export default defineComponent({
     msg: String
   },
   methods : {
+    reloadPage(){
+      this.$router.go(0)
+    },
     submitAnswer(){
       this.submitted = true
       this.checkAnswer()
