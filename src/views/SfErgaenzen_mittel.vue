@@ -164,7 +164,6 @@ export default defineComponent({
       event.target.appendChild(node);
       var cloud = event.dataTransfer.getData("text")
       this.slots[detail-1] = this.translate_ans(cloud)
-      //var slot = event.toElement.id
       
     },
     allowDrop(event: any) {

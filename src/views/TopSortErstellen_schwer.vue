@@ -165,7 +165,7 @@ export default defineComponent({
       var data = event.dataTransfer.getData("text");
       //var node = document.getElementById(data)
       event.target.appendChild(document.getElementById(data));
-      var slot = parseInt(event.toElement.id)
+      var slot = parseInt(event.target.id)
       var cloth_name = event.dataTransfer.getData("text")
       this.answers[slot] = this.get_id_by_name(cloth_name)
       //console.log(this.answers)
