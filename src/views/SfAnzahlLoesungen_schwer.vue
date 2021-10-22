@@ -61,7 +61,7 @@
         <div v-for="i in 5" :key="i">
           <img v-if="seq_numbers[0][i-1] == 0 && number_seq_set[0][i-1]" src="../assets/small-cloud.png" />
           <img v-else-if="seq_numbers[0][i-1] == 1 && number_seq_set[0][i-1]" src="../assets/big-cloud.png" />
-          <div v-else droppable="true" class="drop-slot" id="drop-slot-1"  @dragover="allowDrop($event)"/>
+          <img v-else src="../assets/question_mark.png">
         </div>
       </div>
 
