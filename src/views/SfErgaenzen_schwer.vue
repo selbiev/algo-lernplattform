@@ -97,6 +97,10 @@
         </p>
       <!--<img id="remove" src="../assets/remove.png" @dragover="allowDrop($event)" @drop="drop($event, '1')" width="336" height="69">-->
     <p v-if="submitted">Die Antwort ist {{result}}</p>
+    <p v-if="submitted && (!correct_1 || !correct_2 || !correct_3)">Fehler bei:</p>
+    <p v-if="submitted && !correct_1"> 1. Lücke </p>
+    <p v-if="submitted && !correct_2"> 2. Lücke </p>
+    <p v-if="submitted && !correct_3"> 3. Lücke </p>
     </div>
 </template>
 
@@ -118,14 +122,14 @@ export default defineComponent({
       auswahl_1: "none",
       auswahl_2: "none",
       auswahl_3: "none",
+      correct_1: false,
+      correct_2: false,
+      correct_3: false,
       gap_1: 0,
       gap_2: 0,
       gap_3: 0,
       submitted: false as boolean,
       result: "falsch.",
-      selected_1: "",
-      selected_2: "",
-      selected_3: ""
       
     }
   },
@@ -151,10 +155,10 @@ export default defineComponent({
       var ans_1 = this.translate_ans(this.auswahl_1)
       var ans_2 = this.translate_ans(this.auswahl_2)
       var ans_3 = this.translate_ans(this.auswahl_3)
-      var correct_1 = ans_1 == this.seq_numbers[0][this.gap_1]? true : false
-      var correct_2 = ans_2 == this.seq_numbers[1][this.gap_2]? true : false
-      var correct_3 = ans_3 == this.seq_numbers[2][this.gap_3]? true : false
-      if(correct_1 && correct_2 && correct_3){
+      this.correct_1 = ans_1 == this.seq_numbers[0][this.gap_1]? true : false
+      this.correct_2 = ans_2 == this.seq_numbers[1][this.gap_2]? true : false
+      this.correct_3 = ans_3 == this.seq_numbers[2][this.gap_3]? true : false
+      if(this.correct_1 && this.correct_2 && this.correct_3){
         this.result = "richtig."
       } else {
         this.result = "falsch."

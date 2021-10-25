@@ -55,6 +55,8 @@
     </form>
 
       <p v-if="submitted">Die Antwort ist {{result}}</p>
+      <p v-if="submitted && result=='falsch.' && !check_ordering(this.top_ordering)">{{wrong_cloth}} zu früh gewählt.</p>
+      <p v-if="submitted && result=='falsch.' && check_ordering(this.top_ordering)">Ist diese Reihenfolge wirklich falsch? Schau genauer hin.</p>
 
     </div>
 </template>
@@ -76,6 +78,7 @@ export default defineComponent({
       canvas: null,
       ordering_correct: true,
       top_ordering: [],
+      wrong_cloth: "",
       ctx: null,
       message: "Hello Vue!",
       vueCanvas: null,
@@ -402,24 +405,16 @@ export default defineComponent({
      */
     check_ordering(ordering){
       var in_degrees = this.create_in_degrees()
-      //console.log("in_degrees und adj_list jetzt")
-      //console.log(in_degrees)
-      //console.log(ordering)
       
       for(let i = 0; i < ordering.length; i++){
         var node = ordering[i]
-        //console.log("%d wird angeschaut", node)
         if(in_degrees[node]>0){   //wenns eine kante auf sich zeigen hat, darf knoten noch nicht genommen werden
-          //console.log("in_degrees[%d] > 0, returne false",node)
+          this.wrong_cloth = this.nodes[node].text
           return false
         }
-        //console.log("in_degrees[%d] <= 0, mache weiter",node)
-        //console.log("jetzt schauen wir die nachbarn von %d an",node)
         for(let j = 0; j < this.adj_list[node].length; j++){
           var neighbour = this.adj_list[node][j]
-          //console.log("nachbar %d gefunden. dessen degree ist zuerst %d",neighbour,in_degrees[neighbour])
           in_degrees[neighbour]--
-          //console.log("in_degrees[%d] ist jetzt %d", neighbour, in_degrees[neighbour])
         }
       }
 

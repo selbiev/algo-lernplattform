@@ -101,6 +101,7 @@
       </form>
 
       <p class="ans" v-if="submitted">Die Antwort ist {{result}}</p>
+      <p v-if="submitted && !correct_number_of_answers">Du hast {{hinweis}} Kästchen ausgewählt.</p>
 
     </div>
 </template>
@@ -121,6 +122,8 @@ export default defineComponent({
       pos_1: 0,
       pos_2: 0,
       ans_wetter: [false,false,false,false] as boolean[],
+      hinweis: "",
+      correct_number_of_answers: false,
     }
   },
   created: function(){
@@ -194,6 +197,16 @@ export default defineComponent({
         this.result = "richtig."
       } else {
         this.result = "falsch."
+      }
+
+      if(ausgew_antworten.length > richtige_antworten.length){
+        this.correct_number_of_answers = false
+        this.hinweis = "zu viele"
+      } else if(richtige_antworten.length > ausgew_antworten.length){
+        this.correct_number_of_answers = false
+        this.hinweis = "zu wenige"
+      } else {
+        this.correct_number_of_answers = true
       }
     },
 

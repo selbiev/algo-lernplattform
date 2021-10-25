@@ -2,7 +2,7 @@
   <div class="CodesErstellen">
     <router-link to="/">Hauptmenü</router-link> <br> <br>
     <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
-      Erstelle für jedes Wetter eine Kodierung, sodass es zwischen jedem Paar von Kodierungen ein Abstand von mindestens {{abstand}} Stellen gibt.
+      Erstelle für jedes Wetter eine Kodierung, sodass es zwischen jedem Paar von Kodierungen ein Abstand von mindestens {{abstand}} gibt.
       
         <!-- Automatisierte Version, man muss einfach den css noch anpassen -->
         
@@ -70,6 +70,9 @@
       </form>
 
       <p v-if="submitted">Die Antwort ist {{result}}</p>
+      <p style="display:none" id="hint1">Abstand zwischen dem 1. und 2. Code: {{abstand_0_1}}</p>
+      <p style="display:none" id="hint2">Abstand zwischen dem 2. und 3. Code: {{abstand_1_2}}</p>
+      <p style="display:none" id="hint3">Abstand zwischen dem 1. und 3. Code: {{abstand_0_2}}</p>
 
     </div>
 </template>
@@ -98,9 +101,9 @@ export default defineComponent({
       prop_3: 0,
       submitted: false as boolean,
       result: "falsch.",
-      selected_1: "",
-      selected_2: "",
-      selected_3: ""
+      abstand_0_1: 0,
+      abstand_1_2: 0,
+      abstand_0_2: 0,
     }
   },
   created: function(){
@@ -136,37 +139,58 @@ export default defineComponent({
     checkAnswer(){
       let k = 0
       let j = 1
-      let abstand_0_1 = 0
+      this.abstand_0_1 = 0
       for(let i = 0; i < 5; i++){
         if(this.numbers[k][i] != this.numbers[j][i]){
-          abstand_0_1++
+          this.abstand_0_1++
         }
       }
 
       k = 1
       j = 2
-      let abstand_1_2 = 0
+      this.abstand_1_2 = 0
       for(let i = 0; i < 5; i++){
         if(this.numbers[k][i] != this.numbers[j][i]){
-          abstand_1_2++
+          this.abstand_1_2++
         }
       }
 
       k = 0
       j = 2
-      let abstand_0_2 = 0
+      this.abstand_0_2 = 0
       for(let i = 0; i < 5; i++){
         if(this.numbers[k][i] != this.numbers[j][i]){
-          abstand_0_2++
+          this.abstand_0_2++
         }
       }
-      if(abstand_0_1 >= this.abstand && abstand_1_2 >= this.abstand && abstand_0_2 >= this.abstand){
+      if(this.abstand_0_1 >= this.abstand && this.abstand_1_2 >= this.abstand && this.abstand_0_2 >= this.abstand){
         this.result = "korrekt."
       }
       else {
         this.result = "falsch."
       }
-      //console.log("abstände sind: 0 und 1: %d, 1 und 2: %d, 0 und 2: %d", abstand_0_1, abstand_1_2, abstand_0_2)
+
+      document.getElementById("hint1")!.style.display = "block"
+      document.getElementById("hint2")!.style.display = "block"
+      document.getElementById("hint3")!.style.display = "block"
+
+      if(this.abstand_0_1>=this.abstand){
+        document.getElementById("hint1")!.style.color = "green"
+      } else {
+        document.getElementById("hint1")!.style.color = "red"
+      }
+
+      if(this.abstand_1_2>=this.abstand){
+        document.getElementById("hint2")!.style.color = "green"
+      } else {
+        document.getElementById("hint2")!.style.color = "red"
+      }
+
+      if(this.abstand_0_2>=this.abstand){
+        document.getElementById("hint3")!.style.color = "green"
+      } else {
+        document.getElementById("hint3")!.style.color = "red"
+      }
     },
 
     no_duplicates(){

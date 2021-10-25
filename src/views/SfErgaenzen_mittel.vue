@@ -60,7 +60,7 @@
         <div v-for="i in 5" :key="i">
           <img v-if="seq_numbers[0][i-1] == 0 && number_seq_set[0][i-1]" src="../assets/small-cloud.png" />
           <img v-else-if="seq_numbers[0][i-1] == 1 && number_seq_set[0][i-1]" src="../assets/big-cloud.png" />
-          <div v-else droppable="true" class="drop-slot" id="drop-slot" @drop="drop($event, i)" @dragover="allowDrop($event)"/>
+          <div v-else droppable="true" class="drop-slot" id="drop-slot" @drop="drop($event, i-1)" @dragover="allowDrop($event)"/>
         </div>
       </div>
 
@@ -82,6 +82,9 @@
         </p>
       <!--<img id="remove" src="../assets/remove.png" @dragover="allowDrop($event)" @drop="drop($event, '1')" width="336" height="69">-->
     <p v-if="submitted">Die Antwort ist {{result}}</p>
+    <p v-if="submitted && (!gap_1_korr || !gap_2_korr)">Fehler bei:</p>
+    <p v-if="submitted && !gap_1_korr"> 1. Lücke </p>
+    <p v-if="submitted && !gap_2_korr"> 2. Lücke </p>
     </div>
 </template>
 
@@ -100,17 +103,18 @@ export default defineComponent({
       zahl_1: 0,
       zahl_2: 0,
       zahl_3: 0,
-      auswahl_1: "none",
-      auswahl_2: "none",
-      auswahl_3: "none",
       gap_1: 0,
       gap_2: 0,
+      ans_gap_1: -1,
+      ans_gap_2: -1,
+      gap_1_korr: false,
+      gap_2_korr: false,
       submitted: false as boolean,
       result: "falsch.",
-      selected_1: "",
-      selected_2: "",
-      selected_3: "",
       slots: [-1,-1,-1,-1,-1] as number[],
+      slots_ok: [true,true,true,true,true],
+      falsche_stellen: [] as number[],
+      corr_answered: true,
     }
   },
   created: function(){
@@ -132,51 +136,42 @@ export default defineComponent({
       } else {return -1}
     },
     submitAnswer(){
-      var slots_ok = [true,true,true,true,true];
-      console.log(this.seq_numbers)
-      for(let i = 0; i < this.slots.length; i++){
-        if(this.slots[i] != -1){
-          slots_ok[i] = false
-          var ans_slot_i = this.slots[i]
-          console.log("slot is: %d;   antwort für dieses slot ist: %d", i, ans_slot_i)
-          
-          if(this.seq_numbers[0][i] == ans_slot_i){
-            slots_ok[i] = true
-          }
-        } 
-      }
+      this.gap_1_korr = this.seq_numbers[0][this.gap_1]==this.ans_gap_1
+      this.gap_2_korr = this.seq_numbers[0][this.gap_2]==this.ans_gap_2
+      console.log(this.seq_numbers[0][this.gap_1])
+      console.log(this.ans_gap_1)
+      console.log(this.seq_numbers[0][this.gap_2])
+      console.log(this.ans_gap_2)
 
-      var ans_corr = true
-      for(let i = 0; i < 5; i++){
-        ans_corr = ans_corr && slots_ok[i]
-      }
+      console.log("gap_1_korr ",this.gap_1_korr, "gap_2_korr ", this.gap_2_korr)
+      var corr = this.gap_1_korr && this.gap_2_korr
 
-      this.result = ans_corr? "richtig." : "falsch."
+      this.result = corr? "richtig." : "falsch."
       this.submitted = true
     },
     drag(event: any){
       event.dataTransfer.setData("text", event.target.id);
     },
     drop(event: any, detail: number) {
+      console.log("detail: %d", detail)
       event.preventDefault();
       var data = event.dataTransfer.getData("text");
       var node = document.getElementById(data)
       event.target.appendChild(node);
       var cloud = event.dataTransfer.getData("text")
-      this.slots[detail-1] = this.translate_ans(cloud)
+      if(detail == this.gap_1){
+        console.log("this.gap_1 = %d", this.gap_1)
+        this.ans_gap_1 = this.translate_ans(cloud)
+        console.log("gap1 hat jetzt: %d", this.ans_gap_1)
+      } else if(detail == this.gap_2){
+        console.log("this.gap_2 = %d", this.gap_2)
+        this.ans_gap_2 = this.translate_ans(cloud)
+        console.log("gap2 hat jetzt: %d", this.ans_gap_2)
+      }
       
     },
     allowDrop(event: any) {
       event.preventDefault();
-    },
-    translate_code(str: string){
-      if(str == "Es wird sonnig."){
-        return 1
-      } else if(str == "Es wird regnen."){
-        return 2
-      } else {
-        return 3;
-      }
     },
     checkAbstand(arr1: number[], arr2: number[]){
       let countAbstand = 0
@@ -217,8 +212,7 @@ export default defineComponent({
       //zuerst wollen wir das array "numbers" befüllen
       let new_array_o: number[][]
       do {          //solange die codes nicht verschieden sind, wiederhole folgendes
-        console.log('duplikat gefunden, codes neu generiert')
-        console.log(this.numbers)
+        console.log('codes neu generiert')
         new_array_o = []
         for(let i = 0; i < 3; i++){
           let new_array = []
@@ -255,6 +249,13 @@ export default defineComponent({
       this.number_seq_set = new_array_s_s
       this.gap_1 = Math.floor((Math.random()*5))
       this.gap_2 = Math.floor((Math.random()*5))
+      //gap_1 sollte zwingend kleiner als gap_2 sein
+      var max = Math.max(this.gap_1, this.gap_2)
+      var min = Math.min(this.gap_1, this.gap_2)
+
+      this.gap_1 = min
+      this.gap_2 = max
+
       while(this.gap_1 == this.gap_2){
         this.gap_2 = Math.floor((Math.random()*5))
       }

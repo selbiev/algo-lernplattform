@@ -81,6 +81,7 @@
         </p>
       <!--<img id="remove" src="../assets/remove.png" @dragover="allowDrop($event)" @drop="drop($event, '1')" width="336" height="69">-->
     <p v-if="submitted">Die Antwort ist {{result}}</p>
+    <p v-if="submitted && !correct_number_of_answers">Du hast {{hinweis}} Kästchen ausgewählt.</p>
     </div>
 </template>
 
@@ -105,7 +106,10 @@ export default defineComponent({
       idx_l: 0,
       submitted: false as boolean,
       result: "falsch.",
-      eindeutig: true
+      res: false,
+      eindeutig: true,
+      hinweis: "",
+      correct_number_of_answers: false,
     }
   },
   created: function(){
@@ -212,6 +216,16 @@ export default defineComponent({
         this.result = "richtig."
       } else {
         this.result = "falsch."
+      }
+
+      if(ausgew_antworten.length > richtige_antworten.length){
+        this.correct_number_of_answers = false
+        this.hinweis = "zu viele"
+      } else if(richtige_antworten.length > ausgew_antworten.length){
+        this.correct_number_of_answers = false
+        this.hinweis = "zu wenige"
+      } else {
+        this.correct_number_of_answers = true
       }
     },
     allowDrop(event: any) {

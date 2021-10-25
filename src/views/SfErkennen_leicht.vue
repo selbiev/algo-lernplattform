@@ -108,7 +108,7 @@ export default defineComponent({
       number_set: [] as boolean[][],
       number_seq_set: [] as boolean[][],
       zahl_1: 0,
-      prop_1: 0,
+      prop_1: -1,
       submitted: false as boolean,
       result: "falsch.",
       selected_1: "",
@@ -133,8 +133,10 @@ export default defineComponent({
         return 1
       } else if(str == "Es wird regnen."){
         return 2
-      } else {
+      } else if(str == "Es wird schneien.") {
         return 3;
+      } else {
+        return -1;
       }
     },
     checkAnswer(){

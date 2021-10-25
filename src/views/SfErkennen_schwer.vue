@@ -127,6 +127,11 @@
       </form>
 
       <p v-if="submitted">Die Antwort ist {{result}}</p>
+      <p v-if="submitted">
+        Tag 1 {{ (falsche_tage[0]? "richtig" : "falsch") }} <br>
+        Tag 2 {{ (falsche_tage[1]? "richtig" : "falsch") }} <br>
+        Tag 3 {{ (falsche_tage[2]? "richtig" : "falsch") }} <br>
+      </p>
 
     </div>
 </template>
@@ -146,9 +151,10 @@ export default defineComponent({
       zahl_1: 0,
       zahl_2: 0,
       zahl_3: 0,
-      prop_1: 0,
-      prop_2: 0,
-      prop_3: 0,
+      prop_1: -1,
+      prop_2: -1,
+      prop_3: -1,
+      falsche_tage: [] as boolean[],
       submitted: false as boolean,
       result: "falsch.",
       selected_1: "",
@@ -176,14 +182,32 @@ export default defineComponent({
         return 1
       } else if(str == "Es wird regnen."){
         return 2
-      } else {
+      } else if(str == "Es wird schneien.") {
         return 3;
+      } else {
+        return -1;
       }
     },
     checkAnswer(){
       this.prop_1 = this.translate_code(this.selected_1)
       this.prop_2 = this.translate_code(this.selected_2)
       this.prop_3 = this.translate_code(this.selected_3)
+      if(!(this.zahl_1===this.prop_1)){
+        this.falsche_tage[0] = false
+      } else {
+        this.falsche_tage[0] = true
+      }
+      if(!(this.zahl_2===this.prop_2)){
+        this.falsche_tage[1] = false
+      } else {
+        this.falsche_tage[1] = true
+      }
+      if(!(this.zahl_3===this.prop_3)){
+        this.falsche_tage[2] = false
+      } else {
+        this.falsche_tage[2] = true
+      }
+
       if(this.zahl_1===this.prop_1 && this.zahl_2===this.prop_2 && this.zahl_3===this.prop_3){
         this.result = "korrekt."
       } else{
