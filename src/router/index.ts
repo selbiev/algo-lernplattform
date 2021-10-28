@@ -12,9 +12,12 @@ import SfAnzahlLoesungen_leicht from '../views/SfAnzahlLoesungen_leicht.vue'
 import SfErstellen_leicht from '../views/SfErstellen_leicht.vue'
 import SfErstellen_schwer from '../views/SfErstellen_schwer.vue'
 import SfFehlerhafteFolge from '../views/SfFehlerhafteFolge.vue'
-import TopSortErkennen_schwer from '../views/TopSortErkennen_schwer.vue'
-import TopSortErkennen_leicht from '../views/TopSortErkennen_leicht.vue'
-import TopSortErstellen_schwer from '../views/TopSortErstellen_schwer.vue'
+import TopSortErkennen_Kleider_leicht from '../views/TopSortErkennen_Kleider_leicht.vue'
+import TopSortErkennen_Kleider_schwer from '../views/TopSortErkennen_Kleider_schwer.vue'
+import TopSortErstellen_Kleider_schwer from '../views/TopSortErstellen_Kleider_schwer.vue'
+import TopSortErkennen_Backen_schwer from '../views/TopSortErkennen_Backen_schwer.vue'
+import TopSortErstellen_Backen_schwer from '../views/TopSortErstellen_Backen_schwer.vue'
+
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -83,19 +86,29 @@ const routes: Array<RouteRecordRaw> = [
     component: SfFehlerhafteFolge
   },
   {
-    path: '/topsort-erkennen-leicht',
-    name: 'TopSortErkennen_leicht',
-    component: TopSortErkennen_leicht
+    path: '/topsort-erkennen-kleider-leicht',
+    name: 'TopSortErkennen_Kleider_leicht',
+    component: TopSortErkennen_Kleider_leicht
   },
   {
-    path: '/topsort-erkennen-schwer',
-    name: 'TopSortErkennen_schwer',
-    component: TopSortErkennen_schwer
+    path: '/topsort-erkennen-kleider-schwer',
+    name: 'TopSortErkennen_Kleider_schwer',
+    component: TopSortErkennen_Kleider_schwer
   },
   {
-    path: '/topsort-erstellen-schwer',
-    name: 'TopSortErstellen_schwer',
-    component: TopSortErstellen_schwer
+    path: '/topsort-erstellen-kleider-schwer',
+    name: 'TopSortErstellen_Kleider_schwer',
+    component: TopSortErstellen_Kleider_schwer
+  },
+  {
+    path: '/topsort-erkennen-backen-schwer',
+    name: 'TopSortErkennen_Backen_schwer',
+    component: TopSortErkennen_Backen_schwer
+  },
+  {
+    path: '/topsort-erstellen-backen-schwer',
+    name: 'TopSortErstellen_Backen_schwer',
+    component: TopSortErstellen_Backen_schwer
   }
 ]
 
