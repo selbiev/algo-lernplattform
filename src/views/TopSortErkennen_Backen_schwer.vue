@@ -2,37 +2,30 @@
   <div class="CodesErstellen">
     <router-link to="/">Hauptmenü</router-link> <br> <br>
     <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
-    <img src="../assets/backen/abkuehlen.png" id="abkuehlen" style="display: none;"/>
+    <img src="../assets/backen/k_auftischen.png" id="k_auftischen" style="display: none;"/>
     <img src="../assets/backen/b_lassen.png" id="b_lassen" style="display: none;"/>
     <img src="../assets/backen/bm_fuellen.png" id="bm_fuellen" style="display: none;"/>
     <img src="../assets/backen/bm_vorbereiten.png" id="bm_vorbereiten" style="display: none;"/>
     <img src="../assets/backen/e_guete.png" id="e_guete" style="display: none;"/>
     <img src="../assets/backen/essen.png" id="essen" style="display: none;"/>
     <img src="../assets/backen/freunde_einladen.png" id="freunde_einladen" style="display: none;"/>
-    <img src="../assets/backen/freunde_empfangen.png" id="freunde_empfangen" style="display: none;"/>
-    <img src="../assets/backen/h_waschen.png" id="h_waschen" style="display: none;"/>
-    <img src="../assets/backen/k_auftischen.png" id="k_auftischen" style="display: none;"/>
+    <img src="../assets/backen/t_decken.png" id="t_decken" style="display: none;"/>
     <img src="../assets/backen/o_vorheizen.png" id="o_vorheizen" style="display: none;"/>
-    <img src="../assets/backen/t_auftischen.png" id="t_auftischen" style="display: none;"/>
 
-    Wenn du dir Kleider anziehst, musst du die Reihenfolge beachten. <br>
-    Zum Beispiel T-Shirt &rarr; Jacke bedeutet: Zuerst muss das T-Shirt und erst dann die Jacke angezogen werden.<br> <br>
-    <canvas id="canvas" width="900" height="600" style="border:1px solid #d3d3d3;"></canvas> <br><br>
-    Du möchtest die Kleider in der folgenden Reihenfolge anziehen. Ist das möglich?  <br><br>
+    Du willst einen Kuchen backen und ihn zusammen mit deinen Freunden essen. <br>
+    <canvas id="canvas" width="870" height="500" style="border:1px solid #d3d3d3;"></canvas> <br><br>
+    Du möchtest das in der folgenden Reihenfolge machen. Ist das möglich?  <br><br>
     <div class="kleider">
       <div v-for='index in (top_ordering.length)' :key='index'>
-        <img v-if="top_ordering[index-1]==0" src="../assets/backen/abkuehlen.png" />
+        <img v-if="top_ordering[index-1]==0" src="../assets/backen/k_auftischen.png" />
         <img v-if="top_ordering[index-1]==1" src="../assets/backen/b_lassen.png" />
         <img v-if="top_ordering[index-1]==2" src="../assets/backen/bm_fuellen.png" />
         <img v-if="top_ordering[index-1]==3" src="../assets/backen/bm_vorbereiten.png" />
-        <img v-if="top_ordering[index-1]==4" src="../assets/backen/e_guete.png" />
+        <img v-if="top_ordering[index-1]==4" src="../assets/backen/freunde_einladen.png" />
         <img v-if="top_ordering[index-1]==5" src="../assets/backen/essen.png" />
-        <img v-if="top_ordering[index-1]==6" src="../assets/backen/freunde_einladen.png" />
-        <img v-if="top_ordering[index-1]==7" src="../assets/backen/freunde_empfangen.png" />
-        <img v-if="top_ordering[index-1]==8" src="../assets/backen/h_waschen.png" />
-        <img v-if="top_ordering[index-1]==9" src="../assets/backen/k_auftischen.png" />
-        <img v-if="top_ordering[index-1]==10" src="../assets/backen/o_vorheizen.png" />
-        <img v-if="top_ordering[index-1]==11" src="../assets/backen/t_auftischen.png" />
+        <img v-if="top_ordering[index-1]==6" src="../assets/backen/e_guete.png" />
+        <img v-if="top_ordering[index-1]==7" src="../assets/backen/t_decken.png" />
+        <img v-if="top_ordering[index-1]==8" src="../assets/backen/o_vorheizen.png" />
       </div>
     </div>
     <br>
@@ -87,34 +80,26 @@ export default defineComponent({
       painting: false,
       images: [],
       nodes: [
-        {id: 0, posX: 800, posY: 110, active: true, text: "abkuehlen"},
-        {id: 1, posX: 610, posY: 240, active: true, text: "b_lassen"},
-        {id: 2, posX: 370, posY: 220, active: true, text: "bm_fuellen"},
+        {id: 0, posX: 750, posY: 220, active: true, text: "k_auftischen"},
+        {id: 1, posX: 530, posY: 120, active: true, text: "b_lassen"},
+        {id: 2, posX: 310, posY: 120, active: true, text: "bm_fuellen"},
         {id: 3, posX: 135, posY: 220, active: true, text: "bm_vorbereiten"},
-        {id: 4, posX: 550, posY: 370, active: true, text: "t_auftischen"},
-        {id: 5, posX: 120, posY: 390, active: true, text: "freunde_einladen"},
-        {id: 6, posX: 235, posY: 530, active: true, text: "essen"},
-        {id: 7, posX: 760, posY: 550, active: true, text: "e_guete"},
-        {id: 8, posX: 200, posY: 70, active: true, text: "h_waschen"},
-        {id: 9, posX: 805, posY: 360, active: true, text: "k_auftischen"},
-        {id: 10, posX: 580, posY: 70, active: true, text: "o_vorheizen"},
-        {id: 11, posX: 350, posY: 370, active: true, text: "freunde_empfangen"}
+        {id: 4, posX: 120, posY: 100, active: true, text: "freunde_einladen"},
+        {id: 5, posX: 370, posY: 450, active: true, text: "essen"},
+        {id: 6, posX: 390, posY: 300, active: true, text: "e_guete"},
+        {id: 7, posX: 670, posY: 390, active: true, text: "t_decken"},
+        {id: 8, posX: 740, posY: 70, active: true, text: "o_vorheizen"},
       ],
       edges: [
         /**brauchts id überhaupt??? */
-        {id: 0, from_node: 8, to_node: 3},
+        {id: 1, from_node: 4, to_node: 3},
         {id: 1, from_node: 3, to_node: 2},
-        {id: 2, from_node: 2, to_node: 1},
-        {id: 3, from_node: 1, to_node: 0},
-        {id: 4, from_node: 10, to_node: 1},
-        {id: 5, from_node: 0, to_node: 9},
-        {id: 6, from_node: 1, to_node: 4},
-        {id: 7, from_node: 1, to_node: 11},
-        {id: 8, from_node: 5, to_node: 11},
-        {id: 9, from_node: 11, to_node: 7},
-        {id: 10, from_node: 9, to_node: 7},
-        {id: 11, from_node: 4, to_node: 7},
-        {id: 12, from_node: 7, to_node: 6},
+        {id: 1, from_node: 2, to_node: 1},
+        {id: 1, from_node: 1, to_node: 0},
+        {id: 1, from_node: 8, to_node: 1},
+        {id: 1, from_node: 0, to_node: 6},
+        {id: 1, from_node: 7, to_node: 6},
+        {id: 1, from_node: 6, to_node: 5},
       ],
       adj_list: [],   //klassische adjazenzliste, d.h. adj_list[i] = liste von nachbarsknoten von knoten i
     }
@@ -149,7 +134,7 @@ export default defineComponent({
     this.draw_nodes()
     this.prepare_image_names()
 
-    
+    console.log("Die topologische Sortierung: ",this.top_ordering)
     
   },
   props: {
@@ -161,8 +146,6 @@ export default defineComponent({
     },
     submitAnswer(){
       var solution = this.check_ordering(this.top_ordering)
-      console.log(this.answer)
-      console.log(solution)
       if(solution==true && this.answer=="True"){
         this.result = "korrekt."
       } else if(solution==false && this.answer=="False"){
@@ -173,11 +156,8 @@ export default defineComponent({
       this.submitted = true
     },
     prepare_image_names(){
-      //console.log("top ord len")
-      //console.log(this.top_ordering)
       for(let i = 0; i < this.top_ordering.length; i++){
         var node = this.top_ordering[i]
-        //console.log(node)
         var node_name = this.nodes[node].text + ".png"
         this.images.push(node_name)
       }
@@ -197,20 +177,17 @@ export default defineComponent({
     },
     draw_nodes(){
       var ctx = this.vueCanvas
-      var image0 = document.getElementById('abkuehlen');
+      var image0 = document.getElementById('k_auftischen');
       var image1 = document.getElementById('b_lassen')
       var image2 = document.getElementById('bm_fuellen')
       var image3 = document.getElementById('bm_vorbereiten')
-      var image4 = document.getElementById('t_auftischen')
-      var image5 = document.getElementById('freunde_einladen')
-      var image6 = document.getElementById('essen')
-      var image7 = document.getElementById('e_guete')
-      var image8 = document.getElementById('h_waschen')
-      var image9 = document.getElementById('k_auftischen')
-      var image10 = document.getElementById('o_vorheizen')
-      var image11 = document.getElementById('freunde_empfangen')
+      var image4 = document.getElementById('freunde_einladen')
+      var image5 = document.getElementById('essen')
+      var image6 = document.getElementById('e_guete')
+      var image7 = document.getElementById('t_decken')
+      var image8 = document.getElementById('o_vorheizen')
 
-      var x_offset = -60
+      var x_offset = -70
       var y_offset = -33
       if(this.contained_in_to(0)){
         image0.addEventListener('load', e => {
@@ -265,7 +242,7 @@ export default defineComponent({
           ctx.drawImage(image8, this.nodes[8].posX + x_offset, this.nodes[8].posY + y_offset);
         });
       }
-
+/*
       if(this.contained_in_to(9)){
         image9.addEventListener('load', e => {
           ctx.drawImage(image9, this.nodes[9].posX + x_offset, this.nodes[9].posY + y_offset);
@@ -283,7 +260,7 @@ export default defineComponent({
           ctx.drawImage(image11, this.nodes[11].posX + x_offset, this.nodes[11].posY + y_offset);
         });
       }
-
+*/
       var n = this.nodes.length
       //var asdf = this.nodes.push({id: 16, posX: 1360, posY: 1330})
       for(let i = 0; i < n; i++){
@@ -308,7 +285,6 @@ export default defineComponent({
     make_edge(ctx, u, v){
       ctx.beginPath()
       this.canvas_arrow(ctx, u.posX, u.posY, v.posX, v.posY);
-      //console.log("edge (%d,%d) made",u.id, v.id)
       ctx.stroke()
     },
     connect_nodes(){
@@ -386,8 +362,7 @@ export default defineComponent({
         var v = e.to_node
         
         if((this.nodes[u].active) && !(this.nodes[v].active)){
-          console.log("Die kante (%s,%s) ist nicht aktiv, also machen wir eine transitive kante",this.nodes[u].text,this.nodes[v].text)
-            
+           
           //bzgl. push() und pop() funktioniert der array wie ein stack. das kommt uns gelegen,
           //weil wir eine tiefensuche machen möchten
           var Q = []  
@@ -439,6 +414,28 @@ export default defineComponent({
       }
       return in_degrees
     },
+    get_text(id){
+      switch (id) {
+        case 0:
+          return "Kuchen auftischen"
+        case 1:
+          return "Backen lassen"
+        case 2:
+          return "Backmasse in die Form füllen"
+        case 3:
+          return "Backmasse vorbereiten"
+        case 4:
+          return "Freunde einladen"
+        case 5:
+          return "Essen"
+        case 6:
+          return "Guten Appetit wünschen"
+        case 7:
+          return "Tisch decken"
+        case 8:
+          return "Ofen vorheizen"
+      }
+    },
     /**
      * nimmt eine topologische sortierung und gibt true zurück, wenn sie korrekt ist und false andernfalls
      */
@@ -448,7 +445,7 @@ export default defineComponent({
       for(let i = 0; i < ordering.length; i++){
         var node = ordering[i]
         if(in_degrees[node]>0){   //wenns eine kante auf sich zeigen hat, darf knoten noch nicht genommen werden
-          this.wrong_cloth = this.nodes[node].text
+          this.wrong_cloth = this.get_text(node)
           return false
         }
         for(let j = 0; j < this.adj_list[node].length; j++){
@@ -481,7 +478,6 @@ export default defineComponent({
           already_taken[next_in_ordering] = true
         }
       }
-      //console.log(ordering)
       this.top_ordering = ordering
     },
 
@@ -493,6 +489,7 @@ export default defineComponent({
         }
       }
       var in_degrees = this.create_in_degrees()
+      console.log("the indegrees", in_degrees)
       var top_ordering = []
       while(top_ordering.length < num_active_nodes){
         for(let i = 0; i < in_degrees.length; i++){
@@ -503,9 +500,7 @@ export default defineComponent({
 
             for(let j = 0; j < this.adj_list[node].length; j++){
               var neighbour = this.adj_list[node][j]
-              //console.log("nachbar %d gefunden. dessen degree ist zuerst %d",neighbour,in_degrees[neighbour])
               in_degrees[neighbour]--
-              //console.log("in_degrees[%d] ist jetzt %d", neighbour, in_degrees[neighbour])
             }
           }
         }
@@ -516,15 +511,29 @@ export default defineComponent({
 
     define_ratio(dx, dy){
       var len = Math.abs(dx)+Math.abs(dy)
-      var a = 0.0002
-      var b = 0.610448
-      if(len>=400){
-        var r = 0.88
-        console.log(r)
-        return r
-      } else {
+      
+      if(len>=600){
+        var a = 0.00035
+        var b = 0.610448
         var r = len*a + b
-        console.log(r)
+        return r
+      } 
+      else if(len>=400){
+        var a = 0.0003
+        var b = 0.610448
+        var r = len*a + b
+        return r
+      } 
+      else if(len>=250){
+        var a = 0.0002
+        var b = 0.610448
+        var r = len*a + b
+        return r
+      } 
+      else {
+        var a = 0.00012
+        var b = 0.610448
+        var r = len*a + b
         return r
       }
     },

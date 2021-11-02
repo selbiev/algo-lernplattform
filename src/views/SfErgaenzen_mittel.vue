@@ -80,6 +80,13 @@
           Prüfe Antwort
           </button>
         </p>
+        <p>
+          <button @click="clearDropslots()"
+            type="button"
+          >
+          Alles rückgängig machen
+          </button>
+        </p>
       <!--<img id="remove" src="../assets/remove.png" @dragover="allowDrop($event)" @drop="drop($event, '1')" width="336" height="69">-->
     <p v-if="submitted">Die Antwort ist {{result}}</p>
     <p v-if="submitted && (!gap_1_korr || !gap_2_korr)">Fehler bei:</p>
@@ -138,16 +145,23 @@ export default defineComponent({
     submitAnswer(){
       this.gap_1_korr = this.seq_numbers[0][this.gap_1]==this.ans_gap_1
       this.gap_2_korr = this.seq_numbers[0][this.gap_2]==this.ans_gap_2
-      console.log(this.seq_numbers[0][this.gap_1])
-      console.log(this.ans_gap_1)
-      console.log(this.seq_numbers[0][this.gap_2])
-      console.log(this.ans_gap_2)
 
-      console.log("gap_1_korr ",this.gap_1_korr, "gap_2_korr ", this.gap_2_korr)
       var corr = this.gap_1_korr && this.gap_2_korr
 
       this.result = corr? "richtig." : "falsch."
       this.submitted = true
+    },
+    clearDropslots(){
+      var ds = document.getElementById("drop-slot")
+      ds!.innerHTML = ""
+      this.result = "falsch."
+      this.gap_1_korr = false
+      this.gap_2_korr = false
+      this.result = "falsch."
+      this.submitted = false
+      this.ans_gap_1 = -1
+      this.ans_gap_2 = -1
+
     },
     drag(event: any){
       event.dataTransfer.setData("text", event.target.id);

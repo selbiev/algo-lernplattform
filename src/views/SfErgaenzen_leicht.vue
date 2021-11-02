@@ -78,6 +78,13 @@
           Prüfe Antwort
           </button>
         </p>
+        <p>
+          <button @click="clearDropslots()"
+            type="button"
+          >
+          Alles rückgängig machen
+          </button>
+        </p>
       <!--<img id="remove" src="../assets/remove.png" @dragover="allowDrop($event)" @drop="drop($event, '1')" width="336" height="69">-->
     <p v-if="submitted">Die Antwort ist {{result}}</p>
     </div>
@@ -133,23 +140,6 @@ export default defineComponent({
     submitAnswer(){
       var ans_1 = this.translate_ans(this.auswahl_1)
       var correct_1 = ans_1 == this.seq_numbers[0][this.gap_1]? true : false
-      console.log("hier numbers")
-      console.log(this.numbers)
-      console.log("-----------------")
-      console.log("hier sequence")
-      console.log(this.seq_numbers)
-      console.log("-----------------")
-      console.log("users answer")
-      console.log(this.auswahl_1)
-      console.log("-----------------")
-      console.log("users answer translated")
-      console.log(ans_1)
-      console.log("gap_1")
-      console.log(this.gap_1)
-      console.log("-----------------")
-      console.log("zahl_1")
-      console.log(this.zahl_1)
-      console.log("-----------------")
 
       if(correct_1){
         this.result = "richtig."
@@ -157,6 +147,11 @@ export default defineComponent({
         this.result = "falsch."
       }
       this.submitted = true
+    },
+    clearDropslots(){
+      var ds = document.getElementById("drop-slot-1")
+      ds!.innerHTML = ""
+      this.result = "falsch."
     },
     drag(event: any){
       event.dataTransfer.setData("text", event.target.id);

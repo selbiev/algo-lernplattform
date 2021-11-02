@@ -3,10 +3,9 @@
     <router-link to="/">Hauptmenü</router-link> <br> <br>
     <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
 
-    Wenn du dir Kleider anziehst, musst du die Reihenfolge beachten. <br>
-    Zum Beispiel T-Shirt &rarr; Jacke bedeutet: Zuerst muss das T-Shirt und erst dann die Jacke angezogen werden.<br> <br>
-    <canvas id="canvas" width="500" height="330" style="border:1px solid #d3d3d3;"></canvas> <br><br>
-    In welcher Reihenfolge kannst du diese Kleider anziehen? Ziehe die Kleider in die Lücken. Um die Wahl rückgängig zu machen, ziehe die Kleider zurück.
+    Du willst einen Kuchen backen und ihn zusammen mit deinen Freunden essen.
+    <canvas id="canvas" width="870" height="500" style="border:1px solid #d3d3d3;"></canvas> <br><br>
+    In welcher Reihenfolge kannst du das machen? Ziehe die Aufgaben in die Lücken. Um die Wahl rückgängig zu machen, ziehe die sie wieder zurück wo es Platz hat.
     <br> <br>
 
     <div class="drop-slots">
@@ -17,17 +16,15 @@
     <br>
 
     <div class="start-area" id="start-area" @dragover="allowDrop($event)" @drop="drop($event)">
-      <img v-if="nodes[8].active" id="Handschuhe" src="../assets/kleider/Handschuhe.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[1].active" id="Socken" src="../assets/kleider/Socken.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[7].active" id="Gürtel" src="../assets/kleider/Gürtel.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[2].active" id="Schuhe" src="../assets/kleider/Schuhe.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[5].active" id="Jacke" src="../assets/kleider/Jacke.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[6].active" id="Mütze" src="../assets/kleider/Mütze.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[10].active" id="Pullover" src="../assets/kleider/Pullover.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[4].active" id="Unterhose" src="../assets/kleider/Unterhose.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[0].active" id="Hose" src="../assets/kleider/Hose.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[9].active" id="Sonnenbrille" src="../assets/kleider/Sonnenbrille.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[3].active" id="T-Shirt" src="../assets/kleider/T-Shirt.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[0].active" id="k_auftischen" src="../assets/backen/k_auftischen.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[1].active" id="b_lassen" src="../assets/backen/b_lassen.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[2].active" id="bm_fuellen" src="../assets/backen/bm_fuellen.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[3].active" id="bm_vorbereiten" src="../assets/backen/bm_vorbereiten.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[4].active" id="freunde_einladen" src="../assets/backen/freunde_einladen.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[5].active" id="essen" src="../assets/backen/essen.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[6].active" id="e_guete" src="../assets/backen/e_guete.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[7].active" id="t_decken" src="../assets/backen/t_decken.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[8].active" id="o_vorheizen" src="../assets/backen/o_vorheizen.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
     </div>
     
     
@@ -77,30 +74,26 @@ export default defineComponent({
       painting: false,
       images: [],
       nodes: [
-        {id: 0, posX: 130, posY: 60, active: true, text: "Hose"},
-        {id: 1, posX: 270, posY: 130, active: true, text: "Socken"},
-        {id: 2, posX: 450, posY: 70, active: true, text: "Schuhe"},
-        {id: 3, posX: 440, posY: 185, active: true, text: "T-Shirt"},
-        {id: 4, posX: 45, posY: 125, active: true, text: "Unterhose"},
-        {id: 5, posX: 170, posY: 160, active: true, text: "Jacke"},
-        {id: 6, posX: 175, posY: 260, active: true, text: "Mütze"},
-        {id: 7, posX: 290, posY: 25, active: true, text: "Gürtel"},
-        {id: 8, posX: 55, posY: 200, active: true, text: "Handschuhe"},
-        {id: 9, posX: 420, posY: 280, active: true, text: "Sonnenbrille"},
-        {id: 10, posX: 290, posY: 200, active: true, text: "Pullover"}
+        {id: 0, posX: 750, posY: 220, active: true, text: "k_auftischen"},
+        {id: 1, posX: 530, posY: 120, active: true, text: "b_lassen"},
+        {id: 2, posX: 310, posY: 120, active: true, text: "bm_fuellen"},
+        {id: 3, posX: 135, posY: 220, active: true, text: "bm_vorbereiten"},
+        {id: 4, posX: 120, posY: 100, active: true, text: "freunde_einladen"},
+        {id: 5, posX: 370, posY: 450, active: true, text: "essen"},
+        {id: 6, posX: 390, posY: 300, active: true, text: "e_guete"},
+        {id: 7, posX: 670, posY: 390, active: true, text: "t_decken"},
+        {id: 8, posX: 740, posY: 70, active: true, text: "o_vorheizen"},
       ],
-      node_size: 15,
       edges: [
         /**brauchts id überhaupt??? */
-        {id: 0, from_node: 0, to_node: 7},
-        {id: 0, from_node: 4, to_node: 0},
-        {id: 0, from_node: 1, to_node: 2},
-        {id: 0, from_node: 10, to_node: 5},
-        {id: 0, from_node: 3, to_node: 10},
-        {id: 0, from_node: 0, to_node: 2},
-        {id: 0, from_node: 10, to_node: 6},
-        {id: 0, from_node: 10, to_node: 9},
-        {id: 0, from_node: 5, to_node: 8},
+        {id: 1, from_node: 4, to_node: 3},
+        {id: 1, from_node: 3, to_node: 2},
+        {id: 1, from_node: 2, to_node: 1},
+        {id: 1, from_node: 1, to_node: 0},
+        {id: 1, from_node: 8, to_node: 1},
+        {id: 1, from_node: 0, to_node: 6},
+        {id: 1, from_node: 7, to_node: 6},
+        {id: 1, from_node: 6, to_node: 5},
       ],
       adj_list: [],   //klassische adjazenzliste, d.h. adj_list[i] = liste von nachbarsknoten von knoten i
     }
@@ -212,87 +205,90 @@ export default defineComponent({
     },
     draw_nodes(){
       var ctx = this.vueCanvas
-      //console.log(this.top_ordering)
-      var image1 = document.getElementById('Hose');
-      var image2 = document.getElementById('Socken')
-      var image3 = document.getElementById('Schuhe')
-      var image4 = document.getElementById('T-Shirt')
-      var image5 = document.getElementById('Unterhose')
-      var image6 = document.getElementById('Jacke')
-      var image7 = document.getElementById('Mütze')
-      var image8 = document.getElementById('Gürtel')
-      var image9 = document.getElementById('Handschuhe')
-      var image10 = document.getElementById('Sonnenbrille')
-      var image11 = document.getElementById('Pullover')
+      var image0 = document.getElementById('k_auftischen');
+      var image1 = document.getElementById('b_lassen')
+      var image2 = document.getElementById('bm_fuellen')
+      var image3 = document.getElementById('bm_vorbereiten')
+      var image4 = document.getElementById('freunde_einladen')
+      var image5 = document.getElementById('essen')
+      var image6 = document.getElementById('e_guete')
+      var image7 = document.getElementById('t_decken')
+      var image8 = document.getElementById('o_vorheizen')
 
-      var x_offset = -30
-      var y_offset = -25
+      var x_offset = -70
+      var y_offset = -33
       if(this.contained_in_to(0)){
-        image1.addEventListener('load', e => {
-          ctx.drawImage(image1, this.nodes[0].posX + x_offset, this.nodes[0].posY + y_offset);
+        image0.addEventListener('load', e => {
+          ctx.drawImage(image0, this.nodes[0].posX + x_offset, this.nodes[0].posY + y_offset);
         });
       } 
 
       if(this.contained_in_to(1)){
-        image2.addEventListener('load', e => {
-          ctx.drawImage(image2, this.nodes[1].posX + x_offset, this.nodes[1].posY + y_offset);
+        image1.addEventListener('load', e => {
+          ctx.drawImage(image1, this.nodes[1].posX + x_offset, this.nodes[1].posY + y_offset);
         });
       }
 
       if(this.contained_in_to(2)){
-        image3.addEventListener('load', e => {
-          ctx.drawImage(image3, this.nodes[2].posX + x_offset, this.nodes[2].posY + y_offset);
+        image2.addEventListener('load', e => {
+          ctx.drawImage(image2, this.nodes[2].posX + x_offset, this.nodes[2].posY + y_offset);
         });
       }
 
       if(this.contained_in_to(3)){
-        image4.addEventListener('load', e => {
-          ctx.drawImage(image4, this.nodes[3].posX + x_offset, this.nodes[3].posY + y_offset);
+        image3.addEventListener('load', e => {
+          ctx.drawImage(image3, this.nodes[3].posX + x_offset, this.nodes[3].posY + y_offset);
         });
       }
 
       if(this.contained_in_to(4)){
-        image5.addEventListener('load', e => {
-          ctx.drawImage(image5, this.nodes[4].posX + x_offset, this.nodes[4].posY + y_offset);
+        image4.addEventListener('load', e => {
+          ctx.drawImage(image4, this.nodes[4].posX + x_offset, this.nodes[4].posY + y_offset);
         });
       }
 
       if(this.contained_in_to(5)){
-        image6.addEventListener('load', e => {
-          ctx.drawImage(image6, this.nodes[5].posX + x_offset, this.nodes[5].posY + y_offset);
+        image5.addEventListener('load', e => {
+          ctx.drawImage(image5, this.nodes[5].posX + x_offset, this.nodes[5].posY + y_offset);
         });
       }
 
       if(this.contained_in_to(6)){
-        image7.addEventListener('load', e => {
-          ctx.drawImage(image7, this.nodes[6].posX + x_offset, this.nodes[6].posY + y_offset);
+        image6.addEventListener('load', e => {
+          ctx.drawImage(image6, this.nodes[6].posX + x_offset, this.nodes[6].posY + y_offset);
         });
       }
 
       if(this.contained_in_to(7)){
-        image8.addEventListener('load', e => {
-          ctx.drawImage(image8, this.nodes[7].posX + x_offset, this.nodes[7].posY + y_offset);
+        image7.addEventListener('load', e => {
+          ctx.drawImage(image7, this.nodes[7].posX + x_offset, this.nodes[7].posY + y_offset);
         });
       }
 
       if(this.contained_in_to(8)){
-        image9.addEventListener('load', e => {
-          ctx.drawImage(image9, this.nodes[8].posX + x_offset, this.nodes[8].posY + y_offset);
+        image8.addEventListener('load', e => {
+          ctx.drawImage(image8, this.nodes[8].posX + x_offset, this.nodes[8].posY + y_offset);
         });
       }
-
+/*
       if(this.contained_in_to(9)){
-        image10.addEventListener('load', e => {
-          ctx.drawImage(image10, this.nodes[9].posX + x_offset, this.nodes[9].posY + y_offset);
+        image9.addEventListener('load', e => {
+          ctx.drawImage(image9, this.nodes[9].posX + x_offset, this.nodes[9].posY + y_offset);
         });
       }
 
       if(this.contained_in_to(10)){
-        image11.addEventListener('load', e => {
-          ctx.drawImage(image11, this.nodes[10].posX + x_offset, this.nodes[10].posY + y_offset);
+        image10.addEventListener('load', e => {
+          ctx.drawImage(image10, this.nodes[10].posX + x_offset, this.nodes[10].posY + y_offset);
         });
       }
 
+      if(this.contained_in_to(11)){
+        image11.addEventListener('load', e => {
+          ctx.drawImage(image11, this.nodes[11].posX + x_offset, this.nodes[11].posY + y_offset);
+        });
+      }
+*/
       var n = this.nodes.length
       //var asdf = this.nodes.push({id: 16, posX: 1360, posY: 1330})
       for(let i = 0; i < n; i++){
@@ -301,12 +297,11 @@ export default defineComponent({
           continue
         }
         /*var image = document.getElementById(curr_node.text)
-        console.log(image)
         image.addEventListener('load', e => {
           ctx.drawImage(image, curr_node.posX, curr_node.posY);
         });*/
         /*ctx.beginPath()
-        ctx.arc(curr_node.posX, curr_node.posY, this.node_size, 0, 2 * Math.PI)
+        ctx.arc(curr_node.posX, curr_node.posY, 15, 0, 2 * Math.PI)
         ctx.fillStyle = "#1490a3";
         ctx.fill();
         ctx.font = "12px Georgia";
@@ -386,7 +381,7 @@ export default defineComponent({
               if(!this.edges_contains(u,node)){
                 this.edges.push({id:0, from_node: u, to_node: node})
                 this.adj_list[u].push(node)
-
+                
               }
               //this.make_trans_edge(u,node)
             } else {
@@ -421,6 +416,28 @@ export default defineComponent({
       }
       return in_degrees
     },
+    get_text(id){
+      switch (id) {
+        case 0:
+          return "Kuchen auftischen"
+        case 1:
+          return "Backen lassen"
+        case 2:
+          return "Backmasse in die Form füllen"
+        case 3:
+          return "Backmasse vorbereiten"
+        case 4:
+          return "Freunde einladen"
+        case 5:
+          return "Essen"
+        case 6:
+          return "Guten Appetit wünschen"
+        case 7:
+          return "Tisch decken"
+        case 8:
+          return "Ofen vorheizen"
+      }
+    },
     /**
      * nimmt eine topologische sortierung und gibt true zurück, wenn sie korrekt ist und false andernfalls
      */
@@ -430,7 +447,7 @@ export default defineComponent({
       for(let i = 0; i < ordering.length; i++){
         var node = ordering[i]
         if(in_degrees[node]>0){   //wenns eine kante auf sich zeigen hat, darf knoten noch nicht genommen werden
-          this.wrong_cloth = this.nodes[node].text
+          this.wrong_cloth = this.get_text(node)
           return false
         }
         for(let j = 0; j < this.adj_list[node].length; j++){
@@ -498,10 +515,30 @@ export default defineComponent({
 
     define_ratio(dx, dy){
       var len = Math.abs(dx)+Math.abs(dy)
-      if(len>=400){
-        return 0.86
-      } else {
-        return (0.0012*len + 0.46)
+      
+      if(len>=600){
+        var a = 0.00035
+        var b = 0.610448
+        var r = len*a + b
+        return r
+      } 
+      else if(len>=400){
+        var a = 0.0003
+        var b = 0.610448
+        var r = len*a + b
+        return r
+      } 
+      else if(len>=250){
+        var a = 0.0002
+        var b = 0.610448
+        var r = len*a + b
+        return r
+      } 
+      else {
+        var a = 0.00012
+        var b = 0.610448
+        var r = len*a + b
+        return r
       }
     },
 
@@ -624,8 +661,8 @@ export default defineComponent({
 
     .drop-slot {
       height: 40px;
-      width: 60px;
-      padding: 0 7px 10px 7px;
+      width: 112px;
+      padding: 0 7px 10px 0px;
       border: 1px solid black;
     }
 

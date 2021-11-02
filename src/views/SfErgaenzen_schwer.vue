@@ -95,6 +95,13 @@
           Prüfe Antwort
           </button>
         </p>
+        <p>
+          <button @click="clearDropslots()"
+            type="button"
+          >
+          Alles rückgängig machen
+          </button>
+        </p>
       <!--<img id="remove" src="../assets/remove.png" @dragover="allowDrop($event)" @drop="drop($event, '1')" width="336" height="69">-->
     <p v-if="submitted">Die Antwort ist {{result}}</p>
     <p v-if="submitted && (!correct_1 || !correct_2 || !correct_3)">Fehler bei:</p>
@@ -165,21 +172,21 @@ export default defineComponent({
       }
       this.submitted = true
     },
+    clearDropslots(){
+      var ds1 = document.getElementById("drop-slot-1")
+      var ds2 = document.getElementById("drop-slot-2")
+      var ds3 = document.getElementById("drop-slot-3")
+      ds1!.innerHTML = ""
+      ds2!.innerHTML = ""
+      ds3!.innerHTML = ""
+      this.result = "falsch."
+      this.submitted = false
+      this.auswahl_1 = ""
+      this.auswahl_2 = ""
+      this.auswahl_3 = ""
+    },
     drag(event: any){
       event.dataTransfer.setData("text", event.target.id);
-    },
-    drop_detail(event: any, detail: string){
-      if(detail=='2'){  //in diesem fall wird element kopiert
-        var data = event.dataTransfer.getData("text");
-        var nodeCopy = document.getElementById(data)!.cloneNode(true);
-        (nodeCopy as Element).id = "asdf";
-        event.target.appendChild(nodeCopy);
-      } else if(detail=='1'){ //in diesem fall wird element nicht kopiert
-        var data = event.dataTransfer.getData("text");
-        var node = document.getElementById(data)
-        event.target.appendChild(node);
-      }
-      
     },
     drop(event: any, detail: string) {
       event.preventDefault();

@@ -17,6 +17,12 @@ import TopSortErkennen_Kleider_schwer from '../views/TopSortErkennen_Kleider_sch
 import TopSortErstellen_Kleider_schwer from '../views/TopSortErstellen_Kleider_schwer.vue'
 import TopSortErkennen_Backen_schwer from '../views/TopSortErkennen_Backen_schwer.vue'
 import TopSortErstellen_Backen_schwer from '../views/TopSortErstellen_Backen_schwer.vue'
+import TopSortErkennen_Marathon_schwer from '../views/TopSortErkennen_Marathon_schwer.vue'
+import TopSortErstellen_Marathon_schwer from '../views/TopSortErstellen_Marathon_schwer.vue'
+import SfBauen_bestellen_leicht from '../views/SfBauen_bestellen_leicht.vue'
+import SfBauen_bestellen_schwer from '../views/SfBauen_bestellen_schwer.vue'
+import SfBauen_erkennen_leicht from '../views/SfBauen_bestellen_leicht.vue'
+import SfBauen_erkennen_schwer from '../views/SfBauen_bestellen_schwer.vue'
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -109,7 +115,38 @@ const routes: Array<RouteRecordRaw> = [
     path: '/topsort-erstellen-backen-schwer',
     name: 'TopSortErstellen_Backen_schwer',
     component: TopSortErstellen_Backen_schwer
-  }
+  },
+  {
+    path: '/topsort-erkennen-marathon-schwer',
+    name: 'TopSortErkennen_Marathon_schwer',
+    component: TopSortErkennen_Marathon_schwer
+  },
+  {
+    path: '/topsort-erstellen-marathon-schwer',
+    name: 'TopSortErstellen_Marathon_schwer',
+    component: TopSortErstellen_Marathon_schwer
+  },
+  {
+    path: '/sf-bauen-bestellen-leicht',
+    name: 'SfBauen_bestellen_leicht',
+    component: SfBauen_bestellen_leicht
+  },
+  {
+    path: '/sf-bauen-bestellen-schwer',
+    name: 'SfBauen_bestellen_schwer',
+    component: SfBauen_bestellen_schwer
+  },
+  {
+    path: '/sf-bauen-erkennen-leicht',
+    name: 'SfBauen_erkennen_leicht',
+    component: SfBauen_erkennen_leicht
+  },
+  {
+    path: '/sf-bauen-erkennen-schwer',
+    name: 'SfBauen_erkennen_schwer',
+    component: SfBauen_erkennen_schwer
+  },
+
 ]
 
 const router = createRouter({
