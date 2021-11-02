@@ -274,6 +274,9 @@ export default defineComponent({
       ds1.innerHTML = ''
       ds2.innerHTML = ''
       ds3.innerHTML = ''
+      this.submitted = false
+      this.result = "falsch."
+      this.drop_slots = []
     },
     //siehe zu beginn des <script> tags für beschreibung
     translate_form(name){
@@ -311,39 +314,28 @@ export default defineComponent({
         return 3;
       }
     },
-    checkAbstand(arr1, arr2){
-      let countAbstand = 0
+    same_array(arr1, arr2){
+
+      if(arr1.length != arr2.length){return false}
+
       for(let i = 0; i < arr1.length; i++){
         if((arr1[i] != arr2[i])){
-          countAbstand ++
+          return false
         }
       }
-      return countAbstand
+      return true
     },
     no_duplicates(){
-      //diese methode checkt, ob der abstand zwischen 2 codes mind. mindestAbstand ist, in dem fall return es true, sonst false
-      //fine_1 ist true, wenn code 1 und 2 sich an mind. mindestAbstand stelle unterscheiden
-      //fine_2 ist true, wenn code 1 und 3 sich an mind. mindestAbstand stelle unterscheiden
-      //fine_3 ist true, wenn code 2 und 3 sich an mind. mindestAbstand stelle unterscheiden
-      var mindestAbstand = 2
-
-      let fine_1 = false
-      let fine_2 = false
-      let fine_3 = false
       
-      if(this.checkAbstand(this.numbers[0],this.numbers[1]) >= mindestAbstand){
-        fine_1 = true
+      for(let i = 0; i < this.numbers.length-1; i++){
+        for(let j = i+1; j < this.numbers.length; j++){
+          if(i==j){continue}  //kann zwar nicht passieren da j immer i + 1 ist... aber egal
+          if(this.same_array(this.numbers[i],this.numbers[j])){
+            return false
+          }
+        }
       }
-
-      if(this.checkAbstand(this.numbers[0],this.numbers[2]) >= mindestAbstand){
-        fine_2 = true
-      }
-
-      if(this.checkAbstand(this.numbers[1],this.numbers[2]) >= mindestAbstand){
-        fine_3 = true
-      }
-
-      return fine_1 && fine_2 && fine_3
+      return true
     },
     
     createNumbers(){
