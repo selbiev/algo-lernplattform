@@ -21,8 +21,8 @@ import TopSortErkennen_Marathon_schwer from '../views/TopSortErkennen_Marathon_s
 import TopSortErstellen_Marathon_schwer from '../views/TopSortErstellen_Marathon_schwer.vue'
 import SfBauen_bestellen_leicht from '../views/SfBauen_bestellen_leicht.vue'
 import SfBauen_bestellen_schwer from '../views/SfBauen_bestellen_schwer.vue'
-import SfBauen_erkennen_leicht from '../views/SfBauen_bestellen_leicht.vue'
-import SfBauen_erkennen_schwer from '../views/SfBauen_bestellen_schwer.vue'
+import SfBauen_erkennen_leicht from '../views/SfBauen_erkennen_leicht.vue'
+import SfBauen_erkennen_schwer from '../views/SfBauen_erkennen_schwer.vue'
 
 
 const routes: Array<RouteRecordRaw> = [

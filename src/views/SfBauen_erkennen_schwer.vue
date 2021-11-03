@@ -144,13 +144,23 @@
       <br> Bea benötigt für den Damm das folgende Objekt. Fülle unten die Lücken mit der Kodierung aus, um es zu bestellen. <br> <br>
       
       <div class="to_order">
-        <div v-for="i in 1" :key="i">
-          <img v-if="to_order[i-1] == 0" src="../assets/bauen/grosser_stein.png"/>
-          <img v-if="to_order[i-1] == 1" src="../assets/bauen/kleiner_stein.png"/>
-          <img v-if="to_order[i-1] == 2" src="../assets/bauen/dickes_holz.png"/>
-          <img v-if="to_order[i-1] == 3" src="../assets/bauen/duennes_holz.png"/>
-          <img v-if="to_order[i-1] == 4" src="../assets/bauen/schlamm.png"/>
-          <img v-if="to_order[i-1] == 5" src="../assets/bauen/wasser.png"/>
+        <div v-for="i in 3" :key="i">
+          <img v-if="numbers[to_order[0]][i-1] == 0" src="../assets/bauen/kreis.png"/>
+          <img v-if="numbers[to_order[0]][i-1] == 1" src="../assets/bauen/quadrat.png"/>
+          <img v-if="numbers[to_order[0]][i-1] == 2" src="../assets/bauen/viereck.png"/>
+          <img v-if="numbers[to_order[0]][i-1] == 3" src="../assets/bauen/dreieck.png"/>
+        </div>
+        <div v-for="i in 3" :key="i">
+          <img v-if="numbers[to_order[1]][i-1] == 0" src="../assets/bauen/kreis.png"/>
+          <img v-if="numbers[to_order[1]][i-1] == 1" src="../assets/bauen/quadrat.png"/>
+          <img v-if="numbers[to_order[1]][i-1] == 2" src="../assets/bauen/viereck.png"/>
+          <img v-if="numbers[to_order[1]][i-1] == 3" src="../assets/bauen/dreieck.png"/>
+        </div>
+        <div v-for="i in 3" :key="i">
+          <img v-if="numbers[to_order[2]][i-1] == 0" src="../assets/bauen/kreis.png"/>
+          <img v-if="numbers[to_order[2]][i-1] == 1" src="../assets/bauen/quadrat.png"/>
+          <img v-if="numbers[to_order[2]][i-1] == 2" src="../assets/bauen/viereck.png"/>
+          <img v-if="numbers[to_order[2]][i-1] == 3" src="../assets/bauen/dreieck.png"/>
         </div>
       </div>
 
@@ -165,11 +175,13 @@
       <br> <br>
       
       <div class="start-area" id="start-area" @dragover="allowDrop($event)" @drop="drop($event, '1')">
-        <img id="quadrat" src="../assets/bauen/quadrat.png" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
-        <img id="dreieck" src="../assets/bauen/dreieck.png" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
-        <img id="viereck" src="../assets/bauen/viereck.png" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
-        <img id="kreis" src="../assets/bauen/kreis.png" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
-      </div>
+        <img id="grosser_stein" src="../assets/bauen/grosser_stein.png" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
+        <img id="kleiner_stein" src="../assets/bauen/kleiner_stein.png" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
+        <img id="dickes_holz" src="../assets/bauen/dickes_holz.png" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
+        <img id="duennes_holz" src="../assets/bauen/duennes_holz.png" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
+        <img id="schlamm" src="../assets/bauen/schlamm.png" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
+        <img id="wasser" src="../assets/bauen/wasser.png" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
+        </div>
 
        <p>
           <button @click="submitAnswer()"
@@ -251,11 +263,9 @@ export default defineComponent({
       return res
     },
     submitAnswer(){
-      console.log("this.to_order: ", this.to_order)
-      console.log("this.numbers: ", this.numbers)
-      console.log("this.drop_slots: ", this.drop_slots)
-      var slots_answers = [this.drop_slots[0], this.drop_slots[1], this.drop_slots[2]]
-      if(this.compare_arrays(slots_answers, this.numbers[this.to_order[0]])){
+      if(this.drop_slots[0] == this.to_order[0]
+          && this.drop_slots[1] == this.to_order[1]
+          && this.drop_slots[2] == this.to_order[2]){
         this.result = "korrekt."
       } else {
         this.result = "falsch."
@@ -267,7 +277,7 @@ export default defineComponent({
 
     },
     clearDropslots() {
-      console.log("bla")
+      console.log("drop slots cleared")
       var ds1 = document.getElementById("drop-slot-1")
       var ds2 = document.getElementById("drop-slot-2")
       var ds3 = document.getElementById("drop-slot-3")
@@ -280,8 +290,8 @@ export default defineComponent({
     },
     //siehe zu beginn des <script> tags für beschreibung
     translate_form(name){
-      var fst_letter = name.charAt(0)
-      return fst_letter == 'k'? 0 : (fst_letter == 'q'? 1 : (fst_letter == 'v'? 2 : (fst_letter = 'd'? 3 : -1)))
+      var fst_2_letters = name.charAt(0) + name.charAt(1)
+      return fst_2_letters == "gr"? 0 : (fst_2_letters == 'kl'? 1 : (fst_2_letters == 'di'? 2 : (fst_2_letters == 'du'? 3 : (fst_2_letters == "sc"? 4 : (fst_2_letters == "wa"? 5 : -1)))))
     },
     drag(event){
       event.dataTransfer.setData("text", event.target.id);
@@ -297,10 +307,10 @@ export default defineComponent({
       var node = document.getElementById(data)
       event.target.appendChild(node);*/
       var slot = event.target.id
-      var cloud = nodeCopy.id
+      var material = nodeCopy.id
       var slot_index = slot.charAt(slot.length-1)-1
-      this.drop_slots[slot_index] = this.translate_form(cloud)
-      console.log(cloud)
+      this.drop_slots[slot_index] = this.translate_form(material)
+      console.log(this.drop_slots[slot_index])
     },
     allowDrop(event) {
       event.preventDefault();
@@ -382,6 +392,11 @@ export default defineComponent({
       height: 70px;
     }
 
+    .to_order div img {
+      width: auto;
+      height: 30px;
+    }
+
     .kodierungen {
       /*background-color: #7CC7FF;*/
       
@@ -431,23 +446,32 @@ export default defineComponent({
       justify-content: center;
     }
 
+    .to_order{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     .drop-slot {
-      height: 40px;
-      width: 60px;
+      height: 60px;
+      width: 90px;
       padding: 5px 7px 0 7px;
       margin: 0 3px 0 0;
       border: 1px solid black;
     }
 
+
     .start-area{
-      width: 25%;
+      width: 50%;
       min-height: 30px;
       border: 1px solid black;
       margin: 0 auto;
     }
     
-    .start-area img{
+    .start-area img, .drop-slot img{
       padding: 5px 5px 5px 0;
+      width: auto;
+      height: 50px;
     }
 
     .code_table{
