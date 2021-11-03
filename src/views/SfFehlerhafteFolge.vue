@@ -2,67 +2,70 @@
     <div class="CodesErkennen">
       <router-link to="/">Hauptmenü</router-link> <br> <br>
       <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
-      Biber Bob entscheidet sich, das Wetter mit folgenden Zeichenfolgen zu kodieren: <br>
+      Biber Bob entscheidet sich, das Wetter mit folgenden Zeichenfolgen zu kodieren: <br><br> 
         
       
-      <div class="kodierungen">
-        <div class="erste-reihe-kodierungen" > 
-          <div class="codes">
-            <div v-for='index in 5' :key='index' id="index">
-              <img v-if="numbers[0][index-1] == 0" src="../assets/small-cloud.png" />
-              <img v-else-if="numbers[0][index-1] == 1" src="../assets/big-cloud.png" />
-              <img v-else src="../assets/empty.png" />
+      <table class="code_table">
+        <tr> 
+          <td>
+            <div class="codes">
+              <div v-for='index in 5' :key='index' id="index">
+                <img v-if="numbers[0][index-1] == 0" src="../assets/small-cloud.png" />
+                <img v-else-if="numbers[0][index-1] == 1" src="../assets/big-cloud.png" />
+                <img v-else src="../assets/empty.png" />
+              </div>
             </div>
-          </div>
+          </td>
+          <td>
+            Es wird sonnig.
+          </td>
+        </tr>
 
-          <div class="beschreibung">
-            <br />Es wird sonnig.
-          </div>
-          
-        </div>
-
-        <div class="zweite-reihe-kodierungen">
-          <div class="codes">
+        <tr>
+          <td>
+            <div class="codes">
             <div v-for='index in 5' :key='index'>
               <img v-if="numbers[1][index-1] == 0" src="../assets/small-cloud.png" />
               <img v-else-if="numbers[1][index-1] == 1" src="../assets/big-cloud.png" />
               <img v-else src="../assets/empty.png" />
             </div>
           </div>
+          </td>
+          <td>
+            Es wird regnen.
+          </td>
+        </tr>
 
-          <div class="beschreibung">
-            <br />Es wird regnen.
-          </div>
-        </div>
-
-        <div class="dritte-reihe-kodierungen">
-          <div class="codes">
-            <div v-for='index in 5' :key='index'>
-              <img v-if="numbers[2][index-1] == 0" src="../assets/small-cloud.png" />
-              <img v-else-if="numbers[2][index-1] == 1" src="../assets/big-cloud.png" />
-              <img v-else src="../assets/empty.png" />
+        <tr>
+          <td>
+            <div class="codes">
+              <div v-for='index in 5' :key='index'>
+                <img v-if="numbers[2][index-1] == 0" src="../assets/small-cloud.png" />
+                <img v-else-if="numbers[2][index-1] == 1" src="../assets/big-cloud.png" />
+                <img v-else src="../assets/empty.png" />
+              </div>
             </div>
-          </div>
+          </td>
+          <td>
+            Es wird schneien.
+          </td>
+        </tr>
 
-          <div class="beschreibung">
-            <br />Es wird schneien.
-          </div>
-        </div>
-
-        <div class="vierte-reihe-kodierungen">
-          <div class="codes">
-            <div v-for='index in 5' :key='index'>
-              <img v-if="numbers[3][index-1] == 0" src="../assets/small-cloud.png" />
-              <img v-else-if="numbers[3][index-1] == 1" src="../assets/big-cloud.png" />
-              <img v-else src="../assets/empty.png" />
+        <tr>
+          <td>
+            <div class="codes">
+              <div v-for='index in 5' :key='index'>
+                <img v-if="numbers[3][index-1] == 0" src="../assets/small-cloud.png" />
+                <img v-else-if="numbers[3][index-1] == 1" src="../assets/big-cloud.png" />
+                <img v-else src="../assets/empty.png" />
+              </div>
             </div>
-          </div>
-
-          <div class="beschreibung">
-            <br />Es wird hageln.
-          </div>
-        </div>
-      </div>
+          </td>
+          <td>
+            Es wird hageln.
+          </td>
+        </tr>
+      </table>
       
       <br> Bei folgender Zeichenfolge ist ein Fehler aufgetreten. Eine Wolke wurde falsch gelesen. Kannst du trotzdem herausfinden, welches Wetter Bob voraussagt? Eine oder zwei Antworten möglich.<br><br>
       
@@ -419,6 +422,16 @@ export default defineComponent({
       display: flex !important;
       flex-wrap: wrap;
       padding: 0 0 0 35% !important;
+    }
+
+    .code_table{
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    td, th {
+      padding: 0 0 0 25px;
+      text-align: left;
     }
 
 

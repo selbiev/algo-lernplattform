@@ -3,54 +3,56 @@
     <router-link to="/">Hauptmenü</router-link> <br> <br>
     <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
       Erstelle für jedes Wetter eine Kodierung, sodass es zwischen jedem Paar von Kodierungen ein Abstand von mindestens {{abstand}} gibt.
-      
+       <br> <br>
         <!-- Automatisierte Version, man muss einfach den css noch anpassen -->
         
       
-      <div class="kodierungen">
-        <div class="erste-reihe-kodierungen" >
-          <div class="codes">
-            <div v-for='index in 5' :key='index' id="index" @click="toggleNumber(0,index-1)">
-              <img v-if="numbers[0][index-1] == 0" src="../assets/small-cloud.png" />
-              <img v-else-if="numbers[0][index-1] == 1" src="../assets/big-cloud.png" />
-              <img v-else src="../assets/empty.png" />
+      <table class="code_table">
+        <tr> 
+          <td>
+            <div class="codes">
+              <div v-for='index in 5' :key='index' id="index" @click="toggleNumber(0,index-1)">
+                <img v-if="numbers[0][index-1] == 0" src="../assets/small-cloud.png" />
+                <img v-else-if="numbers[0][index-1] == 1" src="../assets/big-cloud.png" />
+                <img v-else src="../assets/empty.png" />
+              </div>
             </div>
-          </div>
+          </td>
+          <td>
+            Es wird sonnig.
+          </td>
+        </tr>
 
-          <div class="beschreibung">
-            <br />Es wird sonnig.
-          </div>
-          
-        </div>
-
-        <div class="zweite-reihe-kodierungen">
-          <div class="codes">
+        <tr>
+          <td>
+            <div class="codes">
             <div v-for='index in 5' :key='index' @click="toggleNumber(1,index-1)">
               <img v-if="numbers[1][index-1] == 0" src="../assets/small-cloud.png" />
               <img v-else-if="numbers[1][index-1] == 1" src="../assets/big-cloud.png" />
               <img v-else src="../assets/empty.png" />
             </div>
           </div>
+          </td>
+          <td>
+            Es wird regnen.
+          </td>
+        </tr>
 
-          <div class="beschreibung">
-            <br />Es wird regnen.
-          </div>
-        </div>
-
-        <div class="dritte-reihe-kodierungen">
-          <div class="codes">
-            <div v-for='index in 5' :key='index' @click="toggleNumber(2,index-1)">
-              <img v-if="numbers[2][index-1] == 0" src="../assets/small-cloud.png" />
-              <img v-else-if="numbers[2][index-1] == 1" src="../assets/big-cloud.png" />
-              <img v-else src="../assets/empty.png" />
+        <tr>
+          <td>
+            <div class="codes">
+              <div v-for='index in 5' :key='index' @click="toggleNumber(2,index-1)">
+                <img v-if="numbers[2][index-1] == 0" src="../assets/small-cloud.png" />
+                <img v-else-if="numbers[2][index-1] == 1" src="../assets/big-cloud.png" />
+                <img v-else src="../assets/empty.png" />
+              </div>
             </div>
-          </div>
-
-          <div class="beschreibung">
-            <br />Es wird schneien.
-          </div>
-        </div>
-      </div>
+          </td>
+          <td>
+            Es wird schneien.
+          </td>
+        </tr>
+      </table>
       
       
       
@@ -92,7 +94,7 @@ export default defineComponent({
       seq_numbers: [] as number[][],
       number_set: [] as boolean[][],
       number_seq_set: [] as boolean[][],
-      abstand: 2,
+      abstand: 2, //einziger unterschied zur schwierigen version
       zahl_1: 0,
       zahl_2: 0,
       zahl_3: 0,
@@ -297,6 +299,16 @@ export default defineComponent({
       display: flex !important;
       flex-wrap: wrap;
       padding: 0 0 0 10% !important;
+    }
+
+    .code_table{
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    td, th {
+      padding: 0 0 0 25px;
+      text-align: left;
     }
 
 </style>

@@ -2,54 +2,56 @@
     <div class="CodesAnzahlLoesungen">  
       <router-link to="/">Hauptmenü</router-link> <br> <br>
       <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
-      Biber Bob sendet folgende Rauchzeichen, um das Wetter für einen Tag vorauszusagen. <br>
+      Biber Bob sendet folgende Rauchzeichen, um das Wetter für einen Tag vorauszusagen. <br> <br>
         <!-- Automatisierte Version, man muss einfach den css noch anpassen -->
         
       
-      <div class="kodierungen">
-        <div class="erste-reihe-kodierungen" >
-          <div class="codes">
-            <div v-for='index in 5' :key='index'>
-              <img v-if="numbers[0][index-1] == 0 && number_set[0][index-1]" src="../assets/small-cloud.png" />
-              <img v-else-if="numbers[0][index-1] == 1 && number_set[0][index-1]" src="../assets/big-cloud.png" />
-              <img v-else src="../assets/empty.png" />
+      <table class="code_table">
+        <tr> 
+          <td>
+            <div class="codes">
+              <div v-for='index in 5' :key='index' id="index">
+                <img v-if="numbers[0][index-1] == 0 && number_set[0][index-1]" src="../assets/small-cloud.png" />
+                <img v-else-if="numbers[0][index-1] == 1 && number_set[0][index-1]" src="../assets/big-cloud.png" />
+                <img v-else src="../assets/empty.png" />
+              </div>
             </div>
-          </div>
+          </td>
+          <td>
+            Es wird sonnig.
+          </td>
+        </tr>
 
-          <div class="beschreibung">
-            <br />Es wird sonnig.
-          </div>
-          
-        </div>
-
-        <div class="zweite-reihe-kodierungen">
-          <div class="codes">
+        <tr>
+          <td>
+            <div class="codes">
             <div v-for='index in 5' :key='index'>
               <img v-if="numbers[1][index-1] == 0 && number_set[1][index-1]" src="../assets/small-cloud.png" />
               <img v-else-if="numbers[1][index-1] == 1 && number_set[1][index-1]" src="../assets/big-cloud.png" />
               <img v-else src="../assets/empty.png" />
             </div>
           </div>
+          </td>
+          <td>
+            Es wird regnen.
+          </td>
+        </tr>
 
-          <div class="beschreibung">
-            <br />Es wird regnen.
-          </div>
-        </div>
-
-        <div class="dritte-reihe-kodierungen">
-          <div class="codes">
-            <div v-for='index in 5' :key='index'>
-              <img v-if="numbers[2][index-1] == 0 && number_set[2][index-1]" src="../assets/small-cloud.png" />
-              <img v-else-if="numbers[2][index-1] == 1 && number_set[2][index-1]" src="../assets/big-cloud.png" />
-              <img v-else src="../assets/empty.png" />
+        <tr>
+          <td>
+            <div class="codes">
+              <div v-for='index in 5' :key='index'>
+                <img v-if="numbers[2][index-1] == 0 && number_set[2][index-1]" src="../assets/small-cloud.png" />
+                <img v-else-if="numbers[2][index-1] == 1 && number_set[2][index-1]" src="../assets/big-cloud.png" />
+                <img v-else src="../assets/empty.png" />
+              </div>
             </div>
-          </div>
-
-          <div class="beschreibung">
-            <br />Es wird schneien.
-          </div>
-        </div>
-      </div>
+          </td>
+          <td>
+            Es wird schneien.
+          </td>
+        </tr>
+      </table>
       
       
       <br />Welches Wetter könnte Bob mit diesen Zeichenfolgen gemeint haben? Kreuze eins oder mehrere an. <br /> <br />
@@ -465,6 +467,16 @@ export default defineComponent({
       min-height: 30px;
       border: 1px solid black;
       margin: 0 auto;
+    }
+
+    .code_table{
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    td, th {
+      padding: 0 0 0 25px;
+      text-align: left;
     }
 
 </style>
