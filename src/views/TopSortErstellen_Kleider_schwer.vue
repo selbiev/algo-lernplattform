@@ -548,11 +548,7 @@ export default defineComponent({
     .CodesErstellen{
         background-color: #FFE5B2;
         padding: 20px 20px 20px 20px;
-        /*width: 85%;*/
         height: auto;
-        border-color: black;
-        border-width: 5px;
-        border-style: solid;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
     }
 
@@ -620,6 +616,7 @@ export default defineComponent({
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-wrap: wrap;
     }
 
     .drop-slot {

@@ -3,7 +3,7 @@
     <router-link to="/">Hauptmenü</router-link> <br> <br>
     <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
 
-    Du willst einen Kuchen backen und ihn zusammen mit deinen Freunden essen.
+    Du willst einen Kuchen backen und ihn zusammen mit deinen Freunden essen.  <br> <br>
     <canvas id="canvas" width="870" height="500" style="border:1px solid #d3d3d3;"></canvas> <br><br>
     In welcher Reihenfolge kannst du das machen? Ziehe die Aufgaben in die Lücken. Um die Wahl rückgängig zu machen, ziehe die sie wieder zurück wo es Platz hat.
     <br> <br>
@@ -585,11 +585,7 @@ export default defineComponent({
     .CodesErstellen{
         background-color: #FFE5B2;
         padding: 20px 20px 20px 20px;
-        /*width: 85%;*/
         height: auto;
-        border-color: black;
-        border-width: 5px;
-        border-style: solid;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
     }
 
@@ -657,6 +653,7 @@ export default defineComponent({
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-wrap: wrap;
     }
 
     .drop-slot {
