@@ -207,7 +207,7 @@ export default defineComponent({
 
     .beschreibung {
       text-align: start;
-      padding: 0 0 0 15px !important;
+      padding: 10px 0 0 15px !important;
     }
 
     input, select {
