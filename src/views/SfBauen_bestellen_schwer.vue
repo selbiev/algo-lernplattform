@@ -141,7 +141,7 @@
         </tr>
       </table>
       
-      <br> Bea benötigt für den Damm das folgende Objekt. Fülle unten die Lücken mit der Kodierung aus, um es zu bestellen. <br> <br>
+      <br> Bea benötigt für den Damm die folgenden Objekte. Fülle unten die Lücken mit der Kodierung aus, um sie zu bestellen. <br> <br>
       
       <div class="to_order">
         <div v-for="i in 3" :key="i">

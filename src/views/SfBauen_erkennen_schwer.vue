@@ -141,7 +141,7 @@
         </tr>
       </table>
       
-      <br> Bea benötigt für den Damm das folgende Objekt. Fülle unten die Lücken mit der Kodierung aus, um es zu bestellen. <br> <br>
+      <br> Bob hat von Bea die folgende Bestellung erhalten. Welche Objekte hat Bea bestellt? <br> <br>
       
       <div class="to_order">
         <div v-for="i in 3" :key="i">

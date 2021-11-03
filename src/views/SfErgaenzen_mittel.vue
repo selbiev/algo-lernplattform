@@ -60,17 +60,15 @@
         <div v-for="i in 5" :key="i">
           <img v-if="seq_numbers[0][i-1] == 0 && number_seq_set[0][i-1]" src="../assets/small-cloud.png" />
           <img v-else-if="seq_numbers[0][i-1] == 1 && number_seq_set[0][i-1]" src="../assets/big-cloud.png" />
-          <div v-else droppable="true" class="drop-slot" id="drop-slot" @drop="drop($event, i-1)" @dragover="allowDrop($event)"/>
+          <div v-else droppable="true" class="drop-slot" :id="'drop-slot-'+i" @drop="drop($event, i-1)" @dragover="allowDrop($event)"/>
         </div>
       </div>
 
-      <br> Ziehe die Rauchzeichen in die Lücken. Um zu korrigieren, ziehe sie wieder zurück. <br> <br>
+      <br> Ziehe die Rauchzeichen in die Lücken. <br> <br>
 
       <div class="start-area" id="start-area" @dragover="allowDrop($event)" @drop="drop($event, 1)">
         <img id="big-cloud-1" src="../assets/big-cloud.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-        <img id="big-cloud-2" src="../assets/big-cloud.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
         <img id="small-cloud-1" src="../assets/small-cloud.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-        <img id="small-cloud-2" src="../assets/small-cloud.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
       </div>
 
        <p>
@@ -95,18 +93,18 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'SfErstellen',
   data() {
     return {
-      numbers: [] as number[][],
+      numbers: [],
       anz_tage: 3,
-      seq_numbers: [] as number[][],
-      number_set: [] as boolean[][],
-      number_seq_set: [] as boolean[][],
+      seq_numbers: [],
+      number_set: [],
+      number_seq_set: [],
       zahl_1: 0,
       zahl_2: 0,
       zahl_3: 0,
@@ -116,12 +114,13 @@ export default defineComponent({
       ans_gap_2: -1,
       gap_1_korr: false,
       gap_2_korr: false,
-      submitted: false as boolean,
+      submitted: false,
       result: "falsch.",
-      slots: [-1,-1,-1,-1,-1] as number[],
+      slots: [-1,-1,-1,-1,-1],
       slots_ok: [true,true,true,true,true],
-      falsche_stellen: [] as number[],
+      falsche_stellen: [],
       corr_answered: true,
+      couter: 0,
     }
   },
   created: function(){
@@ -135,7 +134,7 @@ export default defineComponent({
     reloadPage(){
       this.$router.go(0)
     },
-    translate_ans(answer: string){
+    translate_ans(answer){
       if(answer.charAt(0)=='s'){
         return 0
       } else if(answer.charAt(0)=='b'){
@@ -152,26 +151,44 @@ export default defineComponent({
       this.submitted = true
     },
     clearDropslots(){
-      var ds = document.getElementById("drop-slot")
-      ds!.innerHTML = ""
+      var ds1 = document.getElementById("drop-slot-1")
+      var ds2 = document.getElementById("drop-slot-2")
+      var ds3 = document.getElementById("drop-slot-3")
+      var ds4 = document.getElementById("drop-slot-4")
+      var ds5 = document.getElementById("drop-slot-5")
+      if(ds1 != null){
+        ds1.innerHTML = ""
+      }
+      if(ds2 != null){
+        ds2.innerHTML = ""
+      }
+      if(ds3 != null){
+        ds3.innerHTML = ""
+      }
+      if(ds4 != null){
+        ds4.innerHTML = ""
+      }
+      if(ds5 != null){
+        ds5.innerHTML = ""
+      }
       this.result = "falsch."
       this.gap_1_korr = false
       this.gap_2_korr = false
-      this.result = "falsch."
       this.submitted = false
       this.ans_gap_1 = -1
       this.ans_gap_2 = -1
 
     },
-    drag(event: any){
+    drag(event){
       event.dataTransfer.setData("text", event.target.id);
     },
-    drop(event: any, detail: number) {
-      console.log("detail: %d", detail)
+    drop(event, detail) {
       event.preventDefault();
       var data = event.dataTransfer.getData("text");
-      var node = document.getElementById(data)
-      event.target.appendChild(node);
+      var nodeCopy = document.getElementById(data).cloneNode(true);
+      nodeCopy.id = event.dataTransfer.getData("text") + this.counter
+      this.counter++
+      event.target.appendChild(nodeCopy);
       var cloud = event.dataTransfer.getData("text")
       if(detail == this.gap_1){
         console.log("this.gap_1 = %d", this.gap_1)
@@ -184,10 +201,10 @@ export default defineComponent({
       }
       
     },
-    allowDrop(event: any) {
+    allowDrop(event) {
       event.preventDefault();
     },
-    checkAbstand(arr1: number[], arr2: number[]){
+    checkAbstand(arr1, arr2){
       let countAbstand = 0
       for(let i = 0; i < 5; i++){
         if((arr1[i] != arr2[i])){
@@ -224,7 +241,7 @@ export default defineComponent({
     
     createNumbers(){
       //zuerst wollen wir das array "numbers" befüllen
-      let new_array_o: number[][]
+      let new_array_o = []
       do {          //solange die codes nicht verschieden sind, wiederhole folgendes
         console.log('codes neu generiert')
         new_array_o = []
@@ -240,7 +257,7 @@ export default defineComponent({
       
       //jetzt das array number_set, das sagt aus, ob eine zahl/eine stelle 
       //in den kodierungen bekannt ist oder nicht (für lückentext)
-      let new_array_s: boolean[][] = []
+      let new_array_s = []
       for(let i = 0; i < 3; i++){
         let new_array_ss = []
         for(let i = 0; i < 5; i++){
@@ -252,7 +269,7 @@ export default defineComponent({
       
       //jetzt das array number_seq_set, das sagt aus, ob eine zahl/eine stelle 
       //in den sequenzen/zeichenfolge bekannt ist oder nicht (für lückentext)
-      let new_array_s_s: boolean[][] = []
+      let new_array_s_s = []
       for(let i = 0; i < 3; i++){
         let new_array_ss_s = []
         for(let i = 0; i < 5; i++){
@@ -363,7 +380,7 @@ export default defineComponent({
     }
 
     .start-area{
-      width: 25%;
+      width: 20%;
       min-height: 30px;
       border: 1px solid black;
       margin: 0 auto;

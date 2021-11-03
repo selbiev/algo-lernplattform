@@ -64,7 +64,7 @@
         </div>
       </div>
 
-      <br> Ziehe die Rauchzeichen in die Lücken. Um zu korrigieren, ziehe sie wieder zurück. <br> <br>
+      <br> Ziehe die Rauchzeichen in die Lücken. <br> <br>
       
       <div class="start-area" id="start-area" @dragover="allowDrop($event)" @drop="drop($event, '1')">
         <img id="big-cloud-1" src="../assets/big-cloud.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
@@ -90,18 +90,18 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'SfErstellen',
   data() {
     return {
-      numbers: [] as number[][],
+      numbers: [],
       anz_tage: 3,
-      seq_numbers: [] as number[][],
-      number_set: [] as boolean[][],
-      number_seq_set: [] as boolean[][],
+      seq_numbers: [],
+      number_set: [],
+      number_seq_set: [],
       zahl_1: 0,
       zahl_2: 0,
       zahl_3: 0,
@@ -111,12 +111,12 @@ export default defineComponent({
       gap_1: 0,
       gap_2: 0,
       gap_3: 0,
-      submitted: false as boolean,
+      submitted: false,
       result: "falsch.",
       selected_1: "",
       selected_2: "",
-      selected_3: ""
-      
+      selected_3: "",
+      counter: 0,
     }
   },
   created: function(){
@@ -130,7 +130,7 @@ export default defineComponent({
     reloadPage(){
       this.$router.go(0)
     },
-    translate_ans(answer: string){
+    translate_ans(answer){
       if(answer.charAt(0)=='s'){
         return 0
       } else if(answer.charAt(0)=='b'){
@@ -150,30 +150,23 @@ export default defineComponent({
     },
     clearDropslots(){
       var ds = document.getElementById("drop-slot-1")
-      ds!.innerHTML = ""
+      ds.innerHTML = ""
       this.result = "falsch."
+      this.auswahl_1 = ""
+      this.auswahl_2 = ""
+      this.auswahl_3 = ""
+      this.submitted = false
     },
-    drag(event: any){
+    drag(event){
       event.dataTransfer.setData("text", event.target.id);
     },
-    drop_detail(event: any, detail: string){
-      if(detail=='2'){  //in diesem fall wird element kopiert
-        var data = event.dataTransfer.getData("text");
-        var nodeCopy = document.getElementById(data)!.cloneNode(true);
-        (nodeCopy as Element).id = "asdf";
-        event.target.appendChild(nodeCopy);
-      } else if(detail=='1'){ //in diesem fall wird element nicht kopiert
-        var data = event.dataTransfer.getData("text");
-        var node = document.getElementById(data)
-        event.target.appendChild(node);
-      }
-      
-    },
-    drop(event: any, detail: string) {
+    drop(event, detail) {
       event.preventDefault();
       var data = event.dataTransfer.getData("text");
-      var node = document.getElementById(data)
-      event.target.appendChild(node);
+      var nodeCopy = document.getElementById(data).cloneNode(true);
+      nodeCopy.id = event.dataTransfer.getData("text") + this.counter
+      this.counter++
+      event.target.appendChild(nodeCopy);
       var slot = event.target.id
       var cloud = event.dataTransfer.getData("text")
       if(slot=="drop-slot-1"){
@@ -187,10 +180,10 @@ export default defineComponent({
         console.log(this.auswahl_3)
       }
     },
-    allowDrop(event: any) {
+    allowDrop(event) {
       event.preventDefault();
     },
-    translate_code(str: string){
+    translate_code(str){
       if(str == "Es wird sonnig."){
         return 1
       } else if(str == "Es wird regnen."){
@@ -199,7 +192,7 @@ export default defineComponent({
         return 3;
       }
     },
-    checkAbstand(arr1: number[], arr2: number[]){
+    checkAbstand(arr1, arr2){
       let countAbstand = 0
       for(let i = 0; i < arr1.length; i++){
         if((arr1[i] != arr2[i])){
@@ -236,7 +229,7 @@ export default defineComponent({
     
     createNumbers(){
       //zuerst wollen wir das array "numbers" befüllen
-      let new_array_o: number[][]
+      let new_array_o = []
       do {          //solange die codes nicht verschieden sind, wiederhole folgendes
         console.log('duplikat gefunden, codes neu generiert')
         console.log(this.numbers)
@@ -253,7 +246,7 @@ export default defineComponent({
       
       //jetzt das array number_set, das sagt aus, ob eine zahl/eine stelle 
       //in den kodierungen bekannt ist oder nicht (für lückentext)
-      let new_array_s: boolean[][] = []
+      let new_array_s = []
       for(let i = 0; i < 3; i++){
         let new_array_ss = []
         for(let i = 0; i < 4; i++){
@@ -265,7 +258,7 @@ export default defineComponent({
       
       //jetzt das array number_seq_set, das sagt aus, ob eine zahl/eine stelle 
       //in den sequenzen/zeichenfolge bekannt ist oder nicht (für lückentext)
-      let new_array_s_s: boolean[][] = []
+      let new_array_s_s = []
       for(let i = 0; i < 3; i++){
         let new_array_ss_s = []
         for(let i = 0; i < 4; i++){
@@ -362,7 +355,7 @@ export default defineComponent({
     }
 
     .start-area{
-      width: 25%;
+      width: 20%;
       min-height: 30px;
       border: 1px solid black;
       margin: 0 auto;
