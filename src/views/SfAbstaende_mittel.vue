@@ -2,7 +2,7 @@
     <div class="CodesAbstaende">
       <router-link to="/">Hauptmenü</router-link> <br> <br>
       <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
-      Betrachten wir uns mal zwei Kodierungen. Sie unterscheiden sich an 2 Stellen, die je mit einem Pfeil markiert sind. <br>
+      Betrachten wir uns mal zwei Kodierungen. Sie unterscheiden sich an 2 Stellen, die je mit einem Pfeil markiert sind. <br> <br>
         <!-- Automatisierte Version, man muss einfach den css noch anpassen -->
         
       
@@ -55,7 +55,7 @@
       </div>
       
       
-      <br /> Finde heraus, bei welchen Stellen sich die unteren Kodierungen unterscheiden. Klicke dazu auf die Pfeile.
+      <br /> Finde heraus, bei welchen Stellen sich die unteren Kodierungen unterscheiden. Klicke dazu auf die Pfeile. <br> <br>
       <div class="kodierungen">
         <div class="erste-reihe-kodierungen" >
           <div class="codes">
@@ -218,11 +218,9 @@ export default defineComponent({
     }
 
     .kodierungen div {
-      /*align-content: left;
-      align-items: left;
-      text-align: left;*/
       display: flex;
-      padding: 10px 0 0 20%;
+      align-items: center;
+      justify-content: center;
     }
 
     .beschreibung {

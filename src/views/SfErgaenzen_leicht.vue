@@ -2,7 +2,7 @@
     <div class="CodesErgaenzen">
         <router-link to="/">Hauptmenü</router-link> <br> <br>
         <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
-      Biber Bob sendet folgende Rauchzeichen, um das Wetter für einen Tag vorauszusagen. <br>
+      Biber Bob sendet folgende Rauchzeichen, um das Wetter für einen Tag vorauszusagen. <br> <br>
         <!-- Automatisierte Version, man muss einfach den css noch anpassen -->
         
       
@@ -53,7 +53,7 @@
         </tr>
       </table>
       
-      <br> Um das Wetter für morgen vorauszusagen, sendet Bob die folgenden Zeichen. Der Wind hat leider einige Zeichen verwischt. Ergänze sie! <br> <br>
+      <br> Um das Wetter für morgen vorauszusagen, sendet Bob die folgenden Zeichen. Der Wind hat leider ein Zeichen verwischt. Welches Zeichen fehlt? <br> <br>
       
       <div class="zeichenfolge">
         <!--<img v-if="seq_numbers[0][0] == 0" src="../assets/small-cloud.png" />
@@ -66,7 +66,7 @@
         </div>
       </div>
 
-      <br> Ziehe die Rauchzeichen in die Lücken. <br> <br>
+      <br> Ziehe ein Rauchzeichen in die Lücke. <br> <br>
       
       <div class="start-area" id="start-area" @dragover="allowDrop($event)" @drop="drop($event, '1')">
         <img id="big-cloud-1" src="../assets/big-cloud.png" draggable="true" @dragstart="drag($event)" width="336" height="69">

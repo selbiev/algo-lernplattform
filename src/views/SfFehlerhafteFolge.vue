@@ -67,7 +67,7 @@
         </tr>
       </table>
       
-      <br> Bei folgender Zeichenfolge ist ein Fehler aufgetreten. Eine Wolke wurde falsch gelesen. Kannst du trotzdem herausfinden, welches Wetter Bob voraussagt? Eine oder zwei Antworten möglich.<br><br>
+      <br> Bei folgender Zeichenfolge ist ein Fehler aufgetreten. Eine Wolke wurde falsch gelesen. <br> Kannst du trotzdem herausfinden, welches Wetter Bob voraussagt? Eine oder zwei Antworten möglich.<br><br>
       
       <div class="zeichenfolge">
         <!--<img v-if="seq_numbers[0][0] == 0" src="../assets/small-cloud.png" />

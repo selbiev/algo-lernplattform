@@ -54,7 +54,7 @@
       </table>
       
       
-      <br> Um das Wetter für morgen vorauszusagen, sendet Bob die folgenden Zeichen. Der Wind hat leider einige Zeichen verwischt. Ergänze sie! <br> <br>
+      <br> Um das Wetter für die nächsten 3 Tage vorauszusagen, sendet Bob die folgenden Zeichen. Der Wind hat leider einige Zeichen verwischt. Welche Zeichen fehlen? <br> <br>
       
       <div class="zeichenfolge">
         <!--<img v-if="seq_numbers[0][0] == 0" src="../assets/small-cloud.png" />

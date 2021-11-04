@@ -54,7 +54,7 @@
       </table>
       
       
-      <br />Um das Wetter für morgen vorauszusagen, sendet Bob die folgenden Zeichen. Wie wird das Wetter morgen? <br /> <br />
+      <br />Um das Wetter vorauszusagen, sendet Bob die folgenden Zeichen. Wie wird das Wetter in den nächsten 3 Tagen? <br /> <br />
 
       <div class="zeichenfolge">
         <!--<img v-if="seq_numbers[0][0] == 0" src="../assets/small-cloud.png" />
