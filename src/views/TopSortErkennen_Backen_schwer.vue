@@ -112,6 +112,10 @@ export default defineComponent({
     this.create_adj_list()
     this.take_subset_of_nodes()   //nimm zufällige teilmenge der nodes
     
+    while(!this.at_least_one_edge()){   //prof. hromkovic will, dass immer mindestens eine kante im graphen ist
+      this.take_subset_of_nodes()   
+    }
+    
     
     this.keep_trans_relation()
     this.connect_nodes()
@@ -154,6 +158,16 @@ export default defineComponent({
         this.result = "falsch."
       }
       this.submitted = true
+    },
+    at_least_one_edge(){
+      for(let i = 0; i < this.edges.length; i++){
+        var edge = this.edges[i]
+        if(this.nodes[edge.from_node].active && this.nodes[edge.to_node].active){
+          return true
+        }
+      }
+      console.log("no edge in the graph")
+      return false    //wenn wir bis hierher keine kante gefunden haben, returne false
     },
     prepare_image_names(){
       for(let i = 0; i < this.top_ordering.length; i++){
