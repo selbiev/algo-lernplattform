@@ -611,6 +611,9 @@ export default defineComponent({
       flex-wrap: wrap;
     }
 
+    
+    
+
     /*.ans_button {
       background-color: #33CCFF;
       border: none;

@@ -373,7 +373,7 @@ export default defineComponent({
       height: 40px;
       width: 60px;
       padding: 0 7px 10px 7px;
-      margin: 0 2px 0 0;
+      margin: 2px 2px 0 0;
       border: 1px solid black;
     }
 

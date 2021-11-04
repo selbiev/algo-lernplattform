@@ -199,6 +199,11 @@
         </p>
       <!--<img id="remove" src="../assets/remove.png" @dragover="allowDrop($event)" @drop="drop($event, '1')" width="336" height="69">-->
     <p v-if="submitted">Die Antwort ist {{result}}</p>
+    <p v-if="submitted">
+        Objekt 1 {{ (falsche_bestellungen[0]? "richtig" : "falsch") }} <br>
+        Objekt 2 {{ (falsche_bestellungen[1]? "richtig" : "falsch") }} <br>
+        Objekt 3 {{ (falsche_bestellungen[2]? "richtig" : "falsch") }} <br>
+      </p>
     </div>
 </template>
 
@@ -231,6 +236,7 @@ export default defineComponent({
       to_order: [],     //to_order[i] ist das i-te, zu bestellende element (z.B. grosses holz)
       drop_slots: [],   //drop_slots[i] ist der inhalt vom i-ten drop-slot (abwurf-fläche). 0 => kreis, 1 => quadrat etc. siehe oben
       counter: 0,   //new copied elements get a new number as a suffix to their id's (see drop() method)
+      falsche_bestellungen: [],
     }
   },
   created: function(){
@@ -263,13 +269,19 @@ export default defineComponent({
       return res
     },
     submitAnswer(){
-      if(this.drop_slots[0] == this.to_order[0]
-          && this.drop_slots[1] == this.to_order[1]
-          && this.drop_slots[2] == this.to_order[2]){
+      var corr_1 = this.drop_slots[0] == this.to_order[0]
+      var corr_2 = this.drop_slots[1] == this.to_order[1]
+      var corr_3 = this.drop_slots[2] == this.to_order[2]
+      if(corr_1 && corr_2 && corr_3){
         this.result = "korrekt."
       } else {
         this.result = "falsch."
       }
+
+      this.falsche_bestellungen[0] = corr_1
+      this.falsche_bestellungen[1] = corr_2
+      this.falsche_bestellungen[2] = corr_3
+
       this.submitted = true
 
       /*var d = document.getElementById("kreis0")

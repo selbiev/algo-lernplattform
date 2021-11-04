@@ -630,6 +630,7 @@ export default defineComponent({
       height: 42px;
       width: 73px;
       padding: 2px 7px 10px 2px;
+      margin: 2px 2px 0 0;
       border: 1px solid black;
     }
 
