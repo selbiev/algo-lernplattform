@@ -17,7 +17,7 @@
     <br>
 
     <div class="start-area" id="start-area" @dragover="allowDrop($event)" @drop="drop($event)">
-      <img v-if="nodes[0].active" id="Ana" src="../assets/marathon/Ana.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[0].active" id="Anna" src="../assets/marathon/Anna.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
       <img v-if="nodes[1].active" id="Dennis" src="../assets/marathon/Dennis.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
       <img v-if="nodes[2].active" id="Jacqueline" src="../assets/marathon/Jacqueline.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
       <img v-if="nodes[3].active" id="Michelle" src="../assets/marathon/Michelle.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
@@ -46,7 +46,7 @@
       <p v-if="submitted && result=='falsch.' && !all_slots_used()">Bitte fülle alle Lücken aus.</p>
       <p v-if="submitted && result=='falsch.' && !check_ordering(this.answers) && all_slots_used()">Folgende Person zu früh gewählt: </p>
       <p>
-        <img v-if="submitted && result=='falsch.' && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Ana'" src="../assets/marathon/Ana.png" />
+        <img v-if="submitted && result=='falsch.' && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Anna'" src="../assets/marathon/Anna.png" />
         <img v-if="submitted && result=='falsch.' && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Dennis'" src="../assets/marathon/Dennis.png" />
         <img v-if="submitted && result=='falsch.' && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Jacqueline'" src="../assets/marathon/Jacqueline.png" />
         <img v-if="submitted && result=='falsch.' && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Michelle'" src="../assets/marathon/Michelle.png" />
@@ -84,7 +84,7 @@ export default defineComponent({
       painting: false,
       images: [],
       nodes: [
-        {id: 0, posX: 65, posY: 250, active: true, text: "Ana"},
+        {id: 0, posX: 65, posY: 250, active: true, text: "Anna"},
         {id: 1, posX: 250, posY: 350, active: true, text: "Dennis"},
         {id: 2, posX: 280, posY: 50, active: true, text: "Jacqueline"},
         {id: 3, posX: 90, posY: 130, active: true, text: "Michelle"},
@@ -232,7 +232,7 @@ export default defineComponent({
     draw_nodes(){
       var ctx = this.vueCanvas
       //console.log(this.top_ordering)
-      var image1 = document.getElementById('Ana');
+      var image1 = document.getElementById('Anna');
       var image2 = document.getElementById('Dennis')
       var image3 = document.getElementById('Jacqueline')
       var image4 = document.getElementById('Michelle')

@@ -2,7 +2,7 @@
   <div class="CodesErstellen">
     <router-link to="/">Hauptmenü</router-link> <br> <br>
     <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
-    <img src="../assets/marathon/Ana.png" id="Ana" style="display: none;"/>
+    <img src="../assets/marathon/Anna.png" id="Anna" style="display: none;"/>
     <img src="../assets/marathon/Dennis.png" id="Dennis" style="display: none;"/>
     <img src="../assets/marathon/Jacqueline.png" id="Jacqueline" style="display: none;"/>
     <img src="../assets/marathon/Michelle.png" id="Michelle" style="display: none;"/>
@@ -18,7 +18,7 @@
     Ist die Rangliste möglich? <br> <br>
     <div class="kleider">
       <div v-for='index in (top_ordering.length)' :key='index'>
-        <img v-if="top_ordering[index-1]==0" src="../assets/marathon/Ana.png" />
+        <img v-if="top_ordering[index-1]==0" src="../assets/marathon/Anna.png" />
         <img v-if="top_ordering[index-1]==1" src="../assets/marathon/Dennis.png" />
         <img v-if="top_ordering[index-1]==2" src="../assets/marathon/Jacqueline.png" />
         <img v-if="top_ordering[index-1]==3" src="../assets/marathon/Michelle.png" />
@@ -53,7 +53,7 @@
       <p v-if="submitted && result=='falsch.' && check_ordering(this.top_ordering)">Ist diese Rangliste wirklich falsch? Schau genauer hin.</p>
       <p v-if="submitted && result=='falsch.' && !check_ordering(this.top_ordering)">Folgende Person ist zu früh auf der Rangliste: </p>
       <p>
-        <img v-if="submitted && result=='falsch.' && !check_ordering(this.top_ordering) && wrong_cloth=='Ana'" src="../assets/marathon/Ana.png" />
+        <img v-if="submitted && result=='falsch.' && !check_ordering(this.top_ordering) && wrong_cloth=='Anna'" src="../assets/marathon/Anna.png" />
         <img v-if="submitted && result=='falsch.' && !check_ordering(this.top_ordering) && wrong_cloth=='Dennis'" src="../assets/marathon/Dennis.png" />
         <img v-if="submitted && result=='falsch.' && !check_ordering(this.top_ordering) && wrong_cloth=='Jacqueline'" src="../assets/marathon/Jacqueline.png" />
         <img v-if="submitted && result=='falsch.' && !check_ordering(this.top_ordering) && wrong_cloth=='Michelle'" src="../assets/marathon/Michelle.png" />
@@ -90,7 +90,7 @@ export default defineComponent({
       painting: false,
       images: [],
       nodes: [
-        {id: 0, posX: 65, posY: 250, active: true, text: "Ana"},
+        {id: 0, posX: 65, posY: 250, active: true, text: "Anna"},
         {id: 1, posX: 250, posY: 350, active: true, text: "Dennis"},
         {id: 2, posX: 280, posY: 50, active: true, text: "Jacqueline"},
         {id: 3, posX: 90, posY: 130, active: true, text: "Michelle"},
@@ -207,7 +207,7 @@ export default defineComponent({
     draw_nodes(){
       var ctx = this.vueCanvas
       //console.log(this.top_ordering)
-      var image1 = document.getElementById('Ana');
+      var image1 = document.getElementById('Anna');
       var image2 = document.getElementById('Dennis')
       var image3 = document.getElementById('Jacqueline')
       var image4 = document.getElementById('Michelle')
