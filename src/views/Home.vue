@@ -5,20 +5,17 @@
     <p> 
       <img src="../assets/home.png"/>
     </p>
-    1. Signalfolgen erkennen | <router-link :to="{name: 'SfErkennen_leicht'}">leicht</router-link> | <router-link :to="{name: 'SfErkennen_schwer'}">schwierig</router-link> <br> <br>  
-    2. Signalfolgen ergänzen | <router-link :to="{name: 'SfErgaenzen_leicht'}">leicht</router-link> | <router-link :to="{name: 'SfErgaenzen_mittel'}">mittel</router-link>  | <router-link :to="{name: 'SfErgaenzen_schwer'}">schwierig</router-link> <br> <br>  
-    3. Signalfolgen Anzahl Lösungen | <router-link :to="{name: 'SfAnzahlLoesungen_leicht'}">leicht</router-link> | <router-link :to="{name: 'SfAnzahlLoesungen_schwer'}">schwierig</router-link> <br> <br> 
-    4. Fehlerhafte Signalfolge korrigieren | <router-link :to="{name: 'SfFehlerhafteFolge'}">mittel</router-link> <br> <br>
-    5. Signalfolgen Abstände | <router-link :to="{name: 'SfAbstaende_mittel'}">mittel</router-link> | <router-link :to="{name: 'SfAbstaende_schwer'}">schwierig</router-link><br> <br>
-    6. Eigene Signalfolgen Erstellen | <router-link :to="{name: 'SfErstellen_leicht'}">leicht</router-link> | <router-link :to="{name: 'SfErstellen_schwer'}">schwierig</router-link> <br> <br>
-    7. Bauteile für Biberdamm bestellen | <router-link :to="{name: 'SfBauen_bestellen_leicht'}">leicht</router-link> | <router-link :to="{name: 'SfBauen_bestellen_schwer'}">schwierig</router-link><br><br>
-    8. Bauteile für Biberdamm erkennen | <router-link :to="{name: 'SfBauen_erkennen_leicht'}">leicht</router-link> | <router-link :to="{name: 'SfBauen_erkennen_schwer'}">schwierig</router-link><br><br>
-    9. Topologische Sortierung erkennen (Kleider) | <router-link :to="{name: 'TopSortErkennen_Kleider_leicht'}">leicht</router-link> | <router-link :to="{name: 'TopSortErkennen_Kleider_schwer'}">schwierig</router-link> <br> <br>
-    10. Topologische Sortierung erstellen (Kleider) | <router-link :to="{name: 'TopSortErstellen_Kleider_schwer'}">schwierig</router-link> <br> <br>
-    11. Topologische Sortierung erkennen (Backen) | <router-link :to="{name: 'TopSortErkennen_Backen_schwer'}">schwierig</router-link> <br> <br>
-    12. Topologische Sortierung erstellen (Backen) | <router-link :to="{name: 'TopSortErstellen_Backen_schwer'}">schwierig</router-link> <br> <br>
-    13. Topologische Sortierung erkennen (Marathon) | <router-link :to="{name: 'TopSortErkennen_Marathon_schwer'}">schwierig</router-link> <br> <br>
-    14. Topologische Sortierung erstellen (Marathon) | <router-link :to="{name: 'TopSortErstellen_Marathon_schwer'}">schwierig</router-link> <br> <br>
+    <div id="aufgaben-kacheln">
+      <div v-for="i in (tasks.length)" :key="i" :id="i">
+        <router-link :to="{name: tasks[i-1].route}" style="text-decoration: none; color: black">
+          <div class="card">
+            <img src="../assets/home/bauen.png"/> <br>
+            {{tasks[i-1].description}}
+          </div>
+        </router-link>
+        
+      </div>
+    </div>
   </div>
 </template>
 
@@ -31,6 +28,26 @@ export default defineComponent({
   components: {
     HelloWorld,
   },
+  data() {
+    return {
+      tasks: [
+        {description: "Kodierung erkennen", route: "SfErkennen_leicht", image: "../assets/home/tisch_decken.png"},
+        {description: "Kodierung ergänzen", route: "SfErgaenzen_leicht", image: "../assets/home/bauen.png"},
+        {description: "Kodierung Anzahl Lösungen", route: "SfAnzahlLoesungen_leicht", image: "../assets/home/bauen.png"},
+        {description: "Kodierung Fehler korrigieren", route: "SfFehlerhafteFolge", image: "../assets/home/bauen.png"},
+        {description: "Kodierung Abstände", route: "SfAbstaende_mittel", image: "../assets/home/bauen.png"},
+        {description: "Kodierung erstellen", route: "SfErstellen_leicht", image: "../assets/home/bauen.png"},
+        {description: "Bauteile bestellen", route: "SfBauen_bestellen_leicht", image: "../assets/home/bauen.png"},
+        {description: "Bauteile erkennen", route: "SfBauen_erkennen_leicht", image: "../assets/home/bauen.png"},
+        {description: "Kleider Reihenfolge einstufen", route: "TopSortErkennen_Kleider_leicht", image: "../assets/home/bauen.png"},
+        {description: "Kleider Reihenfolge angeben", route: "TopSortErstellen_Kleider_schwer", image: "../assets/home/bauen.png"},
+        {description: "Marathon Rangliste einstufen", route: "TopSortErkennen_Marathon_schwer", image: "../assets/home/bauen.png"},
+        {description: "Marathon Rangliste angeben", route: "TopSortErstellen_Marathon_schwer", image: "../assets/home/bauen.png"},
+        {description: "Kuchen Backen Reihenfolge einstufen", route: "TopSortErkennen_Backen_schwer", image: "../assets/home/bauen.png"},
+        {description: "Kuchen Backen Reihenfolge angeben", route: "TopSortErstellen_Backen_schwer", image: "../assets/home/bauen.png"},
+      ]
+    }
+  }
 });
 </script>
 
@@ -42,4 +59,31 @@ export default defineComponent({
   body {
     background-color: #FFE5B2;
   }
+
+  #aufgaben-kacheln {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  #aufgaben-kacheln div img {
+    width: 150px;
+    height: auto;
+  }
+
+  .card {
+    border-radius: 10px;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 40%);
+    transition: .3s;
+    margin: 1em;
+    padding: 5px;
+    background-color: #d7ead9;
+    width: 300px;
+  }
+
+  span {
+    text-decoration: none !important;
+  }
+
 </style>
