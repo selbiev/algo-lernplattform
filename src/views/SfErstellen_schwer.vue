@@ -1,6 +1,9 @@
 <template>
   <div class="CodesErstellen">
-    <router-link to="/">Hauptmenü</router-link> <br> <br>
+    <router-link to="/">Hauptmenü</router-link>
+    <p>
+      <img class="rauchzeichen_bild" style="width:50%; height: auto" src="../assets/rauchzeichen.png" />
+    </p>
     <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
       Erstelle für jedes Wetter eine Kodierung, sodass es zwischen jedem Paar von Kodierungen ein Abstand von mindestens {{abstand}} gibt.
        <br> <br>

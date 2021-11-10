@@ -1,6 +1,9 @@
 <template>
     <div class="CodesAnzahlLoesungen">  
-      <router-link to="/">Hauptmenü</router-link> <br> <br>
+      <router-link to="/">Hauptmenü</router-link>
+      <p>
+        <img class="rauchzeichen_bild" style="width:50%; height: auto" src="../assets/rauchzeichen.png" />
+      </p>
       <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
 
       Biber Bob sendet folgende Rauchzeichen, um das Wetter für einen Tag vorauszusagen. <br> <br>

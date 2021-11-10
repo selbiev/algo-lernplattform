@@ -1,6 +1,9 @@
 <template>
   <div class="CodesErstellen">
-    <router-link to="/">Hauptmenü</router-link> <br> <br>
+    <router-link to="/">Hauptmenü</router-link>
+    <p>
+      <img class="bauen_bild" style="width:35%; height: auto" src="../assets/kleider/kleider.png" />
+    </p>
     <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
 
     Wenn du dir Kleider anziehst, musst du die Reihenfolge beachten. <br>

@@ -1,6 +1,9 @@
 <template>
   <div class="CodesErstellen">
-    <router-link to="/">Hauptmenü</router-link> <br> <br>
+    <router-link to="/">Hauptmenü</router-link> 
+    <p>
+      <img class="bauen_bild" style="width:35%; height: auto" src="../assets/marathon.png" />
+    </p>
     <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
 
     Ein paar Freunde nehmen am Marathon teil. Wir wissen, dass manche schneller sind als andere. <br> 

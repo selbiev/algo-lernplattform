@@ -1,6 +1,9 @@
 <template>
   <div class="CodesErstellen">
-    <router-link to="/">Hauptmenü</router-link> <br> <br>
+    <router-link to="/">Hauptmenü</router-link>
+    <p>
+      <img class="bauen_bild" style="width:35%; height: auto" src="../assets/kleider/kleider.png" />
+    </p>
     <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
     <img src="../assets/kleider/ohne_rand/Hose.png" id="Hose" style="display: none;" lenx="333" leny="111"/>
     <img src="../assets/kleider/ohne_rand/Socken.png" id="Socken" style="display: none"/>

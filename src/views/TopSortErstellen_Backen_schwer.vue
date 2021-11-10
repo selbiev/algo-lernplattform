@@ -1,6 +1,9 @@
 <template>
   <div class="CodesErstellen">
-    <router-link to="/">Hauptmenü</router-link> <br> <br>
+    <router-link to="/">Hauptmenü</router-link>
+    <p>
+      <img class="bauen_bild" style="width:35%; height: auto" src="../assets/tisch_decken.png" />
+    </p>
     <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
 
     Du willst einen Kuchen backen und ihn zusammen mit deinen Freunden essen.  <br> <br>
