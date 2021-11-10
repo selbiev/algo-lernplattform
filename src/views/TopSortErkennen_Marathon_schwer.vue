@@ -2,14 +2,14 @@
   <div class="CodesErstellen">
     <router-link to="/">Hauptmenü</router-link> <br> <br>
     <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
-    <img src="../assets/marathon/Anna.png" id="Anna" style="display: none;"/>
-    <img src="../assets/marathon/Ben.png" id="Ben" style="display: none;"/>
-    <img src="../assets/marathon/Emma.png" id="Emma" style="display: none;"/>
-    <img src="../assets/marathon/Felix.png" id="Felix" style="display: none;"/>
-    <img src="../assets/marathon/Lea.png" id="Lea" style="display: none;"/>
-    <img src="../assets/marathon/Leon.png" id="Leon" style="display: none;"/>
-    <img src="../assets/marathon/Mario.png" id="Mario" style="display: none;"/>
-    <img src="../assets/marathon/Sofia.png" id="Sofia" style="display: none;"/>
+    <img src="../assets/marathon/Ana.png" id="Ana" style="display: none;"/>
+    <img src="../assets/marathon/Dennis.png" id="Dennis" style="display: none;"/>
+    <img src="../assets/marathon/Jacqueline.png" id="Jacqueline" style="display: none;"/>
+    <img src="../assets/marathon/Michelle.png" id="Michelle" style="display: none;"/>
+    <img src="../assets/marathon/Otso.png" id="Otso" style="display: none;"/>
+    <img src="../assets/marathon/Peter.png" id="Peter" style="display: none;"/>
+    <img src="../assets/marathon/Ulla.png" id="Ulla" style="display: none;"/>
+    <img src="../assets/marathon/Xavi.png" id="Xavi" style="display: none;"/>
 
     Ein paar Freunde nehmen am Marathon teil. Wir wissen, dass manche schneller sind als andere. <br> 
     Zum Beispiel Emma &rarr; Sofia bedeutet, dass Emma schneller ist als Sofia.  <br> <br>
@@ -18,14 +18,14 @@
     Ist die Rangliste möglich? <br> <br>
     <div class="kleider">
       <div v-for='index in (top_ordering.length)' :key='index'>
-        <img v-if="top_ordering[index-1]==0" src="../assets/marathon/Anna.png" />
-        <img v-if="top_ordering[index-1]==1" src="../assets/marathon/Ben.png" />
-        <img v-if="top_ordering[index-1]==2" src="../assets/marathon/Emma.png" />
-        <img v-if="top_ordering[index-1]==3" src="../assets/marathon/Felix.png" />
-        <img v-if="top_ordering[index-1]==4" src="../assets/marathon/Lea.png" />
-        <img v-if="top_ordering[index-1]==5" src="../assets/marathon/Leon.png" />
-        <img v-if="top_ordering[index-1]==6" src="../assets/marathon/Mario.png" />
-        <img v-if="top_ordering[index-1]==7" src="../assets/marathon/Sofia.png" />
+        <img v-if="top_ordering[index-1]==0" src="../assets/marathon/Ana.png" />
+        <img v-if="top_ordering[index-1]==1" src="../assets/marathon/Dennis.png" />
+        <img v-if="top_ordering[index-1]==2" src="../assets/marathon/Jacqueline.png" />
+        <img v-if="top_ordering[index-1]==3" src="../assets/marathon/Michelle.png" />
+        <img v-if="top_ordering[index-1]==4" src="../assets/marathon/Otso.png" />
+        <img v-if="top_ordering[index-1]==5" src="../assets/marathon/Peter.png" />
+        <img v-if="top_ordering[index-1]==6" src="../assets/marathon/Ulla.png" />
+        <img v-if="top_ordering[index-1]==7" src="../assets/marathon/Xavi.png" />
       </div>
     </div>
     <br>
@@ -50,8 +50,18 @@
     </form>
 
       <p v-if="submitted">Die Antwort ist {{result}}</p>
-      <p v-if="submitted && result=='falsch.' && !check_ordering(this.top_ordering)">{{wrong_cloth}} erscheint zu früh auf der Rangliste.</p>
       <p v-if="submitted && result=='falsch.' && check_ordering(this.top_ordering)">Ist diese Rangliste wirklich falsch? Schau genauer hin.</p>
+      <p v-if="submitted && result=='falsch.' && !check_ordering(this.top_ordering)">Folgende Person ist zu früh auf der Rangliste: </p>
+      <p>
+        <img v-if="submitted && result=='falsch.' && !check_ordering(this.top_ordering) && wrong_cloth=='Ana'" src="../assets/marathon/Ana.png" />
+        <img v-if="submitted && result=='falsch.' && !check_ordering(this.top_ordering) && wrong_cloth=='Dennis'" src="../assets/marathon/Dennis.png" />
+        <img v-if="submitted && result=='falsch.' && !check_ordering(this.top_ordering) && wrong_cloth=='Jacqueline'" src="../assets/marathon/Jacqueline.png" />
+        <img v-if="submitted && result=='falsch.' && !check_ordering(this.top_ordering) && wrong_cloth=='Michelle'" src="../assets/marathon/Michelle.png" />
+        <img v-if="submitted && result=='falsch.' && !check_ordering(this.top_ordering) && wrong_cloth=='Otso'" src="../assets/marathon/Otso.png" />
+        <img v-if="submitted && result=='falsch.' && !check_ordering(this.top_ordering) && wrong_cloth=='Peter'" src="../assets/marathon/Peter.png" />
+        <img v-if="submitted && result=='falsch.' && !check_ordering(this.top_ordering) && wrong_cloth=='Ulla'" src="../assets/marathon/Ulla.png" />
+        <img v-if="submitted && result=='falsch.' && !check_ordering(this.top_ordering) && wrong_cloth=='Xavi'" src="../assets/marathon/Xavi.png" />
+      </p>
 
     </div>
 </template>
@@ -80,14 +90,14 @@ export default defineComponent({
       painting: false,
       images: [],
       nodes: [
-        {id: 0, posX: 65, posY: 250, active: true, text: "Anna"},
-        {id: 1, posX: 250, posY: 350, active: true, text: "Ben"},
-        {id: 2, posX: 280, posY: 50, active: true, text: "Emma"},
-        {id: 3, posX: 90, posY: 130, active: true, text: "Felix"},
-        {id: 4, posX: 430, posY: 300, active: true, text: "Lea"},
-        {id: 5, posX: 610, posY: 150, active: true, text: "Leon"},
-        {id: 6, posX: 620, posY: 280, active: true, text: "Mario"},
-        {id: 7, posX: 460, posY: 80, active: true, text: "Sofia"},
+        {id: 0, posX: 65, posY: 250, active: true, text: "Ana"},
+        {id: 1, posX: 250, posY: 350, active: true, text: "Dennis"},
+        {id: 2, posX: 280, posY: 50, active: true, text: "Jacqueline"},
+        {id: 3, posX: 90, posY: 130, active: true, text: "Michelle"},
+        {id: 4, posX: 430, posY: 300, active: true, text: "Otso"},
+        {id: 5, posX: 610, posY: 150, active: true, text: "Peter"},
+        {id: 6, posX: 620, posY: 280, active: true, text: "Ulla"},
+        {id: 7, posX: 460, posY: 80, active: true, text: "Xavi"},
       ],
       node_size: 15,
       edges: [
@@ -197,17 +207,17 @@ export default defineComponent({
     draw_nodes(){
       var ctx = this.vueCanvas
       //console.log(this.top_ordering)
-      var image1 = document.getElementById('Anna');
-      var image2 = document.getElementById('Ben')
-      var image3 = document.getElementById('Emma')
-      var image4 = document.getElementById('Felix')
-      var image5 = document.getElementById('Lea')
-      var image6 = document.getElementById('Leon')
-      var image7 = document.getElementById('Mario')
-      var image8 = document.getElementById('Sofia')
+      var image1 = document.getElementById('Ana');
+      var image2 = document.getElementById('Dennis')
+      var image3 = document.getElementById('Jacqueline')
+      var image4 = document.getElementById('Michelle')
+      var image5 = document.getElementById('Otso')
+      var image6 = document.getElementById('Peter')
+      var image7 = document.getElementById('Ulla')
+      var image8 = document.getElementById('Xavi')
 
-      var x_offset = -41
-      var y_offset = -26
+      var x_offset = -40
+      var y_offset = -40
       if(this.contained_in_to(0)){
         image1.addEventListener('load', e => {
           ctx.drawImage(image1, this.nodes[0].posX + x_offset, this.nodes[0].posY + y_offset);
@@ -478,9 +488,9 @@ export default defineComponent({
 
 
     define_ratio(dx, dy){
-      var len = Math.abs(dx)+Math.abs(dy)
+      var len = Math.sqrt(Math.abs(dx)*Math.abs(dx) + Math.abs(dy)*Math.abs(dy))
       var a = 0.0006
-      var b = 0.59
+      var b = 0.56
 
       if(len>=400){
         return 0.86
@@ -538,7 +548,7 @@ export default defineComponent({
 
     img {
       width: auto;
-      height: 50px;
+      height: 80px;
     }
 
     .kodierungen {

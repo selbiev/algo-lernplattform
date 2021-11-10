@@ -17,14 +17,14 @@
     <br>
 
     <div class="start-area" id="start-area" @dragover="allowDrop($event)" @drop="drop($event)">
-      <img v-if="nodes[0].active" id="Anna" src="../assets/marathon/Anna.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[1].active" id="Ben" src="../assets/marathon/Ben.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[2].active" id="Emma" src="../assets/marathon/Emma.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[3].active" id="Felix" src="../assets/marathon/Felix.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[4].active" id="Lea" src="../assets/marathon/Lea.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[5].active" id="Leon" src="../assets/marathon/Leon.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[6].active" id="Mario" src="../assets/marathon/Mario.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[7].active" id="Sofia" src="../assets/marathon/Sofia.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[0].active" id="Ana" src="../assets/marathon/Ana.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[1].active" id="Dennis" src="../assets/marathon/Dennis.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[2].active" id="Jacqueline" src="../assets/marathon/Jacqueline.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[3].active" id="Michelle" src="../assets/marathon/Michelle.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[4].active" id="Otso" src="../assets/marathon/Otso.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[5].active" id="Peter" src="../assets/marathon/Peter.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[6].active" id="Ulla" src="../assets/marathon/Ulla.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[7].active" id="Xavi" src="../assets/marathon/Xavi.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
       </div>
     
     
@@ -44,7 +44,17 @@
 
       <p v-if="submitted && result.length>0">Die Antwort ist {{result}}</p>
       <p v-if="submitted && result=='falsch.' && !all_slots_used()">Bitte fülle alle Lücken aus.</p>
-      <p v-if="submitted && result=='falsch.' && !check_ordering(this.answers) && all_slots_used()">{{wrong_cloth}} zu früh gewählt.</p>
+      <p v-if="submitted && result=='falsch.' && !check_ordering(this.answers) && all_slots_used()">Folgende Person zu früh gewählt: </p>
+      <p>
+        <img v-if="submitted && result=='falsch.' && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Ana'" src="../assets/marathon/Ana.png" />
+        <img v-if="submitted && result=='falsch.' && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Dennis'" src="../assets/marathon/Dennis.png" />
+        <img v-if="submitted && result=='falsch.' && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Jacqueline'" src="../assets/marathon/Jacqueline.png" />
+        <img v-if="submitted && result=='falsch.' && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Michelle'" src="../assets/marathon/Michelle.png" />
+        <img v-if="submitted && result=='falsch.' && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Otso'" src="../assets/marathon/Otso.png" />
+        <img v-if="submitted && result=='falsch.' && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Peter'" src="../assets/marathon/Peter.png" />
+        <img v-if="submitted && result=='falsch.' && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Ulla'" src="../assets/marathon/Ulla.png" />
+        <img v-if="submitted && result=='falsch.' && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Xavi'" src="../assets/marathon/Xavi.png" />
+      </p>
 
 
     </div>
@@ -74,14 +84,14 @@ export default defineComponent({
       painting: false,
       images: [],
       nodes: [
-        {id: 0, posX: 65, posY: 250, active: true, text: "Anna"},
-        {id: 1, posX: 250, posY: 350, active: true, text: "Ben"},
-        {id: 2, posX: 280, posY: 50, active: true, text: "Emma"},
-        {id: 3, posX: 90, posY: 130, active: true, text: "Felix"},
-        {id: 4, posX: 430, posY: 300, active: true, text: "Lea"},
-        {id: 5, posX: 610, posY: 150, active: true, text: "Leon"},
-        {id: 6, posX: 620, posY: 280, active: true, text: "Mario"},
-        {id: 7, posX: 460, posY: 80, active: true, text: "Sofia"},
+        {id: 0, posX: 65, posY: 250, active: true, text: "Ana"},
+        {id: 1, posX: 250, posY: 350, active: true, text: "Dennis"},
+        {id: 2, posX: 280, posY: 50, active: true, text: "Jacqueline"},
+        {id: 3, posX: 90, posY: 130, active: true, text: "Michelle"},
+        {id: 4, posX: 430, posY: 300, active: true, text: "Otso"},
+        {id: 5, posX: 610, posY: 150, active: true, text: "Peter"},
+        {id: 6, posX: 620, posY: 280, active: true, text: "Ulla"},
+        {id: 7, posX: 460, posY: 80, active: true, text: "Xavi"},
       ],
       node_size: 15,
       edges: [
@@ -166,7 +176,9 @@ export default defineComponent({
       event.preventDefault();
       var data = event.dataTransfer.getData("text");
       //var node = document.getElementById(data)
+      console.log("asdf  ",data)
       event.target.appendChild(document.getElementById(data));
+      
       var slot = parseInt(event.target.id)
       var cloth_name = event.dataTransfer.getData("text")
       this.answers[slot] = this.get_id_by_name(cloth_name)
@@ -220,17 +232,17 @@ export default defineComponent({
     draw_nodes(){
       var ctx = this.vueCanvas
       //console.log(this.top_ordering)
-      var image1 = document.getElementById('Anna');
-      var image2 = document.getElementById('Ben')
-      var image3 = document.getElementById('Emma')
-      var image4 = document.getElementById('Felix')
-      var image5 = document.getElementById('Lea')
-      var image6 = document.getElementById('Leon')
-      var image7 = document.getElementById('Mario')
-      var image8 = document.getElementById('Sofia')
+      var image1 = document.getElementById('Ana');
+      var image2 = document.getElementById('Dennis')
+      var image3 = document.getElementById('Jacqueline')
+      var image4 = document.getElementById('Michelle')
+      var image5 = document.getElementById('Otso')
+      var image6 = document.getElementById('Peter')
+      var image7 = document.getElementById('Ulla')
+      var image8 = document.getElementById('Xavi')
 
-      var x_offset = -41
-      var y_offset = -26
+      var x_offset = -40
+      var y_offset = -40
       if(this.contained_in_to(0)){
         image1.addEventListener('load', e => {
           ctx.drawImage(image1, this.nodes[0].posX + x_offset, this.nodes[0].posY + y_offset);
@@ -501,9 +513,9 @@ export default defineComponent({
 
 
     define_ratio(dx, dy){
-      var len = Math.abs(dx)+Math.abs(dy)
+      var len = Math.sqrt(Math.abs(dx)*Math.abs(dx) + Math.abs(dy)*Math.abs(dy))
       var a = 0.0006
-      var b = 0.59
+      var b = 0.56
 
       if(len>=400){
         return 0.86
@@ -561,7 +573,7 @@ export default defineComponent({
 
     img {
       width: auto;
-      height: 50px;
+      height: 80px;
     }
 
     .kodierungen {
@@ -627,8 +639,8 @@ export default defineComponent({
     }
 
     .drop-slot {
-      height: 42px;
-      width: 73px;
+      height: 73px;
+      width: 75px;
       padding: 2px 7px 10px 2px;
       margin: 2px 2px 0 0;
       border: 1px solid black;
