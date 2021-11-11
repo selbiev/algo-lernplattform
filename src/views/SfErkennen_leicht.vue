@@ -1,5 +1,6 @@
 <template>
     <div class="CodesErkennen">
+      
       <router-link to="/">Hauptmenü</router-link>
       <p>
         <img class="rauchzeichen_bild" style="width:50%; height: auto" src="../assets/rauchzeichen.png" />
@@ -101,6 +102,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import HelloWorld from "../components/HelloWorld.vue";
 
 export default defineComponent({
   name: 'SfErstellen',
@@ -119,6 +121,9 @@ export default defineComponent({
       selected_2: "",
       selected_3: ""
     }
+  },
+  components: {
+    HelloWorld
   },
   created: function(){
     this.createNumbers()

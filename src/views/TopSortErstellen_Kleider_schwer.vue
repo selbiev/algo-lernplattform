@@ -14,23 +14,23 @@
 
     <div class="drop-slots">
       <div v-for="i in top_ordering.length" :key="i">
-        <div class="drop-slot" droppable="true" :id=(i-1) @drop="drop($event)" @dragover="allowDrop($event)"/>
+        <div class="drop-slot" droppable="true" :id=(i-1) @drop="drop($event)" @dragover="allowDrop($event)" @click="pasteItem($event, i-1)"/>
       </div>
     </div>
     <br>
 
-    <div class="start-area" id="start-area" @dragover="allowDrop($event)" @drop="drop($event)">
-      <img v-if="nodes[8].active" id="Handschuhe" src="../assets/kleider/Handschuhe.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[1].active" id="Socken" src="../assets/kleider/Socken.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[7].active" id="Gürtel" src="../assets/kleider/Gürtel.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[2].active" id="Schuhe" src="../assets/kleider/Schuhe.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[5].active" id="Jacke" src="../assets/kleider/Jacke.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[6].active" id="Mütze" src="../assets/kleider/Mütze.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[10].active" id="Pullover" src="../assets/kleider/Pullover.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[4].active" id="Unterhose" src="../assets/kleider/Unterhose.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[0].active" id="Hose" src="../assets/kleider/Hose.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[9].active" id="Sonnenbrille" src="../assets/kleider/Sonnenbrille.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[3].active" id="T-Shirt" src="../assets/kleider/T-Shirt.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+    <div class="start-area" id="start-area" @dragover="allowDrop($event)" @drop="drop($event)" >
+      <img v-if="nodes[8].active" id="Handschuhe" src="../assets/kleider/Handschuhe.png" draggable="true" @click="selectItem($event,'Handschuhe')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[1].active" id="Socken" src="../assets/kleider/Socken.png" draggable="true" @click="selectItem($event,'Socken')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[7].active" id="Gürtel" src="../assets/kleider/Gürtel.png" draggable="true" @click="selectItem($event,'Gürtel')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[2].active" id="Schuhe" src="../assets/kleider/Schuhe.png" draggable="true" @click="selectItem($event,'Schuhe')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[5].active" id="Jacke" src="../assets/kleider/Jacke.png" draggable="true" @click="selectItem($event,'Jacke')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[6].active" id="Mütze" src="../assets/kleider/Mütze.png" draggable="true" @click="selectItem($event,'Mütze')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[10].active" id="Pullover" src="../assets/kleider/Pullover.png" draggable="true" @click="selectItem($event,'Pullover')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[4].active" id="Unterhose" src="../assets/kleider/Unterhose.png" draggable="true" @click="selectItem($event,'Unterhose')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[0].active" id="Hose" src="../assets/kleider/Hose.png" draggable="true" @click="selectItem($event,'Hose')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[9].active" id="Sonnenbrille" src="../assets/kleider/Sonnenbrille.png" @click="selectItem($event,'Sonnenbrille')" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[3].active" id="T-Shirt" src="../assets/kleider/T-Shirt.png" draggable="true" @click="selectItem($event,'T-Shirt')" @dragstart="drag($event)" width="336" height="69">
     </div>
     
     
@@ -79,6 +79,8 @@ export default defineComponent({
       vueCanvas: null,
       painting: false,
       images: [],
+      selected: false,
+      selectedItem: "",
       nodes: [
         {id: 0, posX: 130, posY: 60, active: true, text: "Hose"},
         {id: 1, posX: 270, posY: 130, active: true, text: "Socken"},
@@ -152,6 +154,30 @@ export default defineComponent({
     reloadPage(){
       this.$router.go(0)
     },
+    selectItem(event, id){
+      event.stopPropagation()
+      console.log("selectItem() ",id)
+      if(this.selected){
+        this.selected = false
+        this.selectedItem = ""
+      } else {
+        this.selected = true;
+        this.selectedItem = id
+      }
+    },
+    pasteItem(event, target){
+      event.stopPropagation()
+      if(this.selected){
+        this.result = ""
+        var item = document.getElementById(this.selectedItem)
+        var targetplace = document.getElementById(target)
+        console.log("the targetplace is: ",targetplace)
+        targetplace.appendChild(item)
+        this.selected = false
+
+        this.answers[parseInt(targetplace.id)] = this.get_id_by_name(item.id)
+      }
+    },
     submitAnswer(){
       if(this.check_ordering(this.answers) && this.all_slots_used()){
         this.result = "korrekt."
@@ -180,7 +206,6 @@ export default defineComponent({
       var slot = parseInt(event.target.id)
       var cloth_name = event.dataTransfer.getData("text")
       this.answers[slot] = this.get_id_by_name(cloth_name)
-      //console.log(this.answers)
       
     },
     allowDrop(event) {
@@ -195,11 +220,8 @@ export default defineComponent({
       return -1
     },
     prepare_image_names(){
-      //console.log("top ord len")
-      //console.log(this.top_ordering)
       for(let i = 0; i < this.top_ordering.length; i++){
         var node = this.top_ordering[i]
-        //console.log(node)
         var node_name = this.nodes[node].text + ".png"
         this.images.push(node_name)
       }
@@ -219,7 +241,6 @@ export default defineComponent({
     },
     draw_nodes(){
       var ctx = this.vueCanvas
-      //console.log(this.top_ordering)
       var image1 = document.getElementById('Hose');
       var image2 = document.getElementById('Socken')
       var image3 = document.getElementById('Schuhe')
@@ -308,7 +329,6 @@ export default defineComponent({
           continue
         }
         /*var image = document.getElementById(curr_node.text)
-        console.log(image)
         image.addEventListener('load', e => {
           ctx.drawImage(image, curr_node.posX, curr_node.posY);
         });*/
@@ -325,7 +345,6 @@ export default defineComponent({
     make_edge(ctx, u, v){
       ctx.beginPath()
       this.canvas_arrow(ctx, u.posX, u.posY, v.posX, v.posY);
-      //console.log("edge (%d,%d) made",u.id, v.id)
       ctx.stroke()
     },
     at_least_one_edge(){
@@ -442,6 +461,7 @@ export default defineComponent({
      * nimmt eine topologische sortierung und gibt true zurück, wenn sie korrekt ist und false andernfalls
      */
     check_ordering(ordering){
+      console.log("the ordering: ", ordering)
       var in_degrees = this.create_in_degrees()
       
       for(let i = 0; i < ordering.length; i++){
