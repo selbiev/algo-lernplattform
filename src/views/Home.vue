@@ -9,7 +9,7 @@
       <div v-for="i in tasks.length" :key="i">
         <router-link :to="{name: tasks[i-1].route}" style="text-decoration: none; color: black">
           <div class="card">
-            {{tasks[i-1].description}} <br> <br>
+            <span>{{tasks[i-1].description}} </span> <br> <br>
             <img :src="getImage(i-1)" /> 
             
           </div>
@@ -70,6 +70,17 @@ export default defineComponent({
     background-color: #ffe5b2;
   }
 
+  h1 {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: bold;
+  }
+
+  span {
+    text-decoration: none !important;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: bold;
+  }
+
   #aufgaben-kacheln {
     display: flex;
     align-items: center;
@@ -102,8 +113,6 @@ export default defineComponent({
     background-color: black;
   }
 
-  span {
-    text-decoration: none !important;
-  }
+  
 
 </style>
