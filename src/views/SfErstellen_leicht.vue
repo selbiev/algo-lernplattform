@@ -1,10 +1,15 @@
 <template>
   <div class="CodesErstellen">
-    <router-link to="/">Hauptmenü</router-link>
-    <p>
-      <img class="rauchzeichen_bild" style="width:50%; height: auto" src="../assets/rauchzeichen.png" />
-    </p>
-    <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
+    <Header 
+        :diff_level="'leicht'" 
+        :task_name="'Kodierung erstellen'" 
+        :task_name_code="'SfErstellen'"
+        :task_number="'6'" 
+        :picture="'rauchzeichen'"
+        :has_diff_levels="true"
+        :has_leicht="true"
+        :has_mittel="false"
+        :has_schwer="true"/> <br><br>
       Erstelle für jedes Wetter eine Kodierung, sodass es zwischen jedem Paar von Kodierungen ein Abstand von mindestens {{abstand}} gibt.
        <br> <br>
        Klicke auf eine Rauchwolke, um ihre Grösse zu verändern.
@@ -87,11 +92,12 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import Header from "../components/Header.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
-    
+    Header,
   },
   data() {
     return {

@@ -1,10 +1,15 @@
 <template>
   <div class="CodesErstellen">
-    <router-link to="/">Hauptmenü</router-link>
-    <p>
-      <img class="bauen_bild" style="width:35%; height: auto" src="../assets/kleider/kleider.png" />
-    </p>
-    <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
+    <Header 
+        :diff_level="'schwer'" 
+        :task_name="'Kleider Reihenfolge angeben'" 
+        :task_name_code="'TopSortErstellen_Kleider'"
+        :task_number="'10'" 
+        :picture="'kleider'"
+        :has_diff_levels="false"
+        :has_leicht="false"
+        :has_mittel="false"
+        :has_schwer="false"/> <br><br>
 
     Wenn du dir Kleider anziehst, musst du die Reihenfolge beachten. <br>
     Zum Beispiel T-Shirt &rarr; Jacke bedeutet: Zuerst muss das T-Shirt und erst dann die Jacke angezogen werden.<br> <br>
@@ -65,11 +70,12 @@
 
 <script>
 import { defineComponent } from 'vue';
+import Header from "../components/Header.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
-    
+    Header,
   },
   data() {
     return {

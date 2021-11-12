@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <!--<HelloWorld /> -->
     <h1>Willkommen in der Lernumgebung <br>
     Einfach Informatik 3/4</h1>
     <p> 
@@ -9,7 +10,7 @@
       <div v-for="i in tasks.length" :key="i">
         <router-link :to="{name: tasks[i-1].route}" style="text-decoration: none; color: black">
           <div class="card">
-            <span>{{tasks[i-1].description}} </span> <br> <br>
+            <span>{{i}}. {{tasks[i-1].description}} </span> <br> <br>
             <img :src="getImage(i-1)" /> 
             
           </div>
@@ -22,7 +23,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import HelloWorld from '../components/HelloWorld.vue'; // @ is an alias to /src
 
 export default defineComponent({
   name: 'Home',

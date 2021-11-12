@@ -1,10 +1,15 @@
 <template>
   <div class="CodesErstellen">
-    <router-link to="/">Hauptmenü</router-link>
-    <p>
-      <img class="bauen_bild" style="width:35%; height: auto" src="../assets/tisch_decken.png" />
-    </p>
-    <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
+    <Header 
+        :diff_level="'schwer'" 
+        :task_name="'Kuchen Backen Reihenfolge angeben'" 
+        :task_name_code="'TopSortErstellen_Backen'"
+        :task_number="'14'" 
+        :picture="'tisch_decken'"
+        :has_diff_levels="false"
+        :has_leicht="false"
+        :has_mittel="false"
+        :has_schwer="false"/> <br><br>
 
     Du willst einen Kuchen backen und ihn zusammen mit deinen Freunden essen.  <br> <br>
     <canvas id="canvas" width="870" height="500" style="border:1px solid #d3d3d3;"></canvas> <br><br>
@@ -62,11 +67,12 @@
 
 <script>
 import { defineComponent } from 'vue';
+import Header from "../components/Header.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
-    
+    Header,
   },
   data() {
     return {

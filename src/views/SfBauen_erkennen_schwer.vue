@@ -1,10 +1,15 @@
 <template>
     <div class="CodesErgaenzen">
-        <router-link to="/">Hauptmenü</router-link>
-        <p>
-          <img class="bauen_bild" style="width:40%; height: auto" src="../assets/bauen.png" />
-        </p>
-        <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
+        <Header 
+        :diff_level="'schwer'" 
+        :task_name="'Bauteile erkennen'" 
+        :task_name_code="'SfBauen_erkennen'"
+        :task_number="'8'" 
+        :picture="'bauen'"
+        :has_diff_levels="true"
+        :has_leicht="true"
+        :has_mittel="false"
+        :has_schwer="true"/> <br><br>
       Biberin Bea möchte sich einen Damm bauen. Sie hat einen Katalog, aus dem Sie das nötige Material bestellen kann. <br> <br>
         <!-- Automatisierte Version, man muss einfach den css noch anpassen -->
         
@@ -228,9 +233,13 @@
  */
 
 import { defineComponent } from 'vue';
+import Header from "../components/Header.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
+  components: {
+    Header,
+  },
   data() {
     return {
       numbers: [],

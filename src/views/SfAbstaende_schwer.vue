@@ -1,10 +1,15 @@
 <template>
     <div class="CodesAbstaende">
-      <router-link to="/">Hauptmenü</router-link>
-      <p>
-        <img class="rauchzeichen_bild" style="width:50%; height: auto" src="../assets/rauchzeichen.png" />
-      </p>
-      <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
+      <Header 
+        :diff_level="'schwer'" 
+        :task_name="'Kodierung Abstände'" 
+        :task_name_code="'SfAbstaende'"
+        :task_number="'5'" 
+        :picture="'rauchzeichen'"
+        :has_diff_levels="true"
+        :has_leicht="false"
+        :has_mittel="true"
+        :has_schwer="true"/> <br><br>
       Betrachten wir uns mal zwei Kodierungen. Sie unterscheiden sich an 2 Stellen, die je mit einem Pfeil markiert sind. <br> <br>
         <!-- Automatisierte Version, man muss einfach den css noch anpassen -->
         
@@ -101,9 +106,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import Header from "../components/Header.vue"
 
 export default defineComponent({
   name: 'SfAbstaende',
+  components: {
+    Header,
+  },
   data() {
     return {
       numbers: [] as number[][],

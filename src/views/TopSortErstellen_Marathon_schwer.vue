@@ -1,10 +1,15 @@
 <template>
   <div class="CodesErstellen">
-    <router-link to="/">Hauptmenü</router-link> 
-    <p>
-      <img class="bauen_bild" style="width:35%; height: auto" src="../assets/marathon.png" />
-    </p>
-    <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
+    <Header 
+        :diff_level="'schwer'" 
+        :task_name="'Marathon Rangliste angeben'" 
+        :task_name_code="'TopSortErstellen_Marathon'"
+        :task_number="'12'" 
+        :picture="'marathon'"
+        :has_diff_levels="false"
+        :has_leicht="false"
+        :has_mittel="false"
+        :has_schwer="false"/> <br><br>
 
     Ein paar Freunde nehmen am Marathon teil. Wir wissen, dass manche schneller sind als andere. <br> 
     Zum Beispiel Emma &rarr; Sofia bedeutet, dass Emma schneller ist als Sofia.  <br> <br>
@@ -72,11 +77,12 @@
 
 <script>
 import { defineComponent } from 'vue';
+import Header from "../components/Header.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
-    
+    Header,
   },
   data() {
     return {

@@ -1,10 +1,15 @@
 <template>
     <div class="CodesErgaenzen">
-        <router-link to="/">Hauptmenü</router-link>
-        <p>
-          <img class="rauchzeichen_bild" style="width:50%; height: auto" src="../assets/rauchzeichen.png" />
-        </p>
-        <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
+        <Header 
+        :diff_level="'leicht'" 
+        :task_name="'Kodierung ergänzen'" 
+        :task_name_code="'SfErgaenzen'"
+        :task_number="'2'" 
+        :picture="'rauchzeichen'"
+        :has_diff_levels="true"
+        :has_leicht="true"
+        :has_mittel="true"
+        :has_schwer="true"/> <br><br>
       Biber Bob sendet folgende Rauchzeichen, um das Wetter für einen Tag vorauszusagen. <br> <br>
         <!-- Automatisierte Version, man muss einfach den css noch anpassen -->
         
@@ -97,9 +102,13 @@
 
 <script>
 import { defineComponent } from 'vue';
+import Header from "../components/Header.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
+  components: {
+    Header,
+  },
   data() {
     return {
       numbers: [],

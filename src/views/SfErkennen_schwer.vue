@@ -1,10 +1,15 @@
 <template>
     <div class="CodesErkennen">
-      <router-link to="/">Hauptmenü</router-link>
-      <p>
-        <img class="rauchzeichen_bild" style="width:50%; height: auto" src="../assets/rauchzeichen.png" />
-      </p>
-      <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
+      <Header 
+        :diff_level="'schwer'" 
+        :task_name="'Kodierung erkennen'" 
+        :task_name_code="'SfErkennen'"
+        :task_number="'1'" 
+        :picture="'rauchzeichen'"
+        :has_diff_levels="true"
+        :has_leicht="true"
+        :has_mittel="false"
+        :has_schwer="true"/> <br><br>
       Biber Bob entscheidet sich, das Wetter mit folgenden Rauchzeichen zu kodieren: <br> <br>
         <!-- Automatisierte Version, man muss einfach den css noch anpassen -->
         
@@ -143,9 +148,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import Header from "../components/Header.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
+  components: {
+    Header,
+  },
   data() {
     return {
       numbers: [] as number[][],

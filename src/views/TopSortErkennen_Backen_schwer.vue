@@ -1,10 +1,15 @@
 <template>
   <div class="CodesErstellen">
-    <router-link to="/">Hauptmenü</router-link>
-    <p>
-      <img class="bauen_bild" style="width:35%; height: auto" src="../assets/tisch_decken.png" />
-    </p>
-    <button @click="reloadPage()">Neue Aufgabe</button> <br> <br>
+    <Header 
+        :diff_level="'schwer'" 
+        :task_name="'Kuchen Backen Reihenfolge einstufen'" 
+        :task_name_code="'TopSortErkennen_Backen'"
+        :task_number="'13'" 
+        :picture="'tisch_decken'"
+        :has_diff_levels="false"
+        :has_leicht="false"
+        :has_mittel="false"
+        :has_schwer="false"/> <br><br>
     <img src="../assets/backen/k_auftischen.png" id="k_auftischen" style="display: none;"/>
     <img src="../assets/backen/b_lassen.png" id="b_lassen" style="display: none;"/>
     <img src="../assets/backen/bm_fuellen.png" id="bm_fuellen" style="display: none;"/>
@@ -61,11 +66,12 @@
 
 <script>
 import { defineComponent } from 'vue';
+import Header from "../components/Header.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
-    
+    Header,
   },
   data() {
     return {
