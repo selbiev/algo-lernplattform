@@ -14,20 +14,20 @@
 
     <div class="drop-slots">
       <div v-for="i in top_ordering.length" :key="i">
-        <div class="drop-slot" droppable="true" :id=(i-1) @drop="drop($event)" @dragover="allowDrop($event)"/>
+        <div class="drop-slot" droppable="true" :id=(i-1) @drop="drop($event)" @dragover="allowDrop($event)" @click="pasteItem($event, i-1)"/>
       </div>
     </div>
     <br>
 
-    <div class="start-area" id="start-area" @dragover="allowDrop($event)" @drop="drop($event)">
-      <img v-if="nodes[0].active" id="Anna" src="../assets/marathon/Anna.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[1].active" id="Dennis" src="../assets/marathon/Dennis.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[2].active" id="Jacqueline" src="../assets/marathon/Jacqueline.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[3].active" id="Michelle" src="../assets/marathon/Michelle.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[4].active" id="Otso" src="../assets/marathon/Otso.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[5].active" id="Peter" src="../assets/marathon/Peter.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[6].active" id="Ulla" src="../assets/marathon/Ulla.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[7].active" id="Xavi" src="../assets/marathon/Xavi.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+    <div class="start-area" id="start-area" @dragover="allowDrop($event)" @drop="drop($event)" @click="pasteItem($event, 'start-area')">
+      <img v-if="nodes[0].active" id="Anna" src="../assets/marathon/Anna.png" draggable="true" @click="selectItem($event,'Anna')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[1].active" id="Dennis" src="../assets/marathon/Dennis.png" draggable="true" @click="selectItem($event,'Dennis')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[2].active" id="Jacqueline" src="../assets/marathon/Jacqueline.png" draggable="true" @click="selectItem($event,'Jacqueline')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[3].active" id="Michelle" src="../assets/marathon/Michelle.png" draggable="true" @click="selectItem($event,'Michelle')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[4].active" id="Otso" src="../assets/marathon/Otso.png" draggable="true" @click="selectItem($event,'Otso')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[5].active" id="Peter" src="../assets/marathon/Peter.png" draggable="true" @click="selectItem($event,'Peter')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[6].active" id="Ulla" src="../assets/marathon/Ulla.png" draggable="true" @click="selectItem($event,'Ulla')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[7].active" id="Xavi" src="../assets/marathon/Xavi.png" draggable="true" @click="selectItem($event,'Xavi')" @dragstart="drag($event)" width="336" height="69">
       </div>
     
     
@@ -41,6 +41,13 @@
           type="button"
         >
         Prüfe Antwort
+        </button>
+      </p>
+      <p>
+        <button @click="clearDropslots()"
+          type="button"
+        >
+        Alles rückgängig machen
         </button>
       </p>
     </form>
@@ -86,6 +93,9 @@ export default defineComponent({
       vueCanvas: null,
       painting: false,
       images: [],
+      selected: false,
+      selectedItem: "",
+      reset: false,
       nodes: [
         {id: 0, posX: 65, posY: 250, active: true, text: "Anna"},
         {id: 1, posX: 250, posY: 350, active: true, text: "Dennis"},
@@ -155,17 +165,62 @@ export default defineComponent({
     reloadPage(){
       this.$router.go(0)
     },
+    selectItem(event, id){
+      event.stopPropagation()
+      console.log("selectItem() ",id)
+      if(this.selected){
+        this.selected = false
+        this.selectedItem = ""
+        document.getElementById(id).style.border = "none"
+      } else {
+        this.selected = true;
+        this.selectedItem = id
+        document.getElementById(id).style.border = "3px solid red"
+      }
+    },
+    clearDropslots(){
+      for(let i = 0; i < this.top_ordering.length; i++){
+        var curr_slot = document.getElementById(i)
+        if(curr_slot.childNodes.length==0){
+          continue
+        }
+        document.getElementById("start-area").appendChild(curr_slot.childNodes[0])
+        curr_slot.innerHTML = ""
+      }
+      this.reset = true
+    },
+    pasteItem(event, target){
+      event.stopPropagation()
+      if(this.selected){
+        this.result = ""
+        var item = document.getElementById(this.selectedItem)
+        var targetplace = document.getElementById(target)
+        console.log("the targetplace is: ",targetplace)
+        targetplace.appendChild(item)
+        this.selected = false
+
+        this.answers[parseInt(targetplace.id)] = this.get_id_by_name(item.id)
+        document.getElementById(item.id).style.border = "none"
+        this.reset = false
+        if(event.target.id=="start-area"){
+          this.reset = true;
+        }
+      }
+    },
     submitAnswer(){
       if(this.check_ordering(this.answers) && this.all_slots_used()){
         this.result = "korrekt."
       } else {
         this.result = "falsch."
       }
+      if(this.reset){
+        this.result = "falsch."
+      }
       this.submitted = true
     },
     
     all_slots_used(){
-      if(this.answers.length < this.top_ordering.length){
+      if(this.answers.length < this.top_ordering.length || this.reset){
         return false
       } else {
         return true
@@ -177,16 +232,22 @@ export default defineComponent({
     drop(event) {
       this.result = ""
       event.preventDefault();
+      this.reset = false
       var data = event.dataTransfer.getData("text");
       //var node = document.getElementById(data)
-      console.log("asdf  ",data)
       event.target.appendChild(document.getElementById(data));
-      
       var slot = parseInt(event.target.id)
       var cloth_name = event.dataTransfer.getData("text")
       this.answers[slot] = this.get_id_by_name(cloth_name)
-      //console.log(this.answers)
-      
+      if(isNaN(slot) && !(event.target.id=="start-area")){
+        console.log("falscher slot")
+        document.getElementById("start-area").appendChild(document.getElementById(event.target.id).childNodes[0])
+        document.getElementById(event.target.id).innerHTML = ""
+        this.reset = true;
+      }
+      if(event.target.id=="start-area"){
+        this.reset = true;
+      }
     },
     allowDrop(event) {
       event.preventDefault();
@@ -642,8 +703,8 @@ export default defineComponent({
     }
 
     .drop-slot {
-      height: 73px;
-      width: 75px;
+      height: 77px;
+      width: 80px;
       padding: 2px 7px 10px 2px;
       margin: 2px 2px 0 0;
       border: 1px solid black;

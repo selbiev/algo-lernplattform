@@ -161,17 +161,17 @@
 
       <div class="zeichenfolge">
         <div v-for="i in 9" :key="i">
-          <div droppable="true" class="drop-slot" :id="'drop-slot-'+i" @drop="drop($event,'2')" @dragover="allowDrop($event)"/>
+          <div droppable="true" class="drop-slot" :id="'drop-slot-'+i" @click="pasteItem($event,'drop-slot-'+i)" @drop="drop($event,'2')" @dragover="allowDrop($event)"/>
         </div>
       </div>
 
       <br> <br>
       
       <div class="start-area" id="start-area" @dragover="allowDrop($event)" @drop="drop($event, '1')">
-        <img id="quadrat" src="../assets/bauen/quadrat.png" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
-        <img id="dreieck" src="../assets/bauen/dreieck.png" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
-        <img id="viereck" src="../assets/bauen/viereck.png" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
-        <img id="kreis" src="../assets/bauen/kreis.png" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
+        <img id="quadrat" src="../assets/bauen/quadrat.png" @click="selectItem($event,'quadrat')" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
+        <img id="dreieck" src="../assets/bauen/dreieck.png" @click="selectItem($event,'dreieck')" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
+        <img id="viereck" src="../assets/bauen/viereck.png" @click="selectItem($event,'viereck')" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
+        <img id="kreis" src="../assets/bauen/kreis.png" @click="selectItem($event,'kreis')" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
       </div>
 
        <p>
@@ -224,6 +224,8 @@ export default defineComponent({
       numbers: [],
       submitted: false,
       result: "falsch.",
+      selected: false,
+      selectedItem: "",
       to_order: [],     //to_order[i] ist das i-te, zu bestellende element (z.B. grosses holz)
       drop_slots: [],   //drop_slots[i] ist der inhalt vom i-ten drop-slot (abwurf-fläche). 0 => kreis, 1 => quadrat etc. siehe oben
       counter: 0,   //new copied elements get a new number as a suffix to their id's (see drop() method)
@@ -315,6 +317,38 @@ export default defineComponent({
     translate_form(name){
       var fst_letter = name.charAt(0)
       return fst_letter == 'k'? 0 : (fst_letter == 'q'? 1 : (fst_letter == 'v'? 2 : (fst_letter = 'd'? 3 : -1)))
+    },
+    selectItem(event, id){
+      event.stopPropagation()
+      console.log("selectItem() ",id)
+      if(this.selected){
+        this.selected = false
+        this.selectedItem = ""
+        document.getElementById(id).style.border = "none"
+      } else {
+        this.selected = true;
+        this.selectedItem = id
+        document.getElementById(id).style.border = "3px solid red"
+      }
+    },
+    pasteItem(event, target){
+      event.stopPropagation()
+      if(this.selected){
+        this.result = ""
+        var item = document.getElementById(this.selectedItem).cloneNode(true)
+        document.getElementById(item.id).style.border = "none"
+        item.id = item.id + this.counter
+        this.counter++
+        var targetplace = document.getElementById(target)
+        targetplace.appendChild(item)
+        this.selected = false
+        document.getElementById(item.id).style.border = "none"
+
+        var slot = event.target.id
+        var cloud = item.id
+        var slot_index = slot.charAt(slot.length-1)-1
+        this.drop_slots[slot_index] = this.translate_form(cloud)
+      }
     },
     drag(event){
       event.dataTransfer.setData("text", event.target.id);

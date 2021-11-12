@@ -171,19 +171,19 @@
 
       <div class="zeichenfolge">
         <div v-for="i in 3" :key="i">
-          <div droppable="true" class="drop-slot" :id="'drop-slot-'+i" @drop="drop($event,'2')" @dragover="allowDrop($event)"/>
+          <div droppable="true" class="drop-slot" :id="'drop-slot-'+i" @click="pasteItem($event,'drop-slot-'+i)" @drop="drop($event,'2')" @dragover="allowDrop($event)"/>
         </div>
       </div>
 
       <br> <br>
       
       <div class="start-area" id="start-area" @dragover="allowDrop($event)" @drop="drop($event, '1')">
-        <img id="grosser_stein" src="../assets/bauen/grosser_stein.png" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
-        <img id="kleiner_stein" src="../assets/bauen/kleiner_stein.png" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
-        <img id="dickes_holz" src="../assets/bauen/dickes_holz.png" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
-        <img id="duennes_holz" src="../assets/bauen/duennes_holz.png" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
-        <img id="schlamm" src="../assets/bauen/schlamm.png" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
-        <img id="wasser" src="../assets/bauen/wasser.png" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
+        <img id="grosser_stein" src="../assets/bauen/grosser_stein.png" @click="selectItem($event,'grosser_stein')" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
+        <img id="kleiner_stein" src="../assets/bauen/kleiner_stein.png" @click="selectItem($event,'kleiner_stein')" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
+        <img id="dickes_holz" src="../assets/bauen/dickes_holz.png" @click="selectItem($event,'dickes_holz')" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
+        <img id="duennes_holz" src="../assets/bauen/duennes_holz.png" @click="selectItem($event,'duennes_holz')" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
+        <img id="schlamm" src="../assets/bauen/schlamm.png" @click="selectItem($event,'schlamm')" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
+        <img id="wasser" src="../assets/bauen/wasser.png" @click="selectItem($event,'wasser')" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
         </div>
 
        <p>
@@ -236,6 +236,8 @@ export default defineComponent({
       numbers: [],
       submitted: false,
       result: "falsch.",
+      selected: false,
+      selectedItem: "",
       to_order: [],     //to_order[i] ist das i-te, zu bestellende element (z.B. grosses holz)
       drop_slots: [],   //drop_slots[i] ist der inhalt vom i-ten drop-slot (abwurf-fläche). 0 => kreis, 1 => quadrat etc. siehe oben
       counter: 0,   //new copied elements get a new number as a suffix to their id's (see drop() method)
@@ -307,6 +309,38 @@ export default defineComponent({
     translate_form(name){
       var fst_2_letters = name.charAt(0) + name.charAt(1)
       return fst_2_letters == "gr"? 0 : (fst_2_letters == 'kl'? 1 : (fst_2_letters == 'di'? 2 : (fst_2_letters == 'du'? 3 : (fst_2_letters == "sc"? 4 : (fst_2_letters == "wa"? 5 : -1)))))
+    },
+    selectItem(event, id){
+      event.stopPropagation()
+      console.log("selectItem() ",id)
+      if(this.selected){
+        this.selected = false
+        this.selectedItem = ""
+        document.getElementById(id).style.border = "none"
+      } else {
+        this.selected = true;
+        this.selectedItem = id
+        document.getElementById(id).style.border = "3px solid red"
+      }
+    },
+    pasteItem(event, target){
+      event.stopPropagation()
+      if(this.selected){
+        this.result = ""
+        var item = document.getElementById(this.selectedItem).cloneNode(true)
+        document.getElementById(item.id).style.border = "none"
+        item.id = item.id + this.counter
+        this.counter++
+        var targetplace = document.getElementById(target)
+        targetplace.appendChild(item)
+        this.selected = false
+        document.getElementById(item.id).style.border = "none"
+
+        var slot = event.target.id
+        var material = item.id
+        var slot_index = slot.charAt(slot.length-1)-1
+        this.drop_slots[slot_index] = this.translate_form(material)
+      }
     },
     drag(event){
       event.dataTransfer.setData("text", event.target.id);

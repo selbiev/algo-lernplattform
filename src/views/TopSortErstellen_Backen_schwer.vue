@@ -13,21 +13,21 @@
 
     <div class="drop-slots">
       <div v-for="i in top_ordering.length" :key="i">
-        <div class="drop-slot" droppable="true" :id=(i-1) @drop="drop($event)" @dragover="allowDrop($event)"/>
+        <div class="drop-slot" droppable="true" :id=(i-1) @drop="drop($event)" @dragover="allowDrop($event)" @click="pasteItem($event, i-1)"/>
       </div>
     </div>
     <br>
 
-    <div class="start-area" id="start-area" @dragover="allowDrop($event)" @drop="drop($event)">
-      <img v-if="nodes[0].active" id="k_auftischen" src="../assets/backen/k_auftischen.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[1].active" id="b_lassen" src="../assets/backen/b_lassen.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[2].active" id="bm_fuellen" src="../assets/backen/bm_fuellen.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[3].active" id="bm_vorbereiten" src="../assets/backen/bm_vorbereiten.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[4].active" id="freunde_einladen" src="../assets/backen/freunde_einladen.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[5].active" id="essen" src="../assets/backen/essen.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[6].active" id="e_guete" src="../assets/backen/e_guete.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[7].active" id="t_decken" src="../assets/backen/t_decken.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[8].active" id="o_vorheizen" src="../assets/backen/o_vorheizen.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+    <div class="start-area" id="start-area" @dragover="allowDrop($event)" @drop="drop($event)" @click="pasteItem($event, 'start-area')">
+      <img v-if="nodes[0].active" id="k_auftischen" src="../assets/backen/k_auftischen.png" draggable="true" @click="selectItem($event,'k_auftischen')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[1].active" id="b_lassen" src="../assets/backen/b_lassen.png" draggable="true" @click="selectItem($event,'b_lassen')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[2].active" id="bm_fuellen" src="../assets/backen/bm_fuellen.png" draggable="true" @click="selectItem($event,'bm_fuellen')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[3].active" id="bm_vorbereiten" src="../assets/backen/bm_vorbereiten.png" draggable="true" @click="selectItem($event,'bm_vorbereiten')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[4].active" id="freunde_einladen" src="../assets/backen/freunde_einladen.png" draggable="true" @click="selectItem($event,'freunde_einladen')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[5].active" id="essen" src="../assets/backen/essen.png" draggable="true" @click="selectItem($event,'essen')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[6].active" id="e_guete" src="../assets/backen/e_guete.png" draggable="true" @click="selectItem($event,'e_guete')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[7].active" id="t_decken" src="../assets/backen/t_decken.png" draggable="true" @click="selectItem($event,'t_decken')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[8].active" id="o_vorheizen" src="../assets/backen/o_vorheizen.png" draggable="true" @click="selectItem($event,'o_vorheizen')" @dragstart="drag($event)" width="336" height="69">
     </div>
     
     
@@ -41,6 +41,13 @@
           type="button"
         >
         Prüfe Antwort
+        </button>
+      </p>
+      <p>
+        <button @click="clearDropslots()"
+          type="button"
+        >
+        Alles rückgängig machen
         </button>
       </p>
     </form>
@@ -76,6 +83,9 @@ export default defineComponent({
       vueCanvas: null,
       painting: false,
       images: [],
+      selected: false,
+      selectedItem: "",
+      reset: false,
       nodes: [
         {id: 0, posX: 750, posY: 220, active: true, text: "k_auftischen"},
         {id: 1, posX: 530, posY: 120, active: true, text: "b_lassen"},
@@ -145,27 +155,62 @@ export default defineComponent({
     reloadPage(){
       this.$router.go(0)
     },
+    selectItem(event, id){
+      event.stopPropagation()
+      console.log("selectItem() ",id)
+      if(this.selected){
+        this.selected = false
+        this.selectedItem = ""
+        document.getElementById(id).style.border = "none"
+      } else {
+        this.selected = true;
+        this.selectedItem = id
+        document.getElementById(id).style.border = "3px solid red"
+      }
+    },
+    clearDropslots(){
+      for(let i = 0; i < this.top_ordering.length; i++){
+        var curr_slot = document.getElementById(i)
+        if(curr_slot.childNodes.length==0){
+          continue
+        }
+        document.getElementById("start-area").appendChild(curr_slot.childNodes[0])
+        curr_slot.innerHTML = ""
+      }
+      this.reset = true
+    },
+    pasteItem(event, target){
+      event.stopPropagation()
+      if(this.selected){
+        this.result = ""
+        var item = document.getElementById(this.selectedItem)
+        var targetplace = document.getElementById(target)
+        console.log("the targetplace is: ",targetplace)
+        targetplace.appendChild(item)
+        this.selected = false
+
+        this.answers[parseInt(targetplace.id)] = this.get_id_by_name(item.id)
+        document.getElementById(item.id).style.border = "none"
+        this.reset = false
+        if(event.target.id=="start-area"){
+          this.reset = true;
+        }
+      }
+    },
     submitAnswer(){
       if(this.check_ordering(this.answers) && this.all_slots_used()){
         this.result = "korrekt."
       } else {
         this.result = "falsch."
       }
-      this.submitted = true
-    },
-    at_least_one_edge(){
-      for(let i = 0; i < this.edges.length; i++){
-        var edge = this.edges[i]
-        if(this.nodes[edge.from_node].active && this.nodes[edge.to_node].active){
-          return true
-        }
+      if(this.reset){
+        this.result = "falsch."
       }
-      console.log("no edge in the graph")
-      return false    //wenn wir bis hierher keine kante gefunden haben, returne false
+      this.submitted = true
     },
     
     all_slots_used(){
-      if(this.answers.length < this.top_ordering.length){
+      if(this.answers.length < this.top_ordering.length || this.reset){
         return false
       } else {
         return true
@@ -177,17 +222,35 @@ export default defineComponent({
     drop(event) {
       this.result = ""
       event.preventDefault();
+      this.reset = false
       var data = event.dataTransfer.getData("text");
       //var node = document.getElementById(data)
       event.target.appendChild(document.getElementById(data));
       var slot = parseInt(event.target.id)
       var cloth_name = event.dataTransfer.getData("text")
       this.answers[slot] = this.get_id_by_name(cloth_name)
-      //console.log(this.answers)
-      
+      if(isNaN(slot) && !(event.target.id=="start-area")){
+        console.log("falscher slot")
+        document.getElementById("start-area").appendChild(document.getElementById(event.target.id).childNodes[0])
+        document.getElementById(event.target.id).innerHTML = ""
+        this.reset = true;
+      }
+      if(event.target.id=="start-area"){
+        this.reset = true;
+      }
     },
     allowDrop(event) {
       event.preventDefault();
+    },
+    at_least_one_edge(){
+      for(let i = 0; i < this.edges.length; i++){
+        var edge = this.edges[i]
+        if(this.nodes[edge.from_node].active && this.nodes[edge.to_node].active){
+          return true
+        }
+      }
+      console.log("no edge in the graph")
+      return false    //wenn wir bis hierher keine kante gefunden haben, returne false
     },
     get_id_by_name(name){
       for(let i = 0; i < this.nodes.length; i++){
@@ -459,6 +522,7 @@ export default defineComponent({
      * nimmt eine topologische sortierung und gibt true zurück, wenn sie korrekt ist und false andernfalls
      */
     check_ordering(ordering){
+      console.log("ordering",ordering)
       var in_degrees = this.create_in_degrees()
       
       for(let i = 0; i < ordering.length; i++){
@@ -674,8 +738,8 @@ export default defineComponent({
     }
 
     .drop-slot {
-      height: 40px;
-      width: 112px;
+      height: 45px;
+      width: 115px;
       padding: 0 7px 10px 0px;
       margin: 2px 2px 0 0;
       border: 1px solid black;

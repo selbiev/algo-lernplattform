@@ -19,18 +19,18 @@
     </div>
     <br>
 
-    <div class="start-area" id="start-area" @dragover="allowDrop($event)" @drop="drop($event)" >
-      <img v-if="nodes[8].active" id="Handschuhe" src="../assets/kleider/Handschuhe.png" draggable="true" @click="selectItem($event,'Handschuhe')" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[1].active" id="Socken" src="../assets/kleider/Socken.png" draggable="true" @click="selectItem($event,'Socken')" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[7].active" id="Gürtel" src="../assets/kleider/Gürtel.png" draggable="true" @click="selectItem($event,'Gürtel')" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[2].active" id="Schuhe" src="../assets/kleider/Schuhe.png" draggable="true" @click="selectItem($event,'Schuhe')" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[5].active" id="Jacke" src="../assets/kleider/Jacke.png" draggable="true" @click="selectItem($event,'Jacke')" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[6].active" id="Mütze" src="../assets/kleider/Mütze.png" draggable="true" @click="selectItem($event,'Mütze')" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[10].active" id="Pullover" src="../assets/kleider/Pullover.png" draggable="true" @click="selectItem($event,'Pullover')" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[4].active" id="Unterhose" src="../assets/kleider/Unterhose.png" draggable="true" @click="selectItem($event,'Unterhose')" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[0].active" id="Hose" src="../assets/kleider/Hose.png" draggable="true" @click="selectItem($event,'Hose')" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[9].active" id="Sonnenbrille" src="../assets/kleider/Sonnenbrille.png" @click="selectItem($event,'Sonnenbrille')" draggable="true" @dragstart="drag($event)" width="336" height="69">
-      <img v-if="nodes[3].active" id="T-Shirt" src="../assets/kleider/T-Shirt.png" draggable="true" @click="selectItem($event,'T-Shirt')" @dragstart="drag($event)" width="336" height="69">
+    <div class="start-area" id="start-area" @dragover="allowDrop($event)" @drop="drop($event)" @click="pasteItem($event, 'start-area')" >
+      <img v-if="nodes[8].active" class="kleider-bild" id="Handschuhe" src="../assets/kleider/Handschuhe.png" draggable="true" @click="selectItem($event,'Handschuhe')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[1].active" class="kleider-bild" id="Socken" src="../assets/kleider/Socken.png" draggable="true" @click="selectItem($event,'Socken')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[7].active" class="kleider-bild" id="Gürtel" src="../assets/kleider/Gürtel.png" draggable="true" @click="selectItem($event,'Gürtel')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[2].active" class="kleider-bild" id="Schuhe" src="../assets/kleider/Schuhe.png" draggable="true" @click="selectItem($event,'Schuhe')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[5].active" class="kleider-bild" id="Jacke" src="../assets/kleider/Jacke.png" draggable="true" @click="selectItem($event,'Jacke')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[6].active" class="kleider-bild" id="Mütze" src="../assets/kleider/Mütze.png" draggable="true" @click="selectItem($event,'Mütze')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[10].active" class="kleider-bild" id="Pullover" src="../assets/kleider/Pullover.png" draggable="true" @click="selectItem($event,'Pullover')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[4].active" class="kleider-bild" id="Unterhose" src="../assets/kleider/Unterhose.png" draggable="true" @click="selectItem($event,'Unterhose')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[0].active" class="kleider-bild" id="Hose" src="../assets/kleider/Hose.png" draggable="true" @click="selectItem($event,'Hose')" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[9].active" class="kleider-bild" id="Sonnenbrille" src="../assets/kleider/Sonnenbrille.png" @click="selectItem($event,'Sonnenbrille')" draggable="true" @dragstart="drag($event)" width="336" height="69">
+      <img v-if="nodes[3].active" class="kleider-bild" id="T-Shirt" src="../assets/kleider/T-Shirt.png" draggable="true" @click="selectItem($event,'T-Shirt')" @dragstart="drag($event)" width="336" height="69">
     </div>
     
     
@@ -44,6 +44,13 @@
           type="button"
         >
         Prüfe Antwort
+        </button>
+      </p>
+      <p>
+        <button @click="clearDropslots()"
+          type="button"
+        >
+        Alles rückgängig machen
         </button>
       </p>
     </form>
@@ -81,6 +88,7 @@ export default defineComponent({
       images: [],
       selected: false,
       selectedItem: "",
+      reset: false,
       nodes: [
         {id: 0, posX: 130, posY: 60, active: true, text: "Hose"},
         {id: 1, posX: 270, posY: 130, active: true, text: "Socken"},
@@ -160,10 +168,23 @@ export default defineComponent({
       if(this.selected){
         this.selected = false
         this.selectedItem = ""
+        document.getElementById(id).style.border = "none"
       } else {
         this.selected = true;
         this.selectedItem = id
+        document.getElementById(id).style.border = "3px solid red"
       }
+    },
+    clearDropslots(){
+      for(let i = 0; i < this.top_ordering.length; i++){
+        var curr_slot = document.getElementById(i)
+        if(curr_slot.childNodes.length==0){
+          continue
+        }
+        document.getElementById("start-area").appendChild(curr_slot.childNodes[0])
+        curr_slot.innerHTML = ""
+      }
+      this.reset = true
     },
     pasteItem(event, target){
       event.stopPropagation()
@@ -176,6 +197,11 @@ export default defineComponent({
         this.selected = false
 
         this.answers[parseInt(targetplace.id)] = this.get_id_by_name(item.id)
+        document.getElementById(item.id).style.border = "none"
+        this.reset = false
+        if(event.target.id=="start-area"){
+          this.reset = true;
+        }
       }
     },
     submitAnswer(){
@@ -184,11 +210,14 @@ export default defineComponent({
       } else {
         this.result = "falsch."
       }
+      if(this.reset){
+        this.result = "falsch."
+      }
       this.submitted = true
     },
     
     all_slots_used(){
-      if(this.answers.length < this.top_ordering.length){
+      if(this.answers.length < this.top_ordering.length || this.reset){
         return false
       } else {
         return true
@@ -200,13 +229,22 @@ export default defineComponent({
     drop(event) {
       this.result = ""
       event.preventDefault();
+      this.reset = false
       var data = event.dataTransfer.getData("text");
       //var node = document.getElementById(data)
       event.target.appendChild(document.getElementById(data));
       var slot = parseInt(event.target.id)
       var cloth_name = event.dataTransfer.getData("text")
       this.answers[slot] = this.get_id_by_name(cloth_name)
-      
+      if(isNaN(slot) && !(event.target.id=="start-area")){
+        console.log("falscher slot")
+        document.getElementById("start-area").appendChild(document.getElementById(event.target.id).childNodes[0])
+        document.getElementById(event.target.id).innerHTML = ""
+        this.reset = true;
+      }
+      if(event.target.id=="start-area"){
+        this.reset = true;
+      }
     },
     allowDrop(event) {
       event.preventDefault();
@@ -657,7 +695,7 @@ export default defineComponent({
     }
 
     .drop-slot {
-      height: 40px;
+      height: 45px;
       width: 60px;
       padding: 0 7px 10px 7px;
       margin: 2px 2px 0 0;
@@ -670,5 +708,6 @@ export default defineComponent({
       border: 1px solid black;
       margin: 0 auto;
     }
+
 
 </style>

@@ -65,15 +65,15 @@
         <div v-for="i in 5" :key="i">
           <img v-if="seq_numbers[0][i-1] == 0 && number_seq_set[0][i-1]" src="../assets/small-cloud.png" />
           <img v-else-if="seq_numbers[0][i-1] == 1 && number_seq_set[0][i-1]" src="../assets/big-cloud.png" />
-          <div v-else droppable="true" class="drop-slot" :id="'drop-slot-'+i" @drop="drop($event, i-1)" @dragover="allowDrop($event)"/>
+          <div v-else droppable="true" class="drop-slot" :id="'drop-slot-'+i" @click="pasteItem($event,'drop-slot-'+i,i-1)" @drop="drop($event, i-1)" @dragover="allowDrop($event)"/>
         </div>
       </div>
 
       <br> Ziehe die Rauchzeichen in die Lücken. <br> <br>
 
       <div class="start-area" id="start-area" @dragover="allowDrop($event)" @drop="drop($event, 1)">
-        <img id="big-cloud-1" src="../assets/big-cloud.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
-        <img id="small-cloud-1" src="../assets/small-cloud.png" draggable="true" @dragstart="drag($event)" width="336" height="69">
+        <img id="big-cloud-1" src="../assets/big-cloud.png" @click="selectItem($event,'big-cloud-1')" draggable="true" @dragstart="drag($event)" width="336" height="69">
+        <img id="small-cloud-1" src="../assets/small-cloud.png" @click="selectItem($event,'small-cloud-1')" draggable="true" @dragstart="drag($event)" width="336" height="69">
       </div>
 
        <p>
@@ -125,7 +125,9 @@ export default defineComponent({
       slots_ok: [true,true,true,true,true],
       falsche_stellen: [],
       corr_answered: true,
-      couter: 0,
+      counter: 0,
+      selected: false,
+      selectedItem: "",
     }
   },
   created: function(){
@@ -183,6 +185,45 @@ export default defineComponent({
       this.ans_gap_1 = -1
       this.ans_gap_2 = -1
 
+    },
+    selectItem(event, id){
+      event.stopPropagation()
+      console.log("selectItem() ",id)
+      if(this.selected){
+        this.selected = false
+        this.selectedItem = ""
+        document.getElementById(id).style.border = "none"
+      } else {
+        this.selected = true;
+        this.selectedItem = id
+        document.getElementById(id).style.border = "3px solid red"
+      }
+    },
+    pasteItem(event, target, detail){
+      event.stopPropagation()
+      if(this.selected){
+        this.result = ""
+        var item = document.getElementById(this.selectedItem).cloneNode(true)
+        document.getElementById(item.id).style.border = "none"
+        item.id = item.id + this.counter
+        this.counter++
+        var targetplace = document.getElementById(target)
+        targetplace.appendChild(item)
+        this.selected = false
+        document.getElementById(item.id).style.border = "none"
+
+        var cloud = item.id
+
+        if(detail == this.gap_1){
+          console.log("this.gap_1 = %d", this.gap_1)
+          this.ans_gap_1 = this.translate_ans(cloud)
+          console.log("gap1 hat jetzt: %d", this.ans_gap_1)
+        } else if(detail == this.gap_2){
+          console.log("this.gap_2 = %d", this.gap_2)
+          this.ans_gap_2 = this.translate_ans(cloud)
+          console.log("gap2 hat jetzt: %d", this.ans_gap_2)
+        }
+      }
     },
     drag(event){
       event.dataTransfer.setData("text", event.target.id);
