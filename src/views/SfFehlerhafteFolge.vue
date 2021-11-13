@@ -88,31 +88,29 @@
         </div>
       </div>
 
-      <p class="antwort">
-        <input type="checkbox" id="sonne" value="sonne" v-model="ans_wetter[0]">
-        <label for="sonne">Es wird sonnig.</label> <br>
-        <input type="checkbox" id="regen" value="regen" v-model="ans_wetter[1]">
-        <label for="regen">Es wird regnen.</label> <br>
-        <input type="checkbox" id="schnee" value="schnee" v-model="ans_wetter[2]">
-        <label for="schnee">Es wird schneien.</label> <br>
-        <input type="checkbox" id="hagel" value="hagel" v-model="ans_wetter[3]">
-        <label for="hagel">Es wird hageln.</label> <br>
-      </p>
-
-
-
-      <form @submit.prevent="submitAnswer()">
-        <p>
-          <button class="btn" @click="submitAnswer()"
-            type="button"
-          >
-          Prüfe Antwort
-          </button>
-        </p>
-      </form>
+      <br>
+      <button id="btn_0" class="antwort_btn" @click="ans_0()">
+        Es wird sonnig.
+      </button> <br>
+      <button id="btn_1" class="antwort_btn" @click="ans_1()">
+        Es wird regnen.
+      </button> <br>
+      <button id="btn_2" class="antwort_btn" @click="ans_2()">
+        Es wird schneien.
+      </button> <br>
+      <button id="btn_3" class="antwort_btn" @click="ans_3()">
+        Es wird hageln.
+      </button>
 
       <p class="ans" v-if="submitted">Die Antwort ist {{result}}</p>
       <p v-if="submitted && !correct_number_of_answers">Du hast {{hinweis}} Kästchen ausgewählt.</p>
+
+      <br v-if="!submitted"> <br v-if="!submitted">
+      <Footer
+        @next_task="reloadPage()"
+        @check_answer="submitAnswer()"
+        @reset="reloadPage()"
+        @info="reloadPage()" />
 
     </div>
 </template>
@@ -120,11 +118,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
+import Footer from "../components/Footer.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
+    Footer,
   },
   data() {
     return {
@@ -148,6 +148,42 @@ export default defineComponent({
   methods : {
     reloadPage(){
       this.$router.go(0)
+    },
+    ans_0(){
+      if(this.ans_wetter[0]){
+        this.ans_wetter[0] = false
+        document.getElementById("btn_0")!.style.backgroundColor = "grey"
+      } else {
+        this.ans_wetter[0] = true
+        document.getElementById("btn_0")!.style.backgroundColor = "#e1975a"
+      }
+    },
+    ans_1(){
+      if(this.ans_wetter[1]){
+        this.ans_wetter[1] = false
+        document.getElementById("btn_1")!.style.backgroundColor = "grey"
+      } else {
+        this.ans_wetter[1] = true
+        document.getElementById("btn_1")!.style.backgroundColor = "#e1975a"
+      }
+    },
+    ans_2(){
+      if(this.ans_wetter[2]){
+        this.ans_wetter[2] = false
+        document.getElementById("btn_2")!.style.backgroundColor = "grey"
+      } else {
+        this.ans_wetter[2] = true
+        document.getElementById("btn_2")!.style.backgroundColor = "#e1975a"
+      }
+    },
+    ans_3(){
+      if(this.ans_wetter[3]){
+        this.ans_wetter[3] = false
+        document.getElementById("btn_3")!.style.backgroundColor = "grey"
+      } else {
+        this.ans_wetter[3] = true
+        document.getElementById("btn_3")!.style.backgroundColor = "#e1975a"
+      }
     },
     submitAnswer(){
       this.submitted = true
@@ -441,6 +477,15 @@ export default defineComponent({
     td, th {
       padding: 0 0 0 25px;
       text-align: left;
+    }
+
+    .antwort_btn {
+      margin: 0 5px 5px 0;
+      width: 150px;
+      height: 30px;
+      border-radius: 3px;
+      background-color: grey;
+      font-weight: 700;
     }
 
 

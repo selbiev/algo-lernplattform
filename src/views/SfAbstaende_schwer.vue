@@ -85,33 +85,47 @@
           </div>
         </div>
 
-        
-
-        
-      </div>
-      <br>
-      <form @submit.prevent="submitAnswer()">
-        <!-- <input v-model="prop_1" type="number" />
-        <input v-model="prop_2" type="number" />-->
-        <input v-model="answer" type="number" />
         <br>
-        <p>
-          <button class="btn" @click="submitAnswer()" type="button"> Prüfe Antwort </button>
-        </p>
-      </form>
+      <button id="btn_0" class="antwort_btn" @click="answer_abstand(0)">
+        1
+      </button>
+      <button id="btn_1" class="antwort_btn" @click="answer_abstand(1)">
+        2
+      </button>
+      <button id="btn_2" class="antwort_btn" @click="answer_abstand(2)">
+        3
+      </button>
+      <button id="btn_3" class="antwort_btn" @click="answer_abstand(3)">
+        4
+      </button>
+       <button id="btn_4" class="antwort_btn" @click="answer_abstand(4)">
+        5
+      </button>
+
+      </div>
 
       <p class="ans" v-if="submitted">Die Antwort ist {{result}}</p>
+      <br v-if="!submitted">
+      <Footer
+        @next_task="reloadPage()"
+        @check_answer="submitAnswer()"
+        @reset="reset_all()"
+        @info="reloadPage()" />
+
+      
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
+import Footer from "../components/Footer.vue"
 
 export default defineComponent({
   name: 'SfAbstaende',
   components: {
     Header,
+    Footer,
   },
   data() {
     return {
@@ -134,6 +148,12 @@ export default defineComponent({
     reloadPage(){
       this.$router.go(0)
     },
+    reset_all(){
+      this.deactivate_all_btns()
+      this.submitted = false
+      this.answer = -1
+      this.result = "falsch."
+    },
     compute_abstand(){
       var sum = 0
       for(let i = 0; i < this.numbers[0].length; i++){
@@ -143,14 +163,24 @@ export default defineComponent({
       }
       return sum
     },
+    deactivate_all_btns(){
+      for(let i = 0; i < 5; i++){
+        document.getElementById('btn_'+i)!.style.backgroundColor = "grey"
+        this.ans_abst[i] = false
+      }
+    },
+    answer_abstand(zahl: number){
+      if(zahl >= 0 && zahl <= 4){
+        this.deactivate_all_btns()
+        this.ans_abst[zahl] = true;
+        document.getElementById("btn_"+zahl)!.style.backgroundColor = "#e1975a"
+        this.answer = zahl+1
+      }
+    },
     submitAnswer(){
       /* TODO */
       this.submitted = true
       this.checkAnswer()
-    },
-    toggleAbst(ev: any, pos: number){
-      this.ans_abst[pos] = !(this.ans_abst[pos])
-      console.log("feld %d ist nun",pos+1,this.ans_abst[pos])
     },
     checkAnswer(){
       var num_diff = 0
@@ -264,6 +294,15 @@ export default defineComponent({
 
     .abstaende{
       cursor: pointer;
+    }
+
+    .antwort_btn {
+      margin: 0 5px 5px 0;
+      width: 30px;
+      height: 30px;
+      border-radius: 3px;
+      background-color: grey;
+      font-weight: 700;
     }
 
 </style>

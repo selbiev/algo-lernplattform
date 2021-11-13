@@ -81,33 +81,28 @@
         <img id="small-cloud-1" src="../assets/small-cloud.png" @click="selectItem($event,'small-cloud-1')" draggable="true" @dragstart="drag($event)" width="336" height="69">
       </div>
 
-       <p>
-          <button @click="submitAnswer()"
-            type="button"
-          >
-          Prüfe Antwort
-          </button>
-        </p>
-        <p>
-          <button @click="clearDropslots()"
-            type="button"
-          >
-          Alles rückgängig machen
-          </button>
-        </p>
-      <!--<img id="remove" src="../assets/remove.png" @dragover="allowDrop($event)" @drop="drop($event, '1')" width="336" height="69">-->
-    <p v-if="submitted">Die Antwort ist {{result}}</p>
+      <p v-if="submitted">Die Antwort ist {{result}}</p>
+       <br>
+       <Footer
+        @next_task="reloadPage()"
+        @check_answer="submitAnswer()"
+        @reset="clearDropslots()"
+        @info="reloadPage()" />
+
+    
     </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
+import Footer from "../components/Footer.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
+    Footer,
   },
   data() {
     return {
@@ -405,12 +400,12 @@ export default defineComponent({
       padding: 0 7px 10px 7px;
       margin: 2px 2px 0 0;
       border: 1px solid black;
+      border-style: dashed;
     }
 
     .start-area{
-      width: 20%;
+      width: 150px;
       min-height: 30px;
-      border: 1px solid black;
       margin: 0 auto;
     }
 

@@ -105,22 +105,17 @@
 
         
       </div>
-    
-      <form @submit.prevent="submitAnswer()">
-        <!-- <input v-model="prop_1" type="number" />
-        <input v-model="prop_2" type="number" />
-        <input v-model="prop_3" type="number" />
-        -->
-        <p>
-          <button class="btn" @click="submitAnswer()"
-            type="button"
-          >
-          Prüfe Antwort
-          </button>
-        </p>
-      </form>
 
       <p class="ans" v-if="submitted">Die Antwort ist {{result}}</p>
+      <br v-if="!submitted">
+      
+      <Footer
+        @next_task="reloadPage()"
+        @check_answer="submitAnswer()"
+        @reset="reloadPage()"
+        @info="reloadPage()" />
+
+      
       <p v-if="submitted">Der Abstand zwischen den beiden Kodierungen beträgt {{compute_abstand()}}</p>
     </div>
 </template>
@@ -128,11 +123,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
+import Footer from "../components/Footer.vue"
 
 export default defineComponent({
   name: 'SfAbstaende',
   components: {
     Header,
+    Footer,
   },
   data() {
     return {

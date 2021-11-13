@@ -63,28 +63,18 @@
           </td>
         </tr>
       </table>
-      
-      
-      
-
-      <form @submit.prevent="submitAnswer() ">
-        <!-- <input v-model="prop_1" type="number" />
-        <input v-model="prop_2" type="number" />
-        <input v-model="prop_3" type="number" />
-        -->
-        <p>
-          <button @click="submitAnswer()"
-            type="button"
-          >
-          Prüfe Antwort
-          </button>
-        </p>
-      </form>
 
       <p v-if="submitted">Die Antwort ist {{result}}</p>
       <p style="display:none" id="hint1">Abstand zwischen dem ersten und zweiten Code: {{abstand_0_1}}</p>
       <p style="display:none" id="hint2">Abstand zwischen dem zweiten und dritten Code: {{abstand_1_2}}</p>
       <p style="display:none" id="hint3">Abstand zwischen dem ersten und dritten Code: {{abstand_0_2}}</p>
+
+      <br v-if="!submitted">
+      <Footer
+        @next_task="reloadPage()"
+        @check_answer="submitAnswer()"
+        @reset="reloadPage()"
+        @info="reloadPage()" />
 
     </div>
 </template>
@@ -92,12 +82,14 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
+import Footer from "../components/Footer.vue"
 
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
+    Footer,
   },
   data() {
     return {

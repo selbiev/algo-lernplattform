@@ -121,20 +121,8 @@
           </select>
         </div>
       </div>
-
-      <form @submit.prevent="submitAnswer()">
-        <!-- <input v-model="prop_1" type="number" />
-        <input v-model="prop_2" type="number" />
-        <input v-model="prop_3" type="number" />
-        -->
-        <p>
-          <button @click="submitAnswer()"
-            type="button"
-          >
-          Prüfe Antwort
-          </button>
-        </p>
-      </form>
+      <br>
+      
 
       <p v-if="submitted">Die Antwort ist {{result}}</p>
       <p v-if="submitted">
@@ -143,17 +131,25 @@
         Tag 3 {{ (falsche_tage[2]? "richtig" : "falsch") }} <br>
       </p>
 
+      <br><Footer
+        @next_task="reloadPage()"
+        @check_answer="submitAnswer()"
+        @reset="reloadPage()"
+        @info="reloadPage()" />
+
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
+import Footer from "../components/Footer.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
+    Footer,
   },
   data() {
     return {
@@ -329,7 +325,7 @@ export default defineComponent({
         background-color: #FFE5B2;
         padding: 20px 20px 20px 20px;
         height: auto;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;;
     }
 
     img {
@@ -360,6 +356,8 @@ export default defineComponent({
       margin: 8px 5px 0 0;
       box-sizing: border-box;
       text-align: center;
+      background-color: #f1f1f1;
+      border-radius: 5px;
     }
 
     .auswahl_tag {

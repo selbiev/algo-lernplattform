@@ -9,7 +9,8 @@
         :has_diff_levels="true"
         :has_leicht="true"
         :has_mittel="false"
-        :has_schwer="true"/> <br><br>
+        :has_schwer="true"
+        @messageFromChild="childMessageReceived"/> <br><br>
       Biber Bob entscheidet sich, das Wetter mit folgenden Rauchzeichen zu kodieren: <br> <br>
         
       <table class="code_table">
@@ -75,7 +76,7 @@
       <div class="auswahl">
 
         <div class="auswahl_tag">
-          <label for="dd_tag_1"></label> <br>
+          <label for="dd_tag_1"></label>
           <select id="dd_tag_1" v-model="selected_1">
             <option disabled value="">Wähle aus...</option>
             <option>Es wird sonnig.</option>
@@ -84,30 +85,23 @@
           </select>
         </div>
       </div>
+      <br> 
+      <p class="ans" v-if="submitted">Die Antwort ist {{result}} <br></p>
+      <Footer
+        @next_task="reloadPage()"
+        @check_answer="submitAnswer()"
+        @reset="reloadPage()"
+        @info="reloadPage()" />
 
-      <form @submit.prevent="submitAnswer()">
-        <!-- <input v-model="prop_1" type="number" />
-        <input v-model="prop_2" type="number" />
-        <input v-model="prop_3" type="number" />
-        -->
-        <p>
-          <button class="btn" @click="submitAnswer()"
-            type="button"
-          >
-          Prüfe Antwort
-          </button>
-        </p>
-      </form>
-
-      <p class="ans" v-if="submitted">Die Antwort ist {{result}}</p>
+      
 
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import HelloWorld from "../components/HelloWorld.vue";
 import Header from "../components/Header.vue"
+import Footer from "../components/Footer.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
@@ -129,6 +123,7 @@ export default defineComponent({
   },
   components: {
     Header,
+    Footer,
   },
   created: function(){
     this.createNumbers()
@@ -137,6 +132,9 @@ export default defineComponent({
   methods : {
     reloadPage(){
       this.$router.go(0)
+    },
+    childMessageReceived(arg1:any){
+      console.log(arg1)
     },
     submitAnswer(){
       this.submitted = true
@@ -291,6 +289,8 @@ export default defineComponent({
       margin: 8px 5px 0 0;
       box-sizing: border-box;
       text-align: center;
+      background-color: #f1f1f1;
+      border-radius: 5px;
     }
 
     .auswahl_tag {

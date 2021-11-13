@@ -179,27 +179,20 @@
         <img id="kreis" src="../assets/bauen/kreis.png" @click="selectItem($event,'kreis')" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
       </div>
 
-       <p>
-          <button @click="submitAnswer()"
-            type="button"
-          >
-          Prüfe Antwort
-          </button>
-        </p>
-        <p>
-          <button @click="clearDropslots()"
-            type="button"
-          >
-          Alles rückgängig machen
-          </button>
-        </p>
-      <!--<img id="remove" src="../assets/remove.png" @dragover="allowDrop($event)" @drop="drop($event, '1')" width="336" height="69">-->
     <p v-if="submitted">Die Antwort ist {{result}}</p>
     <p v-if="submitted">
         Objekt 1 {{ (falsche_bestellungen[0]? "richtig" : "falsch") }} <br>
         Objekt 2 {{ (falsche_bestellungen[1]? "richtig" : "falsch") }} <br>
         Objekt 3 {{ (falsche_bestellungen[2]? "richtig" : "falsch") }} <br>
-      </p>
+    </p>
+
+    <br v-if="!submitted">
+    <Footer
+        @next_task="reloadPage()"
+        @check_answer="submitAnswer()"
+        @reset="clearDropslots()"
+        @info="reloadPage()" />
+        
     </div>
 </template>
 
@@ -222,11 +215,13 @@
 
 import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
+import Footer from "../components/Footer.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
+    Footer,
   },
   data() {
     return {
@@ -518,12 +513,12 @@ export default defineComponent({
       padding: 5px 7px 0 7px;
       margin: 0 3px 0 0;
       border: 1px solid black;
+      border-style: dashed;
     }
 
     .start-area{
       width: 25%;
       min-height: 30px;
-      border: 1px solid black;
       margin: 0 auto;
     }
     

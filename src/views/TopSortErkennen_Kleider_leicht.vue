@@ -24,7 +24,7 @@
     <img v-if="type[0]" src="../assets/kleider/leicht/1.png" class="types"/>
     <img v-if="type[1]" src="../assets/kleider/leicht/2.png" class="types"/>
     <img v-if="type[2]" src="../assets/kleider/leicht/3.png" class="types"/> <br>
-    Können wir diese Kleider in der folgenden Reihenfolge anziehen? <br>
+    Können wir diese Kleider in der folgenden Reihenfolge anziehen? <br> <br>
 
     <img v-if="type[0] && corr" src="../assets/kleider/leicht/1_c.png" class="orderings"/>
     <img v-if="type[0] && !corr" src="../assets/kleider/leicht/1_f.png" class="orderings"/>
@@ -35,28 +35,22 @@
     <img v-if="type[2] && corr" src="../assets/kleider/leicht/3_c.png" class="orderings"/>
     <img v-if="type[2] && !corr" src="../assets/kleider/leicht/3_f.png" class="orderings"/>
 
-    <br>
-    <input type="radio" id="true" value="True" name="answer_" v-model="answer">
-    <label for="true">Ja</label>
-    <br>
-    <input type="radio" id="false" value="False" name="answer_" v-model="answer">
-    <label for="false">Nein</label>
-    <br>
-    <form @submit.prevent="submitAnswer() ">
-      <!-- <input v-model="prop_1" type="number" />
-      <input v-model="prop_2" type="number" />
-      <input v-model="prop_3" type="number" />
-      -->
-      <p>
-        <button @click="submitAnswer()"
-          type="button"
-        >
-        Prüfe Antwort
-        </button>
-      </p>
-    </form>
+    <br> <br>
+    
+    <button id="ja" class="antwort_btn" @click="give_answer('ja')">
+      Ja
+    </button>
+    <button id="nein" class="antwort_btn" @click="give_answer('nein')">
+      Nein
+    </button>
 
       <p v-if="submitted">Die Antwort ist {{result}}</p>
+      <br v-if="!submitted"> <br v-if="!submitted">
+      <Footer
+        @next_task="reloadPage()"
+        @check_answer="submitAnswer()"
+        @reset="reloadPage()"
+        @info="reloadPage()" />
 
     </div>
 </template>
@@ -64,11 +58,13 @@
 <script>
 import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
+import Footer from "../components/Footer.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
+    Footer,
   },
   data() {
     return {
@@ -93,12 +89,22 @@ export default defineComponent({
       this.$router.go(0)
     },
     submitAnswer(){
-      if((this.answer=="True" && this.corr) || (this.answer=="False" && !this.corr)){
+      if((this.answer==true && this.corr) || (this.answer==false && !this.corr)){
         this.result = "richtig."
       } else {
         this.result = "falsch."
       }
       this.submitted = true
+    },
+    give_answer(antwort){
+      if(antwort == "ja" || antwort == "nein"){
+        document.getElementById('ja').style.backgroundColor = "grey"
+        document.getElementById('nein').style.backgroundColor = "grey"
+        
+        document.getElementById(antwort).style.backgroundColor = "#e1975a"
+        this.answer = (antwort=="ja")? true : false
+        console.log("the answer is: ", this.answer)
+      }
     },
   }
 });
@@ -182,13 +188,22 @@ export default defineComponent({
     }
 
     .types{
-      height: 200px;
+      height: 150px;
       width: auto;
     }
 
     .orderings{
-      height: 100px;
+      height: 60px;
       width: auto;
+    }
+
+    .antwort_btn {
+      margin: 0 5px 5px 0;
+      width: 50px;
+      height: 30px;
+      border-radius: 3px;
+      background-color: grey;
+      font-weight: 700;
     }
 
 </style>

@@ -37,41 +37,37 @@
       </div>
     </div>
     <br>
-    <input type="radio" id="true" value="True" name="answer_" v-model="answer">
-    <label for="true">Ja</label>
-    <br>
-    <input type="radio" id="false" value="False" name="answer_" v-model="answer">
-    <label for="false">Nein</label>
-    <br>
-    <form @submit.prevent="submitAnswer() ">
-      <!-- <input v-model="prop_1" type="number" />
-      <input v-model="prop_2" type="number" />
-      <input v-model="prop_3" type="number" />
-      -->
-      <p>
-        <button @click="submitAnswer()"
-          type="button"
-        >
-        Prüfe Antwort
-        </button>
-      </p>
-    </form>
+
+    <button id="ja" class="antwort_btn" @click="give_answer('ja')">
+      Ja
+    </button>
+    <button id="nein" class="antwort_btn" @click="give_answer('nein')">
+      Nein
+    </button>
 
       <p v-if="submitted">Die Antwort ist {{result}}</p>
       <p v-if="submitted && result=='falsch.' && !check_ordering(this.top_ordering)">{{wrong_cloth}} zu früh gewählt.</p>
       <p v-if="submitted && result=='falsch.' && check_ordering(this.top_ordering)">Ist diese Reihenfolge wirklich falsch? Schau genauer hin.</p>
 
+      <br v-if="!submitted"> <br v-if="!submitted">
+      <Footer
+        @next_task="reloadPage()"
+        @check_answer="submitAnswer()"
+        @reset="reloadPage()"
+        @info="reloadPage()" />
     </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
+import Footer from "../components/Footer.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
+    Footer,
   },
   data() {
     return {
@@ -157,11 +153,21 @@ export default defineComponent({
     reloadPage(){
       this.$router.go(0)
     },
+    give_answer(antwort){
+      if(antwort == "ja" || antwort == "nein"){
+        document.getElementById('ja').style.backgroundColor = "grey"
+        document.getElementById('nein').style.backgroundColor = "grey"
+        
+        document.getElementById(antwort).style.backgroundColor = "#e1975a"
+        this.answer = (antwort=="ja")? true : false
+        console.log("the answer is: ", this.answer)
+      }
+    },
     submitAnswer(){
       var solution = this.check_ordering(this.top_ordering)
-      if(solution==true && this.answer=="True"){
+      if(solution==true && this.answer==true){
         this.result = "korrekt."
-      } else if(solution==false && this.answer=="False"){
+      } else if(solution==false && this.answer==false){
         this.result = "korrekt."
       } else {
         this.result = "falsch."
@@ -669,20 +675,13 @@ export default defineComponent({
       justify-content: center;
     }
 
-    /*.ans_button {
-      background-color: #33CCFF;
-      border: none;
-      color: white;
-      padding: 15px 32px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 16px;
-      margin: 0 2px 0 0;
+    .antwort_btn {
+      margin: 0 5px 5px 0;
+      width: 50px;
+      height: 30px;
+      border-radius: 3px;
+      background-color: grey;
+      font-weight: 700;
     }
-
-    .ans_button:focus-within {     
-      background-color: #9130FF;    
-    }*/
 
 </style>

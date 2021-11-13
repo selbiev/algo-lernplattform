@@ -34,45 +34,30 @@
       <img v-if="nodes[7].active" id="t_decken" src="../assets/backen/t_decken.png" draggable="true" @click="selectItem($event,'t_decken')" @dragstart="drag($event)" width="336" height="69">
       <img v-if="nodes[8].active" id="o_vorheizen" src="../assets/backen/o_vorheizen.png" draggable="true" @click="selectItem($event,'o_vorheizen')" @dragstart="drag($event)" width="336" height="69">
     </div>
-    
-    
-    <form @submit.prevent="submitAnswer() ">
-      <!-- <input v-model="prop_1" type="number" />
-      <input v-model="prop_2" type="number" />
-      <input v-model="prop_3" type="number" />
-      -->
-      <p>
-        <button @click="submitAnswer()"
-          type="button"
-        >
-        Prüfe Antwort
-        </button>
-      </p>
-      <p>
-        <button @click="clearDropslots()"
-          type="button"
-        >
-        Alles rückgängig machen
-        </button>
-      </p>
-    </form>
 
       <p v-if="submitted && result.length>0">Die Antwort ist {{result}}</p>
       <p v-if="submitted && result=='falsch.' && !all_slots_used()">Bitte fülle alle Lücken aus.</p>
       <p v-if="submitted && result=='falsch.' && !check_ordering(this.answers) && all_slots_used()">{{wrong_cloth}} zu früh gewählt.</p>
 
-
-    </div>
+    <br v-if="!submitted">
+    <Footer
+        @next_task="reloadPage()"
+        @check_answer="submitAnswer()"
+        @reset="clearDropslots()"
+        @info="reloadPage()" />
+  </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
+import Footer from "../components/Footer.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
+    Footer,
   },
   data() {
     return {
@@ -678,7 +663,7 @@ export default defineComponent({
 
     img {
       width: auto;
-      height: 50px;
+      height: 60px;
     }
 
     .kodierungen {
@@ -744,11 +729,12 @@ export default defineComponent({
     }
 
     .drop-slot {
-      height: 45px;
-      width: 115px;
+      height: 55px;
+      width: 135px;
       padding: 0 7px 10px 0px;
       margin: 2px 2px 0 0;
       border: 1px solid black;
+      border-style: dashed;
     }
 
     .start-area{

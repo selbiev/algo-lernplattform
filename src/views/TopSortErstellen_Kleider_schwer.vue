@@ -38,44 +38,30 @@
       <img v-if="nodes[3].active" class="kleider-bild" id="T-Shirt" src="../assets/kleider/T-Shirt.png" draggable="true" @click="selectItem($event,'T-Shirt')" @dragstart="drag($event)" width="336" height="69">
     </div>
     
-    
-    <form @submit.prevent="submitAnswer() ">
-      <!-- <input v-model="prop_1" type="number" />
-      <input v-model="prop_2" type="number" />
-      <input v-model="prop_3" type="number" />
-      -->
-      <p>
-        <button @click="submitAnswer()"
-          type="button"
-        >
-        Prüfe Antwort
-        </button>
-      </p>
-      <p>
-        <button @click="clearDropslots()"
-          type="button"
-        >
-        Alles rückgängig machen
-        </button>
-      </p>
-    </form>
-
       <p v-if="submitted && result.length>0">Die Antwort ist {{result}}</p>
       <p v-if="submitted && result=='falsch.' && !all_slots_used()">Bitte fülle alle Lücken aus.</p>
       <p v-if="submitted && result=='falsch.' && !check_ordering(this.answers) && all_slots_used()">{{wrong_cloth}} zu früh gewählt.</p>
 
+    <br v-if="!submitted">
+    <Footer
+        @next_task="reloadPage()"
+        @check_answer="submitAnswer()"
+        @reset="clearDropslots()"
+        @info="reloadPage()" />
 
-    </div>
+  </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
+import Footer from "../components/Footer.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
+    Footer,
   },
   data() {
     return {
@@ -706,6 +692,7 @@ export default defineComponent({
       padding: 0 7px 10px 7px;
       margin: 2px 2px 0 0;
       border: 1px solid black;
+      border-style: dashed;
     }
 
     .start-area{

@@ -62,7 +62,7 @@
         </tr>
       </table>
       
-      <br>Welches Wetter könnte Bob mit diesen Zeichenfolgen gemeint haben? Kreuze eins oder mehrere an.<br><br>
+      <br>Welches Wetter könnte Bob mit diesen Zeichenfolgen gemeint haben? Markiere eins oder mehrere.<br><br>
 
       <div class="zeichenfolge">
         <!--<img v-if="seq_numbers[0][0] == 0" src="../assets/small-cloud.png" />
@@ -75,34 +75,40 @@
         </div>
       </div>
 
-      <p class="antwort">
-        <input type="checkbox" id="sonne" value="Jack" v-model="ans_wetter[0]">
-        <label for="sonne">Es wird sonnig.</label> <br>
-        <input type="checkbox" id="regen" value="John" v-model="ans_wetter[1]">
-        <label for="regen">Es wird regnen.</label> <br>
-        <input type="checkbox" id="schnee" value="Mike" v-model="ans_wetter[2]">
-        <label for="schnee">Es wird schneien.</label> <br>
-      </p>
+      <br>
+      <button id="btn_0" class="antwort_btn" @click="ans_0()">
+        Es wird sonnig.
+      </button> <br>
+      <button id="btn_1" class="antwort_btn" @click="ans_1()">
+        Es wird regnen.
+      </button> <br>
+      <button id="btn_2" class="antwort_btn" @click="ans_2()">
+        Es wird schneien.
+      </button>
+      
 
-       <p>
-          <button @click="submitAnswer()" type="button" >
-          Prüfe Antwort
-          </button>
-        </p>
-      <!--<img id="remove" src="../assets/remove.png" @dragover="allowDrop($event)" @drop="drop($event, '1')" width="336" height="69">-->
     <p v-if="submitted">Die Antwort ist {{result}}</p>
     <p v-if="submitted && !correct_number_of_answers">Du hast {{hinweis}} Kästchen ausgewählt.</p>
+
+    <br v-if="!submitted"> <br v-if="!submitted">
+    <Footer
+        @next_task="reloadPage()"
+        @check_answer="submitAnswer()"
+        @reset="reloadPage()"
+        @info="reloadPage()" />
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
+import Footer from "../components/Footer.vue"
 
 export default defineComponent({
   name: 'SfAbstaende',
   components: {
     Header,
+    Footer,
   },
   data() {
     return {
@@ -124,6 +130,9 @@ export default defineComponent({
       eindeutig: true,
       hinweis: "",
       correct_number_of_answers: false,
+      ans_0_active: false,
+      ans_1_active: false,
+      ans_2_active: false,
     }
   },
   created: function(){
@@ -157,6 +166,33 @@ export default defineComponent({
         return 0
       } else if(answer.charAt(0)=='b'){
         return 1
+      }
+    },
+    ans_0(){
+      if(this.ans_wetter[0]){
+        this.ans_wetter[0] = false
+        document.getElementById("btn_0")!.style.backgroundColor = "grey"
+      } else {
+        this.ans_wetter[0] = true
+        document.getElementById("btn_0")!.style.backgroundColor = "#e1975a"
+      }
+    },
+    ans_1(){
+      if(this.ans_wetter[1]){
+        this.ans_wetter[1] = false
+        document.getElementById("btn_1")!.style.backgroundColor = "grey"
+      } else {
+        this.ans_wetter[1] = true
+        document.getElementById("btn_1")!.style.backgroundColor = "#e1975a"
+      }
+    },
+    ans_2(){
+      if(this.ans_wetter[2]){
+        this.ans_wetter[2] = false
+        document.getElementById("btn_2")!.style.backgroundColor = "grey"
+      } else {
+        this.ans_wetter[2] = true
+        document.getElementById("btn_2")!.style.backgroundColor = "#e1975a"
       }
     },
     
@@ -471,6 +507,15 @@ export default defineComponent({
     td, th {
       padding: 0 0 0 25px;
       text-align: left;
+    }
+
+    .antwort_btn {
+      margin: 0 5px 5px 0;
+      width: 150px;
+      height: 30px;
+      border-radius: 3px;
+      background-color: grey;
+      font-weight: 700;
     }
 
 </style>
