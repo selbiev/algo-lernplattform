@@ -82,6 +82,8 @@ export default defineComponent({
     min-width: 60px;
     background-color: #ffe5b2;
     border-radius: 10px;
+    border: solid black;
+    border-width: thin;
   }
 
   #picture {
