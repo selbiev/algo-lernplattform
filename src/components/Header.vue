@@ -56,9 +56,6 @@ export default defineComponent({
     'has_mittel',
     'has_schwer',
   ],
-  created: function(){
-    this.$emit('messageFromChild', "------------ hello from child to parent ------------")
-  },
   methods: {
     reloadPage(){
       location.reload()

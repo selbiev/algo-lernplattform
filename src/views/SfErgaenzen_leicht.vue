@@ -1,5 +1,12 @@
 <template>
     <div class="CodesErgaenzen">
+
+        <Verifier 
+          :correctSolution="this.result == 'korrekt.'"
+          v-if="this.submitted" 
+          :tip="''"
+          @close-verifier="this.submitted = false" />
+
         <Header 
         :diff_level="'leicht'" 
         :task_name="'Kodierung ergänzen'" 
@@ -74,14 +81,13 @@
         </div>
       </div>
 
-      <br> Ziehe ein Rauchzeichen in die Lücke. <br> <br>
+      <br> Ziehe ein Rauchzeichen in die Lücke. Falls du ein Tablet benutzt, klicke zuerst auf eine Wolke und danach auf eine Lücke. <br> <br>
       
       <div class="start-area" id="start-area" @dragover="allowDrop($event)" @drop="drop($event, '1')">
         <img id="big-cloud-1" src="../assets/big-cloud.png" @click="selectItem($event,'big-cloud-1')" draggable="true" @dragstart="drag($event)" width="336" height="69">
         <img id="small-cloud-1" src="../assets/small-cloud.png" @click="selectItem($event,'small-cloud-1')" draggable="true" @dragstart="drag($event)" width="336" height="69">
       </div>
 
-      <p v-if="submitted">Die Antwort ist {{result}}</p>
        <br>
        <Footer
         @next_task="reloadPage()"
@@ -97,12 +103,14 @@
 import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
 import Footer from "../components/Footer.vue"
+import Verifier from "../components/Verifier.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
     Footer,
+    Verifier,
   },
   data() {
     return {
@@ -153,7 +161,7 @@ export default defineComponent({
       var correct_1 = ans_1 == this.seq_numbers[0][this.gap_1]? true : false
 
       if(correct_1){
-        this.result = "richtig."
+        this.result = "korrekt."
       } else {
         this.result = "falsch."
       }

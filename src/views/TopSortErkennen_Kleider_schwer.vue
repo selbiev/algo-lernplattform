@@ -1,5 +1,11 @@
 <template>
   <div class="CodesErstellen">
+    <Verifier 
+        :correctSolution="this.result == 'korrekt.'"
+        v-if="this.submitted" 
+        :tip="hint()"
+        @close-verifier="this.submitted = false" />
+
     <Header 
         :diff_level="'schwer'" 
         :task_name="'Kleider Reihenfolge einstufen'" 
@@ -49,10 +55,7 @@
       Nein
     </button>
 
-      <p v-if="submitted">Die Antwort ist {{result}}</p>
-      <p v-if="submitted && result=='falsch.' && !check_ordering(this.top_ordering)">{{wrong_cloth}} zu früh gewählt.</p>
-      <p v-if="submitted && result=='falsch.' && check_ordering(this.top_ordering)">Ist diese Reihenfolge wirklich falsch? Schau genauer hin.</p>
-
+      
       <br v-if="!submitted"> <br v-if="!submitted">
       <Footer
         @next_task="reloadPage()"
@@ -66,12 +69,14 @@
 import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
 import Footer from "../components/Footer.vue"
+import Verifier from "../components/Verifier.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
     Footer,
+    Verifier
   },
   data() {
     return {
@@ -115,6 +120,7 @@ export default defineComponent({
         {id: 0, from_node: 5, to_node: 8},
       ],
       adj_list: [],   //klassische adjazenzliste, d.h. adj_list[i] = liste von nachbarsknoten von knoten i
+      answer_given: false,
     }
   },
   mounted() {
@@ -160,8 +166,24 @@ export default defineComponent({
     reloadPage(){
       this.$router.go(0)
     },
+    /**
+     * <p v-if="submitted && result=='falsch.' && !check_ordering(this.top_ordering)">{{wrong_cloth}} zu früh gewählt.</p>
+      <p v-if="submitted && result=='falsch.' && check_ordering(this.top_ordering)">Ist diese Reihenfolge wirklich falsch? Schau genauer hin.</p>
+
+     */
+    hint(){
+      if(this.answer_given && this.submitted && this.result == 'falsch.' && this.check_ordering(this.top_ordering))
+      {
+        return "Ist diese Reihenfolge wirklich falsch? Schau genauer hin."
+      }
+      if(this.answer_given && this.submitted && this.result=='falsch.' && !this.check_ordering(this.top_ordering)){
+        return this.wrong_cloth + " zu früh gewählt."
+      }
+      return ""
+    },
     give_answer(antwort){
       if(antwort == "ja" || antwort == "nein"){
+        this.answer_given = true
         document.getElementById('ja').style.backgroundColor = "grey"
         document.getElementById('nein').style.backgroundColor = "grey"
         
@@ -174,9 +196,9 @@ export default defineComponent({
       var solution = this.check_ordering(this.top_ordering)
       console.log(this.answer)
       console.log(solution)
-      if(solution==true && this.answer==true){
+      if(this.answer_given && solution==true && this.answer==true){
         this.result = "korrekt."
-      } else if(solution==false && this.answer==false){
+      } else if(this.answer_given && solution==false && this.answer==false){
         this.result = "korrekt."
       } else {
         this.result = "falsch."

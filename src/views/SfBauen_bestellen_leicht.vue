@@ -1,5 +1,11 @@
 <template>
     <div class="CodesErgaenzen">
+      <Verifier 
+        :correctSolution="this.result == 'korrekt.'"
+        v-if="this.submitted" 
+        :tip="''"
+        @close-verifier="this.submitted = false" />
+        
         <Header 
         :diff_level="'leicht'" 
         :task_name="'Bauteile bestellen'" 
@@ -162,7 +168,7 @@
         </div>
       </div>
 
-      <br>
+      <br> Ziehe die Figuren in die Lücken. Falls du ein Tablet benutzt, klicke zuerst auf eine Figur und danach auf eine Lücke. <br> <br>
 
       <div class="zeichenfolge">
         <div v-for="i in 3" :key="i">
@@ -179,9 +185,7 @@
         <img id="kreis" src="../assets/bauen/kreis.png" @click="selectItem($event,'kreis')" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
       </div>
 
-       
-    <p v-if="submitted">Die Antwort ist {{result}}</p>
-    <br v-if="!submitted">
+    <br>
     <Footer
         @next_task="reloadPage()"
         @check_answer="submitAnswer()"
@@ -211,12 +215,14 @@
 import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
 import Footer from "../components/Footer.vue"
+import Verifier from "../components/Verifier.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
-    Footer
+    Footer,
+    Verifier
   },
   data() {
     return {

@@ -1,5 +1,11 @@
 <template>
     <div class="CodesAbstaende">
+      <Verifier 
+        :correctSolution="this.result == 'korrekt.'"
+        v-if="this.submitted" 
+        :tip="''"
+        @close-verifier="this.submitted = false" />
+
       <Header 
         :diff_level="'mittel'" 
         :task_name="'Kodierung Abstände'" 
@@ -94,7 +100,7 @@
           </div>
         </div>
 
-        <div v-if="submitted" class="abstaende" >
+        <div v-if="submitted_" class="abstaende" >
           <div class="codes">
             <div v-for='index in 5' :key='index' id="index">
               <img v-if="!falsch_beantwortet[index-1] == true" src="../assets/korrekt.png" @click="toggleAbst($event, index-1)" />
@@ -102,12 +108,11 @@
             </div>
           </div>
         </div>
-
+      <p v-if="submitted_">Der Abstand zwischen den beiden Kodierungen beträgt {{compute_abstand()}}</p>
         
       </div>
 
-      <p class="ans" v-if="submitted">Die Antwort ist {{result}}</p>
-      <br v-if="!submitted">
+      <br>
       
       <Footer
         @next_task="reloadPage()"
@@ -124,12 +129,14 @@
 import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
 import Footer from "../components/Footer.vue"
+import Verifier from "../components/Verifier.vue"
 
 export default defineComponent({
   name: 'SfAbstaende',
   components: {
     Header,
     Footer,
+    Verifier
   },
   data() {
     return {
@@ -137,6 +144,7 @@ export default defineComponent({
       anz_tage: 3,
       answer: 0,
       submitted: false as boolean,
+      submitted_: false as boolean,
       result: "falsch.",
       ans_abst: [false,false,false,false,false],
       falsch_beantwortet: [true,true,true,true,true]
@@ -164,6 +172,7 @@ export default defineComponent({
     submitAnswer(){
       /* TODO */
       this.submitted = true
+      this.submitted_ = true
       this.checkAnswer()
     },
     toggleAbst(ev: any, pos: number){
@@ -182,7 +191,7 @@ export default defineComponent({
       }
 
       if(all_good){
-        this.result = "richtig.";
+        this.result = "korrekt.";
       } else {
         this.result = "falsch."
       }

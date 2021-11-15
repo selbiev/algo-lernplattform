@@ -1,5 +1,11 @@
 <template>
   <div class="CodesErstellen">
+    <Verifier 
+        :correctSolution="this.result == 'korrekt.'"
+        v-if="this.submitted" 
+        :tip="''"
+        @close-verifier="this.submitted = false" />
+
     <Header 
         :diff_level="'schwer'" 
         :task_name="'Marathon Rangliste angeben'" 
@@ -16,6 +22,8 @@
     <canvas id="canvas" width="700" height="400" style="border:1px solid #d3d3d3;"></canvas> <br><br>
     Erstelle eine mögliche Rangliste, wenn die Freunde am Marathon teilnehmen würden.
     <br> <br>
+    Falls du ein Tablet benutzt, klicke zuerst auf eine Person und danach auf eine Lücke.
+    <br><br>
 
     <div class="drop-slots">
       <div v-for="i in top_ordering.length" :key="i">
@@ -35,20 +43,6 @@
       <img v-if="nodes[7].active" id="Xavi" src="../assets/marathon/Xavi.png" draggable="true" @click="selectItem($event,'Xavi')" @dragstart="drag($event)" width="336" height="69">
       </div>
 
-      <p v-if="submitted && result.length>0">Die Antwort ist {{result}}</p>
-      <p v-if="submitted && result=='falsch.' && !all_slots_used()">Bitte fülle alle Lücken aus.</p>
-      <p v-if="submitted && result=='falsch.' && !check_ordering(this.answers) && all_slots_used()">Folgende Person zu früh gewählt: </p>
-      <p>
-        <img v-if="submitted && result=='falsch.' && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Anna'" src="../assets/marathon/Anna.png" />
-        <img v-if="submitted && result=='falsch.' && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Dennis'" src="../assets/marathon/Dennis.png" />
-        <img v-if="submitted && result=='falsch.' && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Jacqueline'" src="../assets/marathon/Jacqueline.png" />
-        <img v-if="submitted && result=='falsch.' && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Michelle'" src="../assets/marathon/Michelle.png" />
-        <img v-if="submitted && result=='falsch.' && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Otso'" src="../assets/marathon/Otso.png" />
-        <img v-if="submitted && result=='falsch.' && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Peter'" src="../assets/marathon/Peter.png" />
-        <img v-if="submitted && result=='falsch.' && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Ulla'" src="../assets/marathon/Ulla.png" />
-        <img v-if="submitted && result=='falsch.' && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Xavi'" src="../assets/marathon/Xavi.png" />
-      </p>
-
     <br v-if="!submitted">
     <Footer
         @next_task="reloadPage()"
@@ -63,12 +57,14 @@
 import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
 import Footer from "../components/Footer.vue"
+import Verifier from "../components/Verifier.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
     Footer,
+    Verifier
   },
   data() {
     return {

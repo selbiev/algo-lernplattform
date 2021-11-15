@@ -1,5 +1,12 @@
 <template>
     <div class="CodesErgaenzen">
+
+      <Verifier 
+        :correctSolution="this.result == 'korrekt.'"
+        v-if="this.submitted" 
+        :tip="this.hint()"
+        @close-verifier="this.submitted = false" />
+
         <Header 
         :diff_level="'mittel'" 
         :task_name="'Kodierung ergänzen'" 
@@ -74,19 +81,12 @@
         </div>
       </div>
 
-      <br> Ziehe die Rauchzeichen in die Lücken. <br> <br>
+      <br> Ziehe die Rauchzeichen in die Lücken. Falls du ein Tablet benutzt, klicke zuerst auf eine Wolke und danach auf eine Lücke. <br> <br>
 
       <div class="start-area" id="start-area" @dragover="allowDrop($event)" @drop="drop($event, 1)">
         <img id="big-cloud-1" src="../assets/big-cloud.png" @click="selectItem($event,'big-cloud-1')" draggable="true" @dragstart="drag($event)" width="336" height="69">
         <img id="small-cloud-1" src="../assets/small-cloud.png" @click="selectItem($event,'small-cloud-1')" draggable="true" @dragstart="drag($event)" width="336" height="69">
       </div>
-
-       
-
-    <p v-if="submitted">Die Antwort ist {{result}}</p>
-    <p class="answer_p" v-if="submitted && (!gap_1_korr || !gap_2_korr)">Fehler bei:</p>
-    <p class="answer_p" v-if="submitted && !gap_1_korr"> 1. Lücke </p>
-    <p class="answer_p" v-if="submitted && !gap_2_korr"> 2. Lücke </p>
 
     <br>
        <Footer
@@ -102,12 +102,14 @@
 import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
 import Footer from "../components/Footer.vue"
+import Verifier from "../components/Verifier.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
     Footer,
+    Verifier
   },
   data() {
     return {
@@ -148,6 +150,16 @@ export default defineComponent({
     reloadPage(){
       this.$router.go(0)
     },
+    hint(){
+      var tip = "Falsch ausgefüllte Lücken: "
+      if(!this.gap_1_korr){
+        tip += "1     "
+      }
+      if(!this.gap_2_korr){
+        tip += "2     "
+      }
+      return tip
+    },
     translate_ans(answer){
       if(answer.charAt(0)=='s'){
         return 0
@@ -161,7 +173,7 @@ export default defineComponent({
 
       var corr = this.gap_1_korr && this.gap_2_korr
 
-      this.result = corr? "richtig." : "falsch."
+      this.result = corr? "korrekt." : "falsch."
       this.submitted = true
     },
     clearDropslots(){

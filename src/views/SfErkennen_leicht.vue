@@ -1,5 +1,11 @@
 <template>
     <div class="CodesErkennen">
+      <Verifier 
+        :correctSolution="this.result == 'korrekt.'"
+        :tip="''"
+        v-if="this.submitted" 
+        @close-verifier="this.submitted = false" />
+
       <Header 
         :diff_level="'einfach'" 
         :task_name="'Kodierung erkennen'" 
@@ -86,14 +92,11 @@
         </div>
       </div>
       <br> 
-      <p class="ans" v-if="submitted">Die Antwort ist {{result}} <br></p>
       <Footer
         @next_task="reloadPage()"
         @check_answer="submitAnswer()"
         @reset="reloadPage()"
         @info="reloadPage()" />
-
-      
 
     </div>
 </template>
@@ -102,6 +105,7 @@
 import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
 import Footer from "../components/Footer.vue"
+import Verifier from "../components/Verifier.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
@@ -124,6 +128,7 @@ export default defineComponent({
   components: {
     Header,
     Footer,
+    Verifier
   },
   created: function(){
     this.createNumbers()
@@ -252,13 +257,11 @@ export default defineComponent({
 
 
 <style scoped>
-
-
     .CodesErkennen{
         background-color: #FFE5B2;
         padding: 20px 20px 20px 20px;
         height: auto;
-        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     }
 
     img {
@@ -325,5 +328,24 @@ export default defineComponent({
       padding: 0 0 0 25px;
       text-align: left;
     }
+
+    /*img:hover {
+  animation: shake 0.5s;
+  animation-iteration-count: 1s;
+}
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}*/
 
 </style>

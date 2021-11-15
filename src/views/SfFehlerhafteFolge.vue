@@ -1,5 +1,11 @@
 <template>
     <div class="CodesErkennen">
+      <Verifier 
+        :correctSolution="this.result == 'korrekt.'"
+        v-if="this.submitted" 
+        :tip="this.hint()"
+        @close-verifier="this.submitted = false" />
+
       <Header 
         :diff_level="'mittel'" 
         :task_name="'Kodierung Fehler korrigieren'" 
@@ -102,10 +108,7 @@
         Es wird hageln.
       </button>
 
-      <p class="ans" v-if="submitted">Die Antwort ist {{result}}</p>
-      <p v-if="submitted && !correct_number_of_answers">Du hast {{hinweis}} Kästchen ausgewählt.</p>
-
-      <br v-if="!submitted"> <br v-if="!submitted">
+      <br><br>
       <Footer
         @next_task="reloadPage()"
         @check_answer="submitAnswer()"
@@ -119,12 +122,14 @@
 import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
 import Footer from "../components/Footer.vue"
+import Verifier from "../components/Verifier.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
     Footer,
+    Verifier
   },
   data() {
     return {
@@ -148,6 +153,11 @@ export default defineComponent({
   methods : {
     reloadPage(){
       this.$router.go(0)
+    },
+    hint(){
+      if(!this.correct_number_of_answers){
+        return "Du hast " + this.hinweis + " Kästchen ausgewählt."
+      }
     },
     ans_0(){
       if(this.ans_wetter[0]){
@@ -245,7 +255,7 @@ export default defineComponent({
       var correct = this.compare_arrays(ausgew_antworten,richtige_antworten)
 
       if(correct){
-        this.result = "richtig."
+        this.result = "korrekt."
       } else {
         this.result = "falsch."
       }

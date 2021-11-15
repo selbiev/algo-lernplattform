@@ -1,5 +1,11 @@
 <template>
     <div class="CodesErgaenzen">
+      <Verifier 
+        :correctSolution="this.result == 'korrekt.'"
+        v-if="this.submitted" 
+        :tip="this.hint()"
+        @close-verifier="this.submitted = false" />
+
         <Header 
         :diff_level="'schwer'" 
         :task_name="'Kodierung ergänzen'" 
@@ -87,20 +93,12 @@
         </div>
       </div>
 
-      <br> Ziehe die Rauchzeichen in die Lücken. <br> <br>
+      <br> Ziehe die Rauchzeichen in die Lücken. Falls du ein Tablet benutzt, klicke zuerst auf eine Wolke und danach auf eine Lücke. <br> <br>
 
       <div class="start-area" id="start-area" @dragover="allowDrop($event)" @drop="drop($event, '1')">
         <img id="big-cloud-1" src="../assets/big-cloud.png" @click="selectItem($event,'big-cloud-1')" draggable="true" @dragstart="drag($event)" width="336" height="69">
         <img id="small-cloud-3" src="../assets/small-cloud.png" @click="selectItem($event,'small-cloud-3')" draggable="true" @dragstart="drag($event)" width="336" height="69">
       </div>
-
-       
-
-    <p v-if="submitted">Die Antwort ist {{result}}</p>
-    <p v-if="submitted && (!correct_1 || !correct_2 || !correct_3)">Fehler bei:</p>
-    <p class="answer_p" v-if="submitted && !correct_1"> 1. Lücke </p>
-    <p class="answer_p" v-if="submitted && !correct_2"> 2. Lücke </p>
-    <p class="answer_p" v-if="submitted && !correct_3"> 3. Lücke </p>
 
     <br>
        <Footer
@@ -115,12 +113,14 @@
 import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
 import Footer from "../components/Footer.vue"
+import Verifier from "../components/Verifier.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
     Footer,
+    Verifier
   },
   data() {
     return {
@@ -159,6 +159,19 @@ export default defineComponent({
     reloadPage(){
       this.$router.go(0)
     },
+    hint(){
+      var tip = "Falsch ausgefüllte Lücken: "
+      if(!this.correct_1){
+        tip += "1     "
+      }
+      if(!this.correct_2){
+        tip += "2     "
+      }
+      if(!this.correct_3){
+        tip += "3     "
+      }
+      return tip
+    },
     translate_ans(answer){
       if(answer.charAt(0)=='s'){
         return 0
@@ -174,7 +187,7 @@ export default defineComponent({
       this.correct_2 = ans_2 == this.seq_numbers[1][this.gap_2]? true : false
       this.correct_3 = ans_3 == this.seq_numbers[2][this.gap_3]? true : false
       if(this.correct_1 && this.correct_2 && this.correct_3){
-        this.result = "richtig."
+        this.result = "korrekt."
       } else {
         this.result = "falsch."
       }

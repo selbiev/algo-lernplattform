@@ -1,5 +1,11 @@
 <template>
   <div class="CodesErstellen">
+    <Verifier 
+        :correctSolution="this.result == 'korrekt.'"
+        v-if="this.submitted" 
+        :tip="''"
+        @close-verifier="this.submitted = false" />
+
     <Header 
         :diff_level="'schwer'" 
         :task_name="'Kleider Reihenfolge angeben'" 
@@ -14,7 +20,7 @@
     Wenn du dir Kleider anziehst, musst du die Reihenfolge beachten. <br>
     Zum Beispiel T-Shirt &rarr; Jacke bedeutet: Zuerst muss das T-Shirt und erst dann die Jacke angezogen werden.<br> <br>
     <canvas id="canvas" width="500" height="330" style="border:1px solid #d3d3d3;"></canvas> <br><br>
-    In welcher Reihenfolge kannst du diese Kleider anziehen? Ziehe die Kleider in die Lücken. Um die Wahl rückgängig zu machen, ziehe die Kleider zurück.
+    In welcher Reihenfolge kannst du diese Kleider anziehen? <br><br>Ziehe die Kleider in die Lücken. Um die Wahl rückgängig zu machen, ziehe die Kleider zurück. <br><br>Falls du ein Tablet benutzt, dann klicke zuerst auf ein Kleidungsstück und danach auf eine Lücke.
     <br> <br>
 
     <div class="drop-slots">
@@ -38,10 +44,6 @@
       <img v-if="nodes[3].active" class="kleider-bild" id="T-Shirt" src="../assets/kleider/T-Shirt.png" draggable="true" @click="selectItem($event,'T-Shirt')" @dragstart="drag($event)" width="336" height="69">
     </div>
     
-      <p v-if="submitted && result.length>0">Die Antwort ist {{result}}</p>
-      <p v-if="submitted && result=='falsch.' && !all_slots_used()">Bitte fülle alle Lücken aus.</p>
-      <p v-if="submitted && result=='falsch.' && !check_ordering(this.answers) && all_slots_used()">{{wrong_cloth}} zu früh gewählt.</p>
-
     <br v-if="!submitted">
     <Footer
         @next_task="reloadPage()"
@@ -56,12 +58,14 @@
 import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
 import Footer from "../components/Footer.vue"
+import Verifier from "../components/Verifier.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
     Footer,
+    Verifier
   },
   data() {
     return {

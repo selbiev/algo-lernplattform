@@ -1,5 +1,11 @@
 <template>
   <div class="CodesErstellen">
+    <Verifier 
+        :correctSolution="this.result == 'korrekt.'"
+        v-if="this.submitted" 
+        :tip="''"
+        @close-verifier="this.submitted = false" />
+
     <Header 
         :diff_level="'schwer'" 
         :task_name="'Kuchen Backen Reihenfolge angeben'" 
@@ -13,7 +19,7 @@
 
     Du willst einen Kuchen backen und ihn zusammen mit deinen Freunden essen.  <br> <br>
     <canvas id="canvas" width="870" height="500" style="border:1px solid #d3d3d3;"></canvas> <br><br>
-    In welcher Reihenfolge kannst du das machen? Ziehe die Aufgaben in die Lücken. Um die Wahl rückgängig zu machen, ziehe die sie wieder zurück wo es Platz hat.
+    In welcher Reihenfolge kannst du das machen? Ziehe die Aufgaben in die Lücken. <br><br>Um die Wahl rückgängig zu machen, ziehe die sie wieder zurück. Falls du ein Tablet benutzt, klicke zuerst auf eine Aktivität und danach auf eine Lücke.
     <br> <br>
 
     <div class="drop-slots">
@@ -35,11 +41,7 @@
       <img v-if="nodes[8].active" id="o_vorheizen" src="../assets/backen/o_vorheizen.png" draggable="true" @click="selectItem($event,'o_vorheizen')" @dragstart="drag($event)" width="336" height="69">
     </div>
 
-      <p v-if="submitted && result.length>0">Die Antwort ist {{result}}</p>
-      <p v-if="submitted && result=='falsch.' && !all_slots_used()">Bitte fülle alle Lücken aus.</p>
-      <p v-if="submitted && result=='falsch.' && !check_ordering(this.answers) && all_slots_used()">{{wrong_cloth}} zu früh gewählt.</p>
-
-    <br v-if="!submitted">
+    <br>
     <Footer
         @next_task="reloadPage()"
         @check_answer="submitAnswer()"
@@ -52,12 +54,14 @@
 import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
 import Footer from "../components/Footer.vue"
+import Verifier from "../components/Verifier.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
     Footer,
+    Verifier
   },
   data() {
     return {

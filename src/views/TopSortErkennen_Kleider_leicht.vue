@@ -1,5 +1,11 @@
 <template>
   <div class="CodesErstellen">
+    <Verifier 
+        :correctSolution="this.result == 'korrekt.'"
+        v-if="this.submitted" 
+        :tip="''"
+        @close-verifier="this.submitted = false" />
+
     <Header 
         :diff_level="'leicht'" 
         :task_name="'Kleider Reihenfolge einstufen'" 
@@ -44,8 +50,7 @@
       Nein
     </button>
 
-      <p v-if="submitted">Die Antwort ist {{result}}</p>
-      <br v-if="!submitted"> <br v-if="!submitted">
+      <br><br>
       <Footer
         @next_task="reloadPage()"
         @check_answer="submitAnswer()"
@@ -59,20 +64,23 @@
 import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
 import Footer from "../components/Footer.vue"
+import Verifier from "../components/Verifier.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
     Footer,
+    Verifier
   },
   data() {
     return {
       answer: false,
       submitted: false,
-      result: "falsch.",
+      result: "",
       type: [false,false,false],
       corr: false,
+      answer_given: false,
     }
   },
   created() {
@@ -89,8 +97,8 @@ export default defineComponent({
       this.$router.go(0)
     },
     submitAnswer(){
-      if((this.answer==true && this.corr) || (this.answer==false && !this.corr)){
-        this.result = "richtig."
+      if(this.answer_given && ((this.answer==true && this.corr) || (this.answer==false && !this.corr))){
+        this.result = "korrekt."
       } else {
         this.result = "falsch."
       }
@@ -98,6 +106,7 @@ export default defineComponent({
     },
     give_answer(antwort){
       if(antwort == "ja" || antwort == "nein"){
+        this.answer_given = true
         document.getElementById('ja').style.backgroundColor = "grey"
         document.getElementById('nein').style.backgroundColor = "grey"
         

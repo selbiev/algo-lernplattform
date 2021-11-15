@@ -1,5 +1,11 @@
 <template>
     <div class="CodesErkennen">
+      <Verifier 
+        :correctSolution="this.result == 'korrekt.'"
+        v-if="this.submitted" 
+        :tip="this.hint()"
+        @close-verifier="this.submitted = false" />
+
       <Header 
         :diff_level="'schwer'" 
         :task_name="'Kodierung erkennen'" 
@@ -123,14 +129,6 @@
       </div>
       <br>
       
-
-      <p v-if="submitted">Die Antwort ist {{result}}</p>
-      <p v-if="submitted">
-        Tag 1 {{ (falsche_tage[0]? "richtig" : "falsch") }} <br>
-        Tag 2 {{ (falsche_tage[1]? "richtig" : "falsch") }} <br>
-        Tag 3 {{ (falsche_tage[2]? "richtig" : "falsch") }} <br>
-      </p>
-
       <br><Footer
         @next_task="reloadPage()"
         @check_answer="submitAnswer()"
@@ -144,12 +142,14 @@
 import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
 import Footer from "../components/Footer.vue"
+import Verifier from "../components/Verifier.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
     Footer,
+    Verifier,
   },
   data() {
     return {
@@ -182,6 +182,20 @@ export default defineComponent({
   methods : {
     reloadPage(){
       this.$router.go(0)
+    },
+    hint(){
+
+      var tip = "Falsch gekennzeichnete Tage: "
+      if(!this.falsche_tage[0]){
+        tip += "1     "
+      }
+      if(!this.falsche_tage[1]){
+        tip += "2     "
+      }
+      if(!this.falsche_tage[2]){
+        tip += "3"
+      }
+      return tip
     },
     submitAnswer(){
       this.submitted = true

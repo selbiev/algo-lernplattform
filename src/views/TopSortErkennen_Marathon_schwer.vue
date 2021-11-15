@@ -1,5 +1,11 @@
 <template>
   <div class="CodesErstellen">
+    <Verifier 
+        :correctSolution="this.result == 'korrekt.'"
+        v-if="this.submitted" 
+        :tip="''"
+        @close-verifier="this.submitted = false" />
+
     <Header 
         :diff_level="'schwer'" 
         :task_name="'Marathon Rangliste einstufen'" 
@@ -44,21 +50,7 @@
       Nein
     </button>
 
-      <p v-if="submitted">Die Antwort ist {{result}}</p>
-      <p v-if="submitted && result=='falsch.' && check_ordering(this.top_ordering)">Ist diese Rangliste wirklich falsch? Schau genauer hin.</p>
-      <p v-if="submitted && result=='falsch.' && !check_ordering(this.top_ordering)">Folgende Person ist zu früh auf der Rangliste: </p>
-      <p>
-        <img v-if="submitted && result=='falsch.' && !check_ordering(this.top_ordering) && wrong_cloth=='Anna'" src="../assets/marathon/Anna.png" />
-        <img v-if="submitted && result=='falsch.' && !check_ordering(this.top_ordering) && wrong_cloth=='Dennis'" src="../assets/marathon/Dennis.png" />
-        <img v-if="submitted && result=='falsch.' && !check_ordering(this.top_ordering) && wrong_cloth=='Jacqueline'" src="../assets/marathon/Jacqueline.png" />
-        <img v-if="submitted && result=='falsch.' && !check_ordering(this.top_ordering) && wrong_cloth=='Michelle'" src="../assets/marathon/Michelle.png" />
-        <img v-if="submitted && result=='falsch.' && !check_ordering(this.top_ordering) && wrong_cloth=='Otso'" src="../assets/marathon/Otso.png" />
-        <img v-if="submitted && result=='falsch.' && !check_ordering(this.top_ordering) && wrong_cloth=='Peter'" src="../assets/marathon/Peter.png" />
-        <img v-if="submitted && result=='falsch.' && !check_ordering(this.top_ordering) && wrong_cloth=='Ulla'" src="../assets/marathon/Ulla.png" />
-        <img v-if="submitted && result=='falsch.' && !check_ordering(this.top_ordering) && wrong_cloth=='Xavi'" src="../assets/marathon/Xavi.png" />
-      </p>
-
-    <br v-if="!submitted">
+    <br><br>
     <Footer
         @next_task="reloadPage()"
         @check_answer="submitAnswer()"
@@ -71,17 +63,20 @@
 import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
 import Footer from "../components/Footer.vue"
+import Verifier from "../components/Verifier.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
     Footer,
+    Verifier
   },
   data() {
     return {
       answer: false,
       submitted: false,
+      submitted_: false,
       result: "falsch.",
       Q: [],
       canvas: null,
@@ -116,6 +111,7 @@ export default defineComponent({
         {id: 0, from_node: 5, to_node: 6},
       ],
       adj_list: [],   //klassische adjazenzliste, d.h. adj_list[i] = liste von nachbarsknoten von knoten i
+      answer_given: false,
     }
   },
   mounted() {
@@ -151,9 +147,6 @@ export default defineComponent({
     //this.top_ordering = (this.ordering_correct)? this.create_valid_ordering() : this.create_random_ordering()
     this.draw_nodes()
     this.prepare_image_names()
-
-    
-    
   },
   props: {
 
@@ -164,6 +157,7 @@ export default defineComponent({
     },
     give_answer(antwort){
       if(antwort == "ja" || antwort == "nein"){
+        this.answer_given = true
         document.getElementById('ja').style.backgroundColor = "grey"
         document.getElementById('nein').style.backgroundColor = "grey"
         
@@ -176,14 +170,15 @@ export default defineComponent({
       var solution = this.check_ordering(this.top_ordering)
       console.log(this.answer)
       console.log(solution)
-      if(solution==true && this.answer==true){
+      if(this.answer_given && solution==true && this.answer==true){
         this.result = "korrekt."
-      } else if(solution==false && this.answer==false){
+      } else if(this.answer_given && solution==false && this.answer==false){
         this.result = "korrekt."
       } else {
         this.result = "falsch."
       }
       this.submitted = true
+      this.submitted_ = true
     },
     prepare_image_names(){
       //console.log("top ord len")

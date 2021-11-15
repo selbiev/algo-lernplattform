@@ -35,9 +35,6 @@ export default defineComponent({
   props: [
     
   ],
-  created: function(){
-    this.$emit('messageFromChild', "------------ hello from child to parent ------------")
-  },
   methods: {
     reloadPage(){
       location.reload()

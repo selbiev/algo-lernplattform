@@ -1,5 +1,11 @@
 <template>
   <div class="CodesErstellen">
+    <Verifier 
+        :correctSolution="this.result == 'korrekt.'"
+        v-if="this.submitted" 
+        :tip="''"
+        @close-verifier="this.submitted = false" />
+        
     <Header 
         :diff_level="'schwer'" 
         :task_name="'Kodierung erstellen'" 
@@ -64,7 +70,6 @@
         </tr>
       </table>
 
-      <p v-if="submitted">Die Antwort ist {{result}}</p>
       <p style="display:none" id="hint1">Abstand zwischen dem ersten und zweiten Code: {{abstand_0_1}}</p>
       <p style="display:none" id="hint2">Abstand zwischen dem zweiten und dritten Code: {{abstand_1_2}}</p>
       <p style="display:none" id="hint3">Abstand zwischen dem ersten und dritten Code: {{abstand_0_2}}</p>
@@ -83,6 +88,7 @@
 import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
 import Footer from "../components/Footer.vue"
+import Verifier from "../components/Verifier.vue"
 
 
 export default defineComponent({
@@ -90,6 +96,7 @@ export default defineComponent({
   components: {
     Header,
     Footer,
+    Verifier
   },
   data() {
     return {

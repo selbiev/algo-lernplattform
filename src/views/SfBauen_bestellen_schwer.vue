@@ -1,5 +1,11 @@
 <template>
     <div class="CodesErgaenzen">
+      <Verifier 
+        :correctSolution="this.result == 'korrekt.'"
+        v-if="this.submitted" 
+        :tip="this.hint()"
+        @close-verifier="this.submitted = false" />
+        
         <Header 
         :diff_level="'schwer'" 
         :task_name="'Bauteile bestellen'" 
@@ -162,7 +168,7 @@
         </div>
       </div>
 
-      <br>
+      <br> Ziehe die Figuren in die Lücken. Falls du ein Tablet benutzt, klicke zuerst auf eine Figur und danach auf eine Lücke. <br> <br>
 
       <div class="zeichenfolge">
         <div v-for="i in 9" :key="i">
@@ -178,13 +184,6 @@
         <img id="viereck" src="../assets/bauen/viereck.png" @click="selectItem($event,'viereck')" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
         <img id="kreis" src="../assets/bauen/kreis.png" @click="selectItem($event,'kreis')" draggable="true" droppable="false" @dragstart="drag($event)" width="336" height="69">
       </div>
-
-    <p v-if="submitted">Die Antwort ist {{result}}</p>
-    <p v-if="submitted">
-        Objekt 1 {{ (falsche_bestellungen[0]? "richtig" : "falsch") }} <br>
-        Objekt 2 {{ (falsche_bestellungen[1]? "richtig" : "falsch") }} <br>
-        Objekt 3 {{ (falsche_bestellungen[2]? "richtig" : "falsch") }} <br>
-    </p>
 
     <br v-if="!submitted">
     <Footer
@@ -216,12 +215,14 @@
 import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
 import Footer from "../components/Footer.vue"
+import Verifier from "../components/Verifier.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
     Footer,
+    Verifier
   },
   data() {
     return {
@@ -248,6 +249,20 @@ export default defineComponent({
   methods : {
     reloadPage(){
       this.$router.go(0)
+    },
+    hint(){
+
+      var tip = "Falsch bestellte Objekte: "
+      if(!this.falsche_bestellungen[0]){
+        tip += "1     "
+      }
+      if(!this.falsche_bestellungen[1]){
+        tip += "2     "
+      }
+      if(!this.falsche_bestellungen[2]){
+        tip += "3"
+      }
+      return tip
     },
     translate_ans(answer){
       if(answer.charAt(0)=='s'){
