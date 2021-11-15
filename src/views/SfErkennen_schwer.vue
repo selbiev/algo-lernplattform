@@ -15,7 +15,8 @@
         :has_diff_levels="true"
         :has_leicht="true"
         :has_mittel="false"
-        :has_schwer="true"/> <br><br>
+        :has_schwer="true"
+        :next_task="'SfErgaenzen_leicht'"/> <br><br>
       Biber Bob entscheidet sich, das Wetter mit folgenden Rauchzeichen zu kodieren: <br> <br>
         <!-- Automatisierte Version, man muss einfach den css noch anpassen -->
         

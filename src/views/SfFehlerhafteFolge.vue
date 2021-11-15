@@ -15,7 +15,8 @@
         :has_diff_levels="false"
         :has_leicht="false"
         :has_mittel="false"
-        :has_schwer="false"/> <br><br>
+        :has_schwer="false"
+        :next_task="'SfAbstaende_mittel'"/> <br><br>
       Biber Bob entscheidet sich, das Wetter mit folgenden Zeichenfolgen zu kodieren: <br><br> 
         
       

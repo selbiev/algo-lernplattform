@@ -15,7 +15,8 @@
         :has_diff_levels="false"
         :has_leicht="false"
         :has_mittel="false"
-        :has_schwer="false"/> <br><br>
+        :has_schwer="false"
+        :next_task="'TopSortErstellen_Backen_schwer'"/> <br><br>
     <img src="../assets/backen/k_auftischen.png" id="k_auftischen" style="display: none;"/>
     <img src="../assets/backen/b_lassen.png" id="b_lassen" style="display: none;"/>
     <img src="../assets/backen/bm_fuellen.png" id="bm_fuellen" style="display: none;"/>

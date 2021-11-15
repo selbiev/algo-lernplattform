@@ -2,10 +2,13 @@
   <h1>{{task_number}}. {{task_name}} ({{diff_level}})</h1>
   <img :src="getImage()" id="picture" />
   <div id="buttons">
-    <button class="button" id="next_task" @click="reloadPage()">
-      <img src="../assets/icons/skip.png" /> 
-      <br> <span> Neue Aufgabe </span>
-    </button>
+    <router-link :to="{name: next_task}">
+      <button class="button" id="next_task">
+        <img src="../assets/icons/skip.png" /> 
+        <br> <span> Nächste Aufgabe </span>
+      </button>
+    </router-link>
+    
 
     <router-link to="/" style="text-decoration: none; color: black">
       <button class="button" id="main_menu">
@@ -55,6 +58,7 @@ export default defineComponent({
     'has_leicht',
     'has_mittel',
     'has_schwer',
+    'next_task',
   ],
   methods: {
     reloadPage(){

@@ -15,7 +15,8 @@
         :has_diff_levels="false"
         :has_leicht="false"
         :has_mittel="false"
-        :has_schwer="false"/> <br><br>
+        :has_schwer="false"
+        :next_task="'TopSortErkennen_Backen_schwer'"/> <br><br>
 
     Ein paar Freunde nehmen am Marathon teil. Wir wissen, dass manche schneller sind als andere. <br> 
     Zum Beispiel Emma &rarr; Sofia bedeutet, dass Emma schneller ist als Sofia.  <br> <br>

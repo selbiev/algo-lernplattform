@@ -15,7 +15,8 @@
         :has_diff_levels="false"
         :has_leicht="false"
         :has_mittel="false"
-        :has_schwer="false"/> <br><br>
+        :has_schwer="false"
+        :next_task="'TopSortErstellen_Marathon_schwer'"/> <br><br>
     <img src="../assets/marathon/Anna.png" id="Anna" style="display: none;"/>
     <img src="../assets/marathon/Dennis.png" id="Dennis" style="display: none;"/>
     <img src="../assets/marathon/Jacqueline.png" id="Jacqueline" style="display: none;"/>

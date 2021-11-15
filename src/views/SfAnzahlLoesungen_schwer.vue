@@ -15,7 +15,8 @@
         :has_diff_levels="true"
         :has_leicht="true"
         :has_mittel="false"
-        :has_schwer="true"/> <br><br>
+        :has_schwer="true"
+        :next_task="'SfFehlerhafteFolge'"/> <br><br>
       Biber Bob sendet folgende Rauchzeichen, um das Wetter für einen Tag vorauszusagen. <br> <br>
         <!-- Automatisierte Version, man muss einfach den css noch anpassen -->
         

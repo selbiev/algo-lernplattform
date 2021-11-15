@@ -15,7 +15,8 @@
         :has_diff_levels="false"
         :has_leicht="false"
         :has_mittel="false"
-        :has_schwer="false"/> <br><br>
+        :has_schwer="false"
+        :next_task="'TopSortErkennen_Marathon_schwer'"/> <br><br>
 
     Wenn du dir Kleider anziehst, musst du die Reihenfolge beachten. <br>
     Zum Beispiel T-Shirt &rarr; Jacke bedeutet: Zuerst muss das T-Shirt und erst dann die Jacke angezogen werden.<br> <br>

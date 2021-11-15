@@ -7,7 +7,7 @@
         @close-verifier="this.submitted = false" />
 
       <Header 
-        :diff_level="'einfach'" 
+        :diff_level="'leicht'" 
         :task_name="'Kodierung erkennen'" 
         :task_name_code="'SfErkennen'"
         :task_number="'1'" 
@@ -16,6 +16,7 @@
         :has_leicht="true"
         :has_mittel="false"
         :has_schwer="true"
+        :next_task="'SfErkennen_schwer'"
         @messageFromChild="childMessageReceived"/> <br><br>
       Biber Bob entscheidet sich, das Wetter mit folgenden Rauchzeichen zu kodieren: <br> <br>
         

@@ -15,7 +15,8 @@
         :has_diff_levels="true"
         :has_leicht="true"
         :has_mittel="false"
-        :has_schwer="true"/> <br><br>
+        :has_schwer="true"
+        :next_task="'SfBauen_bestellen_leicht'"/> <br><br>
       Erstelle für jedes Wetter eine Kodierung, sodass es zwischen jedem Paar von Kodierungen ein Abstand von mindestens {{abstand}} gibt.
        <br> <br>
        Klicke auf eine Rauchwolke, um ihre Grösse zu verändern.

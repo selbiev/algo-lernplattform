@@ -15,7 +15,8 @@
         :has_diff_levels="false"
         :has_leicht="false"
         :has_mittel="false"
-        :has_schwer="false"/> <br><br>
+        :has_schwer="false"
+        :next_task="'SfErkennen_leicht'"/> <br><br>
 
     Du willst einen Kuchen backen und ihn zusammen mit deinen Freunden essen.  <br> <br>
     <canvas id="canvas" width="870" height="500" style="border:1px solid #d3d3d3;"></canvas> <br><br>

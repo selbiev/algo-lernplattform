@@ -2,8 +2,8 @@
   
   <div id="buttons">
     <button class="button" id="next_task" @click="next_task()">
-      <img src="../assets/icons/skip.png" /> 
-      <br> <span> Nächste Aufgabe </span>
+      <img src="../assets/icons/new_generate.png" /> 
+      <br> <span>Neue Aufgabe</span>
     </button>
 
     
@@ -14,7 +14,7 @@
 
     <button class="button" id="restart" @click="reset()">
         <img src="../assets/icons/restart.png" />
-        <br> <span> Neu starten </span>
+        <br> <span> Zurücksetzen </span>
     </button>
 
     <button class="button" id="info" @click="info()">
