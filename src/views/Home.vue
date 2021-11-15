@@ -1,11 +1,14 @@
 <template>
   <div class="home">
-    <!--<HelloWorld /> -->
+    <p>
+      <a href="https://forms.gle/6QpQPDXsQMpNHC26A" target="_blank">Link zur Umfrage</a>
+    </p>
     <h1>Willkommen in der Lernumgebung <br>
     Einfach Informatik 3/4</h1>
     <p> 
       <img src="../assets/home.png"/>
     </p>
+    
     <div id="aufgaben-kacheln">
       <div v-for="i in tasks.length" :key="i">
         <router-link :to="{name: tasks[i-1].route}" style="text-decoration: none; color: black">

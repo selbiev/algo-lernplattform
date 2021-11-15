@@ -202,7 +202,7 @@
         @next_task="reloadPage()"
         @check_answer="submitAnswer()"
         @reset="clearDropslots()"
-        @info="reloadPage()" />
+        @info="''" />
   </div>
 </template>
 

@@ -118,7 +118,7 @@
         @next_task="reloadPage()"
         @check_answer="submitAnswer()"
         @reset="reloadPage()"
-        @info="reloadPage()" />
+        @info="''" />
 
       
       <p v-if="submitted">Der Abstand zwischen den beiden Kodierungen beträgt {{compute_abstand()}}</p>

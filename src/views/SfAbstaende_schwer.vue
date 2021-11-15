@@ -115,7 +115,7 @@
         @next_task="reloadPage()"
         @check_answer="submitAnswer()"
         @reset="reset_all()"
-        @info="reloadPage()" />
+        @info="''" />
 
       
     </div>

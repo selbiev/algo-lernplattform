@@ -55,7 +55,7 @@
         @next_task="reloadPage()"
         @check_answer="submitAnswer()"
         @reset="reloadPage()"
-        @info="reloadPage()" />
+        @info="''" />
   </div>
 </template>
 
