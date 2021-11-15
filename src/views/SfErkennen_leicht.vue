@@ -96,7 +96,7 @@
       <Footer
         @next_task="reloadPage()"
         @check_answer="submitAnswer()"
-        @reset="reloadPage()"
+        @reset="''"
         @info="''" />
 
     </div>
