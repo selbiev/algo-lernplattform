@@ -69,7 +69,7 @@
       </table>
       
       
-      <br />Welches Wetter könnte Bob mit diesen Zeichenfolgen gemeint haben? Kreuze eins oder mehrere an. <br /> <br />
+      <br />Welches Wetter könnte Bob mit diesen Zeichenfolgen gemeint haben? Klicke auf eins oder mehrere. <br /> <br />
 
       <div class="zeichenfolge">
         <!--<img v-if="seq_numbers[0][0] == 0" src="../assets/small-cloud.png" />

@@ -264,7 +264,7 @@ export default defineComponent({
     },
     hint(){
 
-      var tip = "Falsch erkannte Objekte: "
+      var tip = "Folgende Objekte wurden falsch erkannt: "
       if(!this.falsche_bestellungen[0]){
         tip += "1     "
       }

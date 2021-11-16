@@ -186,7 +186,7 @@ export default defineComponent({
     },
     hint(){
 
-      var tip = "Falsch gekennzeichnete Tage: "
+      var tip = "Die folgenden Tage sind falsch eingestuft: "
       if(!this.falsche_tage[0]){
         tip += "1     "
       }

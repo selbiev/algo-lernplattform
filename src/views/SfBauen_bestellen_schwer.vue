@@ -253,7 +253,7 @@ export default defineComponent({
     },
     hint(){
 
-      var tip = "Falsch bestellte Objekte: "
+      var tip = "Folgende Objekte wurden falsch bestellt: "
       if(!this.falsche_bestellungen[0]){
         tip += "1     "
       }

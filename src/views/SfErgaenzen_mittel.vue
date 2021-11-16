@@ -152,7 +152,7 @@ export default defineComponent({
       this.$router.go(0)
     },
     hint(){
-      var tip = "Falsch ausgefüllte Lücken: "
+      var tip = "Die folgenden Lücken sind falsch ausgefüllt: "
       if(!this.gap_1_korr){
         tip += "1     "
       }
