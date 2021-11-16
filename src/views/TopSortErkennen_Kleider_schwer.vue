@@ -16,7 +16,7 @@
         :has_leicht="true"
         :has_mittel="false"
         :has_schwer="true"
-        :next_task="'TopSortErkennen_Marathon_schwer'"/> <br><br>
+        :next_task="'TopSortErstellen_Kleider_schwer'"/> <br><br>
     <img src="../assets/kleider/ohne_rand/Hose.png" id="Hose" style="display: none;" lenx="333" leny="111"/>
     <img src="../assets/kleider/ohne_rand/Socken.png" id="Socken" style="display: none"/>
     <img src="../assets/kleider/ohne_rand/Schuhe.png" id="Schuhe" style="display: none"/>
