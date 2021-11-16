@@ -133,7 +133,7 @@ export default defineComponent({
         background-color: #FFE5B2;
         padding: 20px 20px 20px 20px;
         height: auto;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     }
 
 
