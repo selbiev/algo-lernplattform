@@ -17,17 +17,17 @@
         :has_mittel="false"
         :has_schwer="true"
         :next_task="'TopSortErstellen_Kleider_schwer'"/> <br><br>
-    <img src="../assets/kleider/ohne_rand/Hose.png" id="Hose" style="display: none;" lenx="333" leny="111"/>
-    <img src="../assets/kleider/ohne_rand/Socken.png" id="Socken" style="display: none"/>
-    <img src="../assets/kleider/ohne_rand/Schuhe.png" id="Schuhe" style="display: none"/>
-    <img src="../assets/kleider/ohne_rand/T-Shirt.png" id="T-Shirt" style="display: none"/>
-    <img src="../assets/kleider/ohne_rand/Unterhose.png" id="Unterhose" style="display: none"/>
-    <img src="../assets/kleider/ohne_rand/Jacke.png" id="Jacke" style="display: none"/>
-    <img src="../assets/kleider/ohne_rand/Mütze.png" id="Mütze" style="display: none"/>
-    <img src="../assets/kleider/ohne_rand/Gürtel.png" id="Gürtel" style="display: none"/>
-    <img src="../assets/kleider/ohne_rand/Handschuhe.png" id="Handschuhe" style="display: none"/>
-    <img src="../assets/kleider/ohne_rand/Sonnenbrille.png" id="Sonnenbrille" style="display: none"/>
-    <img src="../assets/kleider/ohne_rand/Pullover.png" id="Pullover" style="display: none"/>
+    <img src="../assets/kleider/Hose.png" id="Hose" style="display: none;" lenx="333" leny="111"/>
+    <img src="../assets/kleider/Socken.png" id="Socken" style="display: none"/>
+    <img src="../assets/kleider/Schuhe.png" id="Schuhe" style="display: none"/>
+    <img src="../assets/kleider/T-Shirt.png" id="T-Shirt" style="display: none"/>
+    <img src="../assets/kleider/Unterhose.png" id="Unterhose" style="display: none"/>
+    <img src="../assets/kleider/Jacke.png" id="Jacke" style="display: none"/>
+    <img src="../assets/kleider/Mütze.png" id="Mütze" style="display: none"/>
+    <img src="../assets/kleider/Gürtel.png" id="Gürtel" style="display: none"/>
+    <img src="../assets/kleider/Handschuhe.png" id="Handschuhe" style="display: none"/>
+    <img src="../assets/kleider/Sonnenbrille.png" id="Sonnenbrille" style="display: none"/>
+    <img src="../assets/kleider/Pullover.png" id="Pullover" style="display: none"/>
 
     Wenn du dir Kleider anziehst, musst du die Reihenfolge beachten. <br>
     Zum Beispiel T-Shirt &rarr; Jacke bedeutet: Zuerst muss das T-Shirt und erst dann die Jacke angezogen werden.<br> <br>

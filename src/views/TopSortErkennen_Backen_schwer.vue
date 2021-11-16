@@ -221,7 +221,7 @@ export default defineComponent({
       var image7 = document.getElementById('t_decken')
       var image8 = document.getElementById('o_vorheizen')
 
-      var x_offset = -70
+      var x_offset = -60
       var y_offset = -33
       if(this.contained_in_to(0)){
         image0.addEventListener('load', e => {
@@ -255,7 +255,7 @@ export default defineComponent({
 
       if(this.contained_in_to(5)){
         image5.addEventListener('load', e => {
-          ctx.drawImage(image5, this.nodes[5].posX + x_offset, this.nodes[5].posY + y_offset);
+          ctx.drawImage(image5, this.nodes[5].posX + (-50), this.nodes[5].posY + (-40));
         });
       }
 
@@ -621,7 +621,7 @@ export default defineComponent({
 
     img {
       width: auto;
-      height: 60px;
+      height: 80px;
     }
 
     .kodierungen {
