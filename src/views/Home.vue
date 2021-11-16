@@ -1,8 +1,5 @@
 <template>
   <div class="home">
-    <p>
-      <a href="https://forms.gle/6QpQPDXsQMpNHC26A" target="_blank">Link zur Umfrage</a>
-    </p>
     <h1>Willkommen in der Lernumgebung <br>
     Einfach Informatik 3/4</h1>
     <p> 
