@@ -177,16 +177,22 @@ export default defineComponent({
       this.auswahl_3 = ""
       this.submitted = false
     },
+    deselectAll(){
+      document.getElementById("big-cloud-1").style.border = "none"
+      document.getElementById("small-cloud-1").style.border = "none"
+    },
     selectItem(event, id){
       event.stopPropagation()
       console.log("selectItem() ",id)
       if(this.selected){
         this.selected = false
         this.selectedItem = ""
+        this.deselectAll()
         document.getElementById(id).style.border = "none"
       } else {
         this.selected = true;
         this.selectedItem = id
+        this.deselectAll()
         document.getElementById(id).style.border = "3px solid red"
       }
     },

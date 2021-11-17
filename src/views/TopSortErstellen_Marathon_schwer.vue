@@ -108,6 +108,7 @@ export default defineComponent({
         {id: 0, from_node: 5, to_node: 6},
       ],
       adj_list: [],   //klassische adjazenzliste, d.h. adj_list[i] = liste von nachbarsknoten von knoten i
+      previously_selected_items: [],
     }
   },
   mounted() {
@@ -154,17 +155,25 @@ export default defineComponent({
     reloadPage(){
       this.$router.go(0)
     },
+    deselectAll(){
+      for(let i = 0; i < this.previously_selected_items.length; i++){
+        document.getElementById(this.previously_selected_items[i]).style.border = "none"
+      }
+    },
     selectItem(event, id){
       event.stopPropagation()
       console.log("selectItem() ",id)
       if(this.selected){
         this.selected = false
         this.selectedItem = ""
+        this.deselectAll()
         document.getElementById(id).style.border = "none"
       } else {
         this.selected = true;
         this.selectedItem = id
+        this.deselectAll()
         document.getElementById(id).style.border = "3px solid red"
+        this.previously_selected_items.push(id)
       }
     },
     clearDropslots(){

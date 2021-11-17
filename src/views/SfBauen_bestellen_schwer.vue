@@ -408,16 +408,24 @@ export default defineComponent({
       var fst_letter = name.charAt(0)
       return fst_letter == 'k'? 0 : (fst_letter == 'q'? 1 : (fst_letter == 'v'? 2 : (fst_letter = 'd'? 3 : -1)))
     },
+    deselectAll(){
+      document.getElementById("quadrat").style.border = "none"
+      document.getElementById("dreieck").style.border = "none"
+      document.getElementById("viereck").style.border = "none"
+      document.getElementById("kreis").style.border = "none"
+    },
     selectItem(event, id){
       event.stopPropagation()
       console.log("selectItem() ",id)
       if(this.selected){
         this.selected = false
         this.selectedItem = ""
+        this.deselectAll()
         document.getElementById(id).style.border = "none"
       } else {
         this.selected = true;
         this.selectedItem = id
+        this.deselectAll()
         document.getElementById(id).style.border = "3px solid red"
       }
     },

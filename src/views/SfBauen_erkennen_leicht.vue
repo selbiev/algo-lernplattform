@@ -250,16 +250,26 @@ export default defineComponent({
     reloadPage(){
       this.$router.go(0)
     },
+    deselectAll(){
+      document.getElementById("grosser_stein").style.border = "none"
+      document.getElementById("kleiner_stein").style.border = "none"
+      document.getElementById("dickes_holz").style.border = "none"
+      document.getElementById("duennes_holz").style.border = "none"
+      document.getElementById("schlamm").style.border = "none"
+      document.getElementById("wasser").style.border = "none"
+    },
     selectItem(event, id){
       event.stopPropagation()
       console.log("selectItem() ",id)
       if(this.selected){
         this.selected = false
         this.selectedItem = ""
+        this.deselectAll()
         document.getElementById(id).style.border = "none"
       } else {
         this.selected = true;
         this.selectedItem = id
+        this.deselectAll()
         document.getElementById(id).style.border = "3px solid red"
       }
     },
