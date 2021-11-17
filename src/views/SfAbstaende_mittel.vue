@@ -56,11 +56,11 @@
         <div class="dritte-reihe-kodierungen">
           <div class="codes">
             <div>
-              <img src="../assets/kein_abstand.png" />
-              <img src="../assets/abstand.png" />
-              <img src="../assets/kein_abstand.png" />
-              <img src="../assets/kein_abstand.png" />
-              <img src="../assets/abstand.png" />
+              <img src="../assets/kein_abstand_1.png" />
+              <img src="../assets/abstand_1.png" />
+              <img src="../assets/kein_abstand_1.png" />
+              <img src="../assets/kein_abstand_1.png" />
+              <img src="../assets/abstand_1.png" />
             </div>
           </div>
 
