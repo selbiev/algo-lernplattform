@@ -185,10 +185,16 @@ export default defineComponent({
     give_answer(antwort){
       if(antwort == "ja" || antwort == "nein"){
         this.answer_given = true
-        document.getElementById('ja').style.backgroundColor = "grey"
-        document.getElementById('nein').style.backgroundColor = "grey"
+        document.getElementById("ja").style.backgroundColor = "#ffe5b2"
+        document.getElementById("ja").style.borderWidth="thin"
+        document.getElementById("ja").style.fontWeight="400"
+        document.getElementById("nein").style.backgroundColor = "#ffe5b2"
+        document.getElementById("nein").style.borderWidth="thin"
+        document.getElementById("nein").style.fontWeight="400"
         
         document.getElementById(antwort).style.backgroundColor = "#e1975a"
+        document.getElementById(antwort).style.borderWidth="medium"
+        document.getElementById(antwort).style.fontWeight="700"
         this.answer = (antwort=="ja")? true : false
         console.log("the answer is: ", this.answer)
       }
@@ -647,13 +653,16 @@ export default defineComponent({
       justify-content: center;
       flex-wrap: wrap;
     }
+
     .antwort_btn {
       margin: 0 5px 5px 0;
       width: 50px;
       height: 30px;
       border-radius: 3px;
-      background-color: grey;
-      font-weight: 700;
+      border-width: thin;
+      background-color: #ffe5b2;
+      font-weight: 500;
+      cursor: pointer;
     }
 
 </style>

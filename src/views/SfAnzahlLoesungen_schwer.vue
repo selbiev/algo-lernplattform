@@ -214,28 +214,40 @@ export default defineComponent({
     ans_0(){
       if(this.ans_wetter[0]){
         this.ans_wetter[0] = false
-        document.getElementById("btn_0")!.style.backgroundColor = "grey"
+        document.getElementById("btn_0")!.style.backgroundColor = "#ffe5b2"
+        document.getElementById("btn_0")!.style.borderWidth="thin"
+        document.getElementById("btn_0")!.style.fontWeight="400"
       } else {
         this.ans_wetter[0] = true
         document.getElementById("btn_0")!.style.backgroundColor = "#e1975a"
+        document.getElementById("btn_0")!.style.borderWidth="medium"
+        document.getElementById("btn_0")!.style.fontWeight="700"
       }
     },
     ans_1(){
       if(this.ans_wetter[1]){
         this.ans_wetter[1] = false
-        document.getElementById("btn_1")!.style.backgroundColor = "grey"
+        document.getElementById("btn_1")!.style.backgroundColor = "#ffe5b2"
+        document.getElementById("btn_1")!.style.borderWidth="thin"
+        document.getElementById("btn_1")!.style.fontWeight="400"
       } else {
         this.ans_wetter[1] = true
         document.getElementById("btn_1")!.style.backgroundColor = "#e1975a"
+        document.getElementById("btn_1")!.style.borderWidth="medium"
+        document.getElementById("btn_1")!.style.fontWeight="700"
       }
     },
     ans_2(){
       if(this.ans_wetter[2]){
         this.ans_wetter[2] = false
-        document.getElementById("btn_2")!.style.backgroundColor = "grey"
+        document.getElementById("btn_2")!.style.backgroundColor = "#ffe5b2"
+        document.getElementById("btn_2")!.style.borderWidth="thin"
+        document.getElementById("btn_2")!.style.fontWeight="400"
       } else {
         this.ans_wetter[2] = true
         document.getElementById("btn_2")!.style.backgroundColor = "#e1975a"
+        document.getElementById("btn_2")!.style.borderWidth="medium"
+        document.getElementById("btn_2")!.style.fontWeight="700"
       }
     },
     compare_arrays(arr1: number[], arr2: number[]){   //returns true if arr1 is same as arr2, false otherwise
@@ -537,8 +549,10 @@ export default defineComponent({
       width: 150px;
       height: 30px;
       border-radius: 3px;
-      background-color: grey;
-      font-weight: 700;
+      border-width: thin;
+      background-color: #ffe5b2;
+      font-weight: 500;
+      cursor: pointer;
     }
 
 </style>

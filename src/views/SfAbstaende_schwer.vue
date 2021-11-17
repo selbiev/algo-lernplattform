@@ -173,7 +173,9 @@ export default defineComponent({
     },
     deactivate_all_btns(){
       for(let i = 0; i < 5; i++){
-        document.getElementById('btn_'+i)!.style.backgroundColor = "grey"
+        document.getElementById('btn_'+i)!.style.backgroundColor = "#ffe5b2"
+        document.getElementById('btn_'+i)!.style.borderWidth="thin"
+        document.getElementById('btn_'+i)!.style.fontWeight="400"
         this.ans_abst[i] = false
       }
     },
@@ -182,6 +184,8 @@ export default defineComponent({
         this.deactivate_all_btns()
         this.ans_abst[zahl] = true;
         document.getElementById("btn_"+zahl)!.style.backgroundColor = "#e1975a"
+        document.getElementById("btn_"+zahl)!.style.borderWidth="medium"
+        document.getElementById("btn_"+zahl)!.style.fontWeight="700"
         this.answer = zahl+1
       }
     },
@@ -309,8 +313,11 @@ export default defineComponent({
       width: 30px;
       height: 30px;
       border-radius: 3px;
-      background-color: grey;
-      font-weight: 700;
+      border-width: thin;
+      background-color: #ffe5b2;
+      font-weight: 500;
+      cursor: pointer;
     }
+
 
 </style>
