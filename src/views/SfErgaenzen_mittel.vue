@@ -174,10 +174,30 @@ export default defineComponent({
 
       var corr = this.gap_1_korr && this.gap_2_korr
 
+      if(!this.gap_1_korr){
+        document.getElementById("drop-slot-"+(this.gap_1+1)).style.borderColor = "red";
+        document.getElementById("drop-slot-"+(this.gap_1+1)).style.borderWidth = "thick";
+      } else {
+        document.getElementById("drop-slot-"+(this.gap_1+1)).style.borderColor = "black";
+        document.getElementById("drop-slot-"+(this.gap_1+1)).style.borderWidth = "thin";
+      }
+      if(!this.gap_2_korr){
+        document.getElementById("drop-slot-"+(this.gap_2+1)).style.borderColor = "red";
+        document.getElementById("drop-slot-"+(this.gap_2+1)).style.borderWidth = "thick";
+      } else{
+        document.getElementById("drop-slot-"+(this.gap_2+1)).style.borderColor = "black";
+        document.getElementById("drop-slot-"+(this.gap_2+1)).style.borderWidth = "thin";
+      }
+
       this.result = corr? "korrekt." : "falsch."
       this.submitted = true
     },
     clearDropslots(){
+      document.getElementById("drop-slot-"+(this.gap_1+1)).style.borderColor = "black";
+      document.getElementById("drop-slot-"+(this.gap_1+1)).style.borderWidth = "thin";
+      document.getElementById("drop-slot-"+(this.gap_2+1)).style.borderColor = "black";
+      document.getElementById("drop-slot-"+(this.gap_2+1)).style.borderWidth = "thin";
+
       var ds1 = document.getElementById("drop-slot-1")
       var ds2 = document.getElementById("drop-slot-2")
       var ds3 = document.getElementById("drop-slot-3")

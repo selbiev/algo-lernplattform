@@ -187,6 +187,29 @@ export default defineComponent({
       this.correct_1 = ans_1 == this.seq_numbers[0][this.gap_1]? true : false
       this.correct_2 = ans_2 == this.seq_numbers[1][this.gap_2]? true : false
       this.correct_3 = ans_3 == this.seq_numbers[2][this.gap_3]? true : false
+
+      if(!this.correct_1){
+        document.getElementById("drop-slot-1").style.borderColor = "red";
+        document.getElementById("drop-slot-1").style.borderWidth = "thick";
+      } else {
+        document.getElementById("drop-slot-1").style.borderColor = "black";
+        document.getElementById("drop-slot-1").style.borderWidth = "thin";
+      }
+      if(!this.correct_2){
+        document.getElementById("drop-slot-2").style.borderColor = "red";
+        document.getElementById("drop-slot-2").style.borderWidth = "thick";
+      } else{
+        document.getElementById("drop-slot-2").style.borderColor = "black";
+        document.getElementById("drop-slot-2").style.borderWidth = "thin";
+      }
+      if(!this.correct_3){
+        document.getElementById("drop-slot-3").style.borderColor = "red";
+        document.getElementById("drop-slot-3").style.borderWidth = "thick";
+      } else{
+        document.getElementById("drop-slot-3").style.borderColor = "black";
+        document.getElementById("drop-slot-3").style.borderWidth = "thin";
+      }
+
       if(this.correct_1 && this.correct_2 && this.correct_3){
         this.result = "korrekt."
       } else {
@@ -195,6 +218,12 @@ export default defineComponent({
       this.submitted = true
     },
     clearDropslots(){
+      document.getElementById("drop-slot-1").style.borderColor = "black";
+      document.getElementById("drop-slot-1").style.borderWidth = "thin";
+      document.getElementById("drop-slot-2").style.borderColor = "black";
+      document.getElementById("drop-slot-2").style.borderWidth = "thin";
+      document.getElementById("drop-slot-3").style.borderColor = "black";
+      document.getElementById("drop-slot-3").style.borderWidth = "thin";
       var ds1 = document.getElementById("drop-slot-1")
       var ds2 = document.getElementById("drop-slot-2")
       var ds3 = document.getElementById("drop-slot-3")

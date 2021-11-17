@@ -294,6 +294,55 @@ export default defineComponent({
       var corr_bst_1 = this.compare_arrays(slots_answers_1, this.numbers[this.to_order[0]])
       var corr_bst_2 = this.compare_arrays(slots_answers_2, this.numbers[this.to_order[1]])
       var corr_bst_3 = this.compare_arrays(slots_answers_3, this.numbers[this.to_order[2]])
+
+      if(!corr_bst_1){
+        document.getElementById("drop-slot-1").style.borderColor = "red";
+        document.getElementById("drop-slot-1").style.borderWidth = "thick";
+        document.getElementById("drop-slot-2").style.borderColor = "red";
+        document.getElementById("drop-slot-2").style.borderWidth = "thick";
+        document.getElementById("drop-slot-3").style.borderColor = "red";
+        document.getElementById("drop-slot-3").style.borderWidth = "thick";
+      } else {
+        document.getElementById("drop-slot-1").style.borderColor = "black";
+        document.getElementById("drop-slot-1").style.borderWidth = "thin";
+        document.getElementById("drop-slot-2").style.borderColor = "black";
+        document.getElementById("drop-slot-2").style.borderWidth = "thin";
+        document.getElementById("drop-slot-3").style.borderColor = "black";
+        document.getElementById("drop-slot-3").style.borderWidth = "thin";
+      }
+
+      if(!corr_bst_2){
+        document.getElementById("drop-slot-4").style.borderColor = "red";
+        document.getElementById("drop-slot-4").style.borderWidth = "thick";
+        document.getElementById("drop-slot-5").style.borderColor = "red";
+        document.getElementById("drop-slot-5").style.borderWidth = "thick";
+        document.getElementById("drop-slot-6").style.borderColor = "red";
+        document.getElementById("drop-slot-6").style.borderWidth = "thick";
+      } else {
+        document.getElementById("drop-slot-4").style.borderColor = "black";
+        document.getElementById("drop-slot-4").style.borderWidth = "thin";
+        document.getElementById("drop-slot-5").style.borderColor = "black";
+        document.getElementById("drop-slot-5").style.borderWidth = "thin";
+        document.getElementById("drop-slot-6").style.borderColor = "black";
+        document.getElementById("drop-slot-6").style.borderWidth = "thin";
+      }
+
+      if(!corr_bst_3){
+        document.getElementById("drop-slot-7").style.borderColor = "red";
+        document.getElementById("drop-slot-7").style.borderWidth = "thick";
+        document.getElementById("drop-slot-8").style.borderColor = "red";
+        document.getElementById("drop-slot-8").style.borderWidth = "thick";
+        document.getElementById("drop-slot-9").style.borderColor = "red";
+        document.getElementById("drop-slot-9").style.borderWidth = "thick";
+      } else {
+        document.getElementById("drop-slot-7").style.borderColor = "black";
+        document.getElementById("drop-slot-7").style.borderWidth = "thin";
+        document.getElementById("drop-slot-8").style.borderColor = "black";
+        document.getElementById("drop-slot-8").style.borderWidth = "thin";
+        document.getElementById("drop-slot-9").style.borderColor = "black";
+        document.getElementById("drop-slot-9").style.borderWidth = "thin";
+      }
+
       if(corr_bst_1 && corr_bst_2 && corr_bst_3){
         this.result = "korrekt."
       } else {
@@ -311,6 +360,24 @@ export default defineComponent({
 
     },
     clearDropslots() {
+      document.getElementById("drop-slot-1").style.borderColor = "black";
+      document.getElementById("drop-slot-1").style.borderWidth = "thin";
+      document.getElementById("drop-slot-2").style.borderColor = "black";
+      document.getElementById("drop-slot-2").style.borderWidth = "thin";
+      document.getElementById("drop-slot-3").style.borderColor = "black";
+      document.getElementById("drop-slot-3").style.borderWidth = "thin";
+      document.getElementById("drop-slot-4").style.borderColor = "black";
+      document.getElementById("drop-slot-4").style.borderWidth = "thin";
+      document.getElementById("drop-slot-5").style.borderColor = "black";
+      document.getElementById("drop-slot-5").style.borderWidth = "thin";
+      document.getElementById("drop-slot-6").style.borderColor = "black";
+      document.getElementById("drop-slot-6").style.borderWidth = "thin";
+      document.getElementById("drop-slot-7").style.borderColor = "black";
+      document.getElementById("drop-slot-7").style.borderWidth = "thin";
+      document.getElementById("drop-slot-8").style.borderColor = "black";
+      document.getElementById("drop-slot-8").style.borderWidth = "thin";
+      document.getElementById("drop-slot-9").style.borderColor = "black";
+      document.getElementById("drop-slot-9").style.borderWidth = "thin";
       var ds1 = document.getElementById("drop-slot-1")
       var ds2 = document.getElementById("drop-slot-2")
       var ds3 = document.getElementById("drop-slot-3")

@@ -297,6 +297,29 @@ export default defineComponent({
       var corr_1 = this.drop_slots[0] == this.to_order[0]
       var corr_2 = this.drop_slots[1] == this.to_order[1]
       var corr_3 = this.drop_slots[2] == this.to_order[2]
+
+      if(!corr_1){
+        document.getElementById("drop-slot-1").style.borderColor = "red";
+        document.getElementById("drop-slot-1").style.borderWidth = "thick";
+      } else {
+        document.getElementById("drop-slot-1").style.borderColor = "black";
+        document.getElementById("drop-slot-1").style.borderWidth = "thin";
+      }
+      if(!corr_2){
+        document.getElementById("drop-slot-2").style.borderColor = "red";
+        document.getElementById("drop-slot-2").style.borderWidth = "thick";
+      } else{
+        document.getElementById("drop-slot-2").style.borderColor = "black";
+        document.getElementById("drop-slot-2").style.borderWidth = "thin";
+      }
+      if(!corr_3){
+        document.getElementById("drop-slot-3").style.borderColor = "red";
+        document.getElementById("drop-slot-3").style.borderWidth = "thick";
+      } else{
+        document.getElementById("drop-slot-3").style.borderColor = "black";
+        document.getElementById("drop-slot-3").style.borderWidth = "thin";
+      }
+
       if(corr_1 && corr_2 && corr_3){
         this.result = "korrekt."
       } else {
@@ -314,6 +337,12 @@ export default defineComponent({
 
     },
     clearDropslots() {
+      document.getElementById("drop-slot-1").style.borderColor = "black";
+      document.getElementById("drop-slot-1").style.borderWidth = "thin";
+      document.getElementById("drop-slot-2").style.borderColor = "black";
+      document.getElementById("drop-slot-2").style.borderWidth = "thin";
+      document.getElementById("drop-slot-3").style.borderColor = "black";
+      document.getElementById("drop-slot-3").style.borderWidth = "thin";
       console.log("drop slots cleared")
       var ds1 = document.getElementById("drop-slot-1")
       var ds2 = document.getElementById("drop-slot-2")
