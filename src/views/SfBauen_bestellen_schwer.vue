@@ -174,6 +174,9 @@
       <div class="zeichenfolge">
         <div v-for="i in 9" :key="i">
           <div droppable="true" class="drop-slot" :id="'drop-slot-'+i" @click="pasteItem($event,'drop-slot-'+i)" @drop="drop($event,'2')" @dragover="allowDrop($event)"/>
+        </div>&nbsp; &nbsp; &nbsp; &nbsp;
+        <div class="drop-slot" droppable="true" @drop="removeObj($event)" @dragover="allowDrop($event)">
+          <span class="removetext">Objekt löschen</span>
         </div>
       </div>
 
@@ -370,6 +373,40 @@ export default defineComponent({
         this.drop_slots[slot_index] = this.translate_form(cloud)
       }
     },
+    getIdOfString(str){
+      let str_id = ""
+      let j = 0
+      for(let i = 0; i < str.length; i++){
+        if(str.charAt(i)=='i' && str.charAt(i+1)=='d'){ //id found, extract it now
+          j = i+4
+          break
+        }
+      }
+
+      while(str.charAt(j) != '"'){
+        str_id += str.charAt(j)
+        j++
+      }
+
+      return str_id
+    },
+    removeObj(event){
+      event.preventDefault();
+      var data = event.dataTransfer.getData("text/html");
+      
+      var id_of_obj_to_be_removed = this.getIdOfString(data)
+      console.log("we have found the id of the removed objekt: ",id_of_obj_to_be_removed)
+      //now we need to find the slot in which this objekt occurs
+      for(let i = 1; i < 10; i++){
+        if(document.getElementById("drop-slot-"+i).childNodes.length > 0){
+          if(document.getElementById("drop-slot-"+i).childNodes[0].id == id_of_obj_to_be_removed){
+            console.log("slot to be cleared: ",i)
+            document.getElementById("drop-slot-"+i).innerHTML = ""
+            this.drop_slots[i-1] = -1
+          } 
+        } 
+      }
+    },
     drag(event){
       event.dataTransfer.setData("text", event.target.id);
     },
@@ -549,6 +586,10 @@ export default defineComponent({
 
     td, th {
       padding: 0 0 0 25px;
+    }
+
+    .removetext {
+      font-size: 14px;
     }
 
 </style>
