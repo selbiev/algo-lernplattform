@@ -26,8 +26,9 @@
     <img src="../assets/marathon/Ulla.png" id="Ulla" style="display: none;"/>
     <img src="../assets/marathon/Xavi.png" id="Xavi" style="display: none;"/>
 
-    Ein paar Freunde nehmen am Marathon teil. Wir wissen, dass manche schneller sind als andere. <br> 
-    Zum Beispiel Emma &rarr; Sofia bedeutet, dass Emma schneller ist als Sofia.  <br> <br>
+    Ein paar Freunde nehmen am Marathon teil. Wir wissen, dass manche schneller sind als andere. <br> <br>
+    <img src="../assets/marathon/beschreibungsbild.png" style="width: 200px; height: auto"/> <br> <br>
+    Beim obigen Bild läuft das rechte Mädchen schneller als das linke Mädchen. <br> <br>
     <canvas id="canvas" width="700" height="400" style="border:1px solid #d3d3d3;"></canvas> <br><br>
     Am Ende des Marathons zeigt dir jemand die folgende Rangliste. Ganz links ist die Person auf Rang 1 und ganz rechts die letzte Person.
     Ist die Rangliste möglich? <br> <br>
@@ -324,8 +325,9 @@ export default defineComponent({
     },
     make_edge(ctx, u, v){
       ctx.beginPath()
-      console.log("edge (%s,%s) following",this.nodes[u.id].text, this.nodes[v.id].text)
-      this.canvas_arrow(ctx, u.posX, u.posY, v.posX, v.posY);
+      //achtung: in dieser aufgabe sind die edges verkehrt herum
+      //das ist damit es wie im lehrmittel ist
+      this.canvas_arrow(ctx, v.posX, v.posY, u.posX, u.posY);
       ctx.stroke()
     },
     connect_nodes(){

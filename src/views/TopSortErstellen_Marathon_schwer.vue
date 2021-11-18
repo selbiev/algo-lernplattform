@@ -18,8 +18,9 @@
         :has_schwer="false"
         :next_task="'TopSortErkennen_Backen_schwer'"/> <br><br>
 
-    Ein paar Freunde nehmen am Marathon teil. Wir wissen, dass manche schneller sind als andere. <br> 
-    Zum Beispiel Emma &rarr; Sofia bedeutet, dass Emma schneller ist als Sofia.  <br> <br>
+    Ein paar Freunde nehmen am Marathon teil. Wir wissen, dass manche schneller sind als andere. <br> <br>
+    <img src="../assets/marathon/beschreibungsbild.png" style="width: 200px; height: auto"/> <br> <br>
+    Beim obigen Bild läuft das rechte Mädchen schneller als das linke Mädchen. <br> <br>
     <canvas id="canvas" width="700" height="400" style="border:1px solid #d3d3d3;"></canvas> <br><br>
     Erstelle eine mögliche Rangliste, wenn die Freunde am Marathon teilnehmen würden.
     <br> <br>
@@ -395,8 +396,9 @@ export default defineComponent({
     },
     make_edge(ctx, u, v){
       ctx.beginPath()
-      this.canvas_arrow(ctx, u.posX, u.posY, v.posX, v.posY);
-      //console.log("edge (%d,%d) made",u.id, v.id)
+      //achtung: in dieser aufgabe sind die edges verkehrt herum
+      //das ist damit es wie im lehrmittel ist
+      this.canvas_arrow(ctx, v.posX, v.posY, u.posX, u.posY);
       ctx.stroke()
     },
     connect_nodes(){
