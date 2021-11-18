@@ -20,141 +20,150 @@
       Biberin Bea möchte sich einen Damm bauen. Sie hat einen Katalog, aus dem Sie das nötige Material bestellen kann. <br> <br>
         <!-- Automatisierte Version, man muss einfach den css noch anpassen -->
         
-      <table class="code_table">
-        <tr> 
-          <th>Kodierung</th>
-          <th>Objekt</th>
-          <th>Beschreibung</th>
-        </tr>
-        <tr>
-          <td>
-            <div class="codes">
-              <div v-for='index in 3' :key='index'>
-                <img v-if="numbers[0][index-1] == 0" src="../assets/bauen/kreis.png" />
-                <img v-else-if="numbers[0][index-1] == 1" src="../assets/bauen/quadrat.png" />
-                <img v-else-if="numbers[0][index-1] == 2" src="../assets/bauen/viereck.png" />
-                <img v-else-if="numbers[0][index-1] == 3" src="../assets/bauen/dreieck.png" />
+      <div class="tables">
+
+        <table class="code_table" id="table_left">
+          <tr> 
+            <th>Kodierung</th>
+            <th>Objekt</th>
+            <th>Beschreibung</th>
+          </tr>
+          <tr>
+            <td>
+              <div class="codes">
+                <div v-for='index in 3' :key='index'>
+                  <img v-if="numbers[0][index-1] == 0" src="../assets/bauen/kreis.png" />
+                  <img v-else-if="numbers[0][index-1] == 1" src="../assets/bauen/quadrat.png" />
+                  <img v-else-if="numbers[0][index-1] == 2" src="../assets/bauen/viereck.png" />
+                  <img v-else-if="numbers[0][index-1] == 3" src="../assets/bauen/dreieck.png" />
+                </div>
               </div>
-            </div>
-          </td>
-          <td>
-            <img class="material" src="../assets/bauen/grosser_stein.png"/>
-          </td>
-          <td>
-            Grosser Stein
-          </td>
-        </tr>
+            </td>
+            <td>
+              <img class="material" src="../assets/bauen/grosser_stein.png"/>
+            </td>
+            <td>
+              Grosser Stein
+            </td>
+          </tr>
 
 
 
 
-        <tr>
-          <td>
-            <div class="codes">
-              <div v-for='index in 3' :key='index'>
-                <img v-if="numbers[1][index-1] == 0" src="../assets/bauen/kreis.png" />
-                <img v-else-if="numbers[1][index-1] == 1" src="../assets/bauen/quadrat.png" />
-                <img v-else-if="numbers[1][index-1] == 2" src="../assets/bauen/viereck.png" />
-                <img v-else-if="numbers[1][index-1] == 3" src="../assets/bauen/dreieck.png" />
+          <tr>
+            <td>
+              <div class="codes">
+                <div v-for='index in 3' :key='index'>
+                  <img v-if="numbers[1][index-1] == 0" src="../assets/bauen/kreis.png" />
+                  <img v-else-if="numbers[1][index-1] == 1" src="../assets/bauen/quadrat.png" />
+                  <img v-else-if="numbers[1][index-1] == 2" src="../assets/bauen/viereck.png" />
+                  <img v-else-if="numbers[1][index-1] == 3" src="../assets/bauen/dreieck.png" />
+                </div>
               </div>
-            </div>
-          </td>
-          <td>
-            <img class="material" src="../assets/bauen/kleiner_stein.png"/>
-          </td>
-          <td>
-            Kleiner Stein
-          </td>
-        </tr>
+            </td>
+            <td>
+              <img class="material" src="../assets/bauen/kleiner_stein.png"/>
+            </td>
+            <td>
+              Kleiner Stein
+            </td>
+          </tr>
 
 
 
 
-        <tr>
-          <td>
-            <div class="codes">
-              <div v-for='index in 3' :key='index'>
-                <img v-if="numbers[2][index-1] == 0" src="../assets/bauen/kreis.png" />
-                <img v-else-if="numbers[2][index-1] == 1" src="../assets/bauen/quadrat.png" />
-                <img v-else-if="numbers[2][index-1] == 2" src="../assets/bauen/viereck.png" />
-                <img v-else-if="numbers[2][index-1] == 3" src="../assets/bauen/dreieck.png" />
+          <tr>
+            <td>
+              <div class="codes">
+                <div v-for='index in 3' :key='index'>
+                  <img v-if="numbers[2][index-1] == 0" src="../assets/bauen/kreis.png" />
+                  <img v-else-if="numbers[2][index-1] == 1" src="../assets/bauen/quadrat.png" />
+                  <img v-else-if="numbers[2][index-1] == 2" src="../assets/bauen/viereck.png" />
+                  <img v-else-if="numbers[2][index-1] == 3" src="../assets/bauen/dreieck.png" />
+                </div>
               </div>
-            </div>
-          </td>
-          <td>
-            <img class="material" src="../assets/bauen/dickes_holz.png"/>
-          </td>
-          <td>
-            Dickes Holz
-          </td>
-        </tr>
+            </td>
+            <td>
+              <img class="material" src="../assets/bauen/dickes_holz.png"/>
+            </td>
+            <td>
+              Dickes Holz
+            </td>
+          </tr>
+        </table>
 
+        <table class="code_table" id="table_right">
+          <tr> 
+            <th>Kodierung</th>
+            <th>Objekt</th>
+            <th>Beschreibung</th>
+          </tr>
 
-
-
-        <tr>
-          <td>
-            <div class="codes">
-              <div v-for='index in 3' :key='index'>
-                <img v-if="numbers[3][index-1] == 0" src="../assets/bauen/kreis.png" />
-                <img v-else-if="numbers[3][index-1] == 1" src="../assets/bauen/quadrat.png" />
-                <img v-else-if="numbers[3][index-1] == 2" src="../assets/bauen/viereck.png" />
-                <img v-else-if="numbers[3][index-1] == 3" src="../assets/bauen/dreieck.png" />
+          <tr>
+            <td>
+              <div class="codes">
+                <div v-for='index in 3' :key='index'>
+                  <img v-if="numbers[3][index-1] == 0" src="../assets/bauen/kreis.png" />
+                  <img v-else-if="numbers[3][index-1] == 1" src="../assets/bauen/quadrat.png" />
+                  <img v-else-if="numbers[3][index-1] == 2" src="../assets/bauen/viereck.png" />
+                  <img v-else-if="numbers[3][index-1] == 3" src="../assets/bauen/dreieck.png" />
+                </div>
               </div>
-            </div>
-          </td>
-          <td>
-            <img class="material" src="../assets/bauen/duennes_holz.png"/>
-          </td>
-          <td>
-            Dünnes Holz
-          </td>
-        </tr>
+            </td>
+            <td>
+              <img class="material" src="../assets/bauen/duennes_holz.png"/>
+            </td>
+            <td>
+              Dünnes Holz
+            </td>
+          </tr>
 
 
 
 
-        <tr>
-          <td>
-            <div class="codes">
-              <div v-for='index in 3' :key='index'>
-                <img v-if="numbers[4][index-1] == 0" src="../assets/bauen/kreis.png" />
-                <img v-else-if="numbers[4][index-1] == 1" src="../assets/bauen/quadrat.png" />
-                <img v-else-if="numbers[4][index-1] == 2" src="../assets/bauen/viereck.png" />
-                <img v-else-if="numbers[4][index-1] == 3" src="../assets/bauen/dreieck.png" />
+          <tr>
+            <td>
+              <div class="codes">
+                <div v-for='index in 3' :key='index'>
+                  <img v-if="numbers[4][index-1] == 0" src="../assets/bauen/kreis.png" />
+                  <img v-else-if="numbers[4][index-1] == 1" src="../assets/bauen/quadrat.png" />
+                  <img v-else-if="numbers[4][index-1] == 2" src="../assets/bauen/viereck.png" />
+                  <img v-else-if="numbers[4][index-1] == 3" src="../assets/bauen/dreieck.png" />
+                </div>
               </div>
-            </div>
-          </td>
-          <td>
-            <img class="material" src="../assets/bauen/schlamm.png"/>
-          </td>
-          <td>
-            Schlamm
-          </td>
-        </tr>
+            </td>
+            <td>
+              <img class="material" src="../assets/bauen/schlamm.png"/>
+            </td>
+            <td>
+              Schlamm
+            </td>
+          </tr>
 
 
 
 
-        <tr>
-          <td>
-            <div class="codes">
-              <div v-for='index in 3' :key='index'>
-                <img v-if="numbers[5][index-1] == 0" src="../assets/bauen/kreis.png" />
-                <img v-else-if="numbers[5][index-1] == 1" src="../assets/bauen/quadrat.png" />
-                <img v-else-if="numbers[5][index-1] == 2" src="../assets/bauen/viereck.png" />
-                <img v-else-if="numbers[5][index-1] == 3" src="../assets/bauen/dreieck.png" />
+          <tr>
+            <td>
+              <div class="codes">
+                <div v-for='index in 3' :key='index'>
+                  <img v-if="numbers[5][index-1] == 0" src="../assets/bauen/kreis.png" />
+                  <img v-else-if="numbers[5][index-1] == 1" src="../assets/bauen/quadrat.png" />
+                  <img v-else-if="numbers[5][index-1] == 2" src="../assets/bauen/viereck.png" />
+                  <img v-else-if="numbers[5][index-1] == 3" src="../assets/bauen/dreieck.png" />
+                </div>
               </div>
-            </div>
-          </td>
-          <td>
-            <img class="material" src="../assets/bauen/wasser.png"/>
-          </td>
-          <td>
-            Wasser
-          </td>
-        </tr>
-      </table>
+            </td>
+            <td>
+              <img class="material" src="../assets/bauen/wasser.png"/>
+            </td>
+            <td>
+              Wasser
+            </td>
+          </tr>
+        </table>
+      
+      </div>
       
       <br> Bob hat von Bea die folgende Bestellung erhalten. Welches Objekt hat Bea bestellt? <br> <br>
 
@@ -449,7 +458,12 @@ export default defineComponent({
       height: 30px;
     }
 
-    .material, .to_order div img {
+    .material {
+      width: auto;
+      height: 50px;
+    }
+
+    .to_order div img {
       width: auto;
       height: 70px;
     }
@@ -544,6 +558,48 @@ export default defineComponent({
 
     td, th {
       padding: 0 0 0 25px;
+    }
+
+    .tables {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    #table_right {
+      margin-left: 0;
+    }
+
+
+    #table_left {
+      margin-right: 10px;
+      padding-right: 30px;
+      border-right: 1px solid black;
+    }
+
+    @media (max-width: 1100px) {   /* hälfte meines screens ist 760px */
+      .tables {
+        display: block;
+      }
+
+      #table_right {
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: auto;
+        margin-top: 20px;
+        padding: 0;
+      }
+
+
+      #table_left {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: auto;
+        margin-bottom: 20px;
+        border-right: none;
+        padding: 0;
+      }
     }
 
 </style>
