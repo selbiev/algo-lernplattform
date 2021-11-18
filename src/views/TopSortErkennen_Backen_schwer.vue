@@ -483,6 +483,7 @@ export default defineComponent({
       var in_degrees = this.create_in_degrees()
       
       for(let i = 0; i < ordering.length; i++){
+        
         var node = ordering[i]
         if(in_degrees[node]>0){   //wenns eine kante auf sich zeigen hat, darf knoten noch nicht genommen werden
           this.wrong_cloth = this.get_text(node)

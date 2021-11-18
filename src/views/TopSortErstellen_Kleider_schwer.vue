@@ -149,7 +149,7 @@ export default defineComponent({
     //this.top_ordering = (this.ordering_correct)? this.create_valid_ordering() : this.create_random_ordering()
     this.draw_nodes()
     this.prepare_image_names()
-
+    this.initialize_answers()
     
     
   },
@@ -199,11 +199,23 @@ export default defineComponent({
         this.result = ""
         var item = document.getElementById(this.selectedItem)
         var targetplace = document.getElementById(target)
+        var cloth_number = this.get_id_by_name(item)
         console.log("the targetplace is: ",targetplace)
         targetplace.appendChild(item)
         this.selected = false
+        if(event.target.id=='start-area'){
+          console.log("cloth_name: ",cloth_number)
+          console.log("target name: ",event.target.id)
+          for(let i = 0; i < this.answers.length; i++){
+            if(this.answers[i]==cloth_number){
+              this.answers[i] = -1
+            }
+          }
+        } else {
+          this.answers[parseInt(targetplace.id)] = this.get_id_by_name(item.id)
+        }
 
-        this.answers[parseInt(targetplace.id)] = this.get_id_by_name(item.id)
+        
         document.getElementById(item.id).style.border = "none"
         this.reset = false
         if(event.target.id=="start-area"){
@@ -242,13 +254,32 @@ export default defineComponent({
       event.target.appendChild(document.getElementById(data));
       var slot = parseInt(event.target.id)
       var cloth_name = event.dataTransfer.getData("text")
-      this.answers[slot] = this.get_id_by_name(cloth_name)
-      if(isNaN(slot) && !(event.target.id=="start-area")){
-        console.log("falscher slot")
-        document.getElementById("start-area").appendChild(document.getElementById(event.target.id).childNodes[0])
-        document.getElementById(event.target.id).innerHTML = ""
-        this.reset = true;
+      var cloth_number = this.get_id_by_name(cloth_name)
+
+      if(event.target.id=='start-area'){
+        console.log("cloth_name: ",cloth_number)
+        console.log("target name: ",event.target.id)
+        for(let i = 0; i < this.answers.length; i++){
+          if(this.answers[i]==cloth_number){
+            this.answers[i] = -1
+          }
+        }
+      } else{
+        this.answers[slot] = this.get_id_by_name(cloth_name)
+
+        if(isNaN(slot) && !(event.target.id=="start-area")){  //wenn ein bild auf ein anderes gelegt wird anstatt in ein slot
+          console.log("falscher slot")
+          document.getElementById("start-area").appendChild(document.getElementById(event.target.id).childNodes[0])
+          document.getElementById(event.target.id).innerHTML = ""
+          this.reset = true;
+          for(let i = 0; i < this.answers.length; i++){
+          if(this.answers[i]==cloth_number){
+            this.answers[i] = -1
+          }
+        }
+        }
       }
+      
       if(event.target.id=="start-area"){
         this.reset = true;
       }
@@ -488,6 +519,21 @@ export default defineComponent({
       }
       //this.keep_trans_relation()  //stelle sicher, dass transitive abhängigkeiten bewahrt werden
     },
+    number_of_active_nodes(){
+      var num_active_nodes = 0
+      for(let i = 0; i < this.nodes.length; i++){
+        if(this.nodes[i].active){
+          num_active_nodes++
+        }
+      }
+      return num_active_nodes
+    },
+    initialize_answers(){
+      var nans = this.number_of_active_nodes()
+      for(let i = 0; i < nans; i++){
+        this.answers.push(-1)
+      }
+    },
     create_in_degrees(){
       var in_degrees = []
       for(let i = 0; i < this.nodes.length; i++){
@@ -510,6 +556,9 @@ export default defineComponent({
       var in_degrees = this.create_in_degrees()
       
       for(let i = 0; i < ordering.length; i++){
+        if(ordering[i]==-1){
+          return false
+        }
         var node = ordering[i]
         if(in_degrees[node]>0){   //wenns eine kante auf sich zeigen hat, darf knoten noch nicht genommen werden
           this.wrong_cloth = this.nodes[node].text
