@@ -284,7 +284,7 @@ export default defineComponent({
     },
     pasteItem(event, target){
       event.stopPropagation()
-      if(this.selected){
+      if(this.selected && document.getElementById(target).childNodes.length <= 0){
         this.result = ""
         var item = document.getElementById(this.selectedItem).cloneNode(true)
         document.getElementById(item.id).style.border = "none"
@@ -306,19 +306,23 @@ export default defineComponent({
     },
     drop(event, detail) {
       event.preventDefault();
-      var data = event.dataTransfer.getData("text");
-      var nodeCopy = document.getElementById(data).cloneNode(true);
-      nodeCopy.id = event.dataTransfer.getData("text") + this.counter
-      this.counter++
-      event.target.appendChild(nodeCopy);
-      /*var data = event.dataTransfer.getData("text");
-      var node = document.getElementById(data)
-      event.target.appendChild(node);*/
-      var slot = event.target.id
-      var material = nodeCopy.id
-      var slot_index = slot.charAt(slot.length-1)-1
-      this.drop_slots[slot_index] = this.translate_form(material)
-      console.log(this.drop_slots[slot_index])
+      
+      if(event.target.childNodes.length <= 0){
+        var data = event.dataTransfer.getData("text");
+        var nodeCopy = document.getElementById(data).cloneNode(true);
+        nodeCopy.id = event.dataTransfer.getData("text") + this.counter
+        this.counter++
+        event.target.appendChild(nodeCopy);
+        /*var data = event.dataTransfer.getData("text");
+        var node = document.getElementById(data)
+        event.target.appendChild(node);*/
+        var slot = event.target.id
+        var cloud = nodeCopy.id
+        var slot_index = slot.charAt(slot.length-1)-1
+        this.drop_slots[slot_index] = this.translate_form(cloud)
+        console.log(cloud)
+      }
+      
     },
     allowDrop(event) {
       event.preventDefault();

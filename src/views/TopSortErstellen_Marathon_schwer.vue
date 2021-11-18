@@ -210,7 +210,7 @@ export default defineComponent({
     },
     pasteItem(event, target){
       event.stopPropagation()
-      if(this.selected){
+      if(this.selected && document.getElementById(target).childNodes.length <= 0){
         this.result = ""
         var item = document.getElementById(this.selectedItem)
         var targetplace = document.getElementById(target)
@@ -267,6 +267,9 @@ export default defineComponent({
       this.reset = false
       var data = event.dataTransfer.getData("text");
       //var node = document.getElementById(data)
+      if(event.target.childNodes.length > 0){
+        return
+      }
       event.target.appendChild(document.getElementById(data));
       var slot = parseInt(event.target.id)
       var cloth_name = event.dataTransfer.getData("text")

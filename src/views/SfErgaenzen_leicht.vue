@@ -198,7 +198,7 @@ export default defineComponent({
     },
     pasteItem(event, target){
       event.stopPropagation()
-      if(this.selected){
+      if(this.selected && document.getElementById(target).childNodes.length <= 0){
         this.result = ""
         var item = document.getElementById(this.selectedItem).cloneNode(true)
         document.getElementById(item.id).style.border = "none"
@@ -232,6 +232,9 @@ export default defineComponent({
       var nodeCopy = document.getElementById(data).cloneNode(true);
       nodeCopy.id = event.dataTransfer.getData("text") + this.counter
       this.counter++
+      if(event.target.childNodes.length > 0){
+        return
+      }
       event.target.appendChild(nodeCopy);
       var slot = event.target.id
       var cloud = event.dataTransfer.getData("text")
