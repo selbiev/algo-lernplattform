@@ -540,6 +540,8 @@ export default defineComponent({
       background-color: #ffe5b2;
       font-weight: 500;
       cursor: pointer;
+      border: solid black;
+      border-width: thin;
     }
 
 </style>
