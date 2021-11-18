@@ -3,7 +3,7 @@
     <Verifier 
         :correctSolution="this.result == 'korrekt.'"
         v-if="this.submitted" 
-        :tip="''"
+        :tip="hint()"
         @close-verifier="this.submitted = false" />
 
     <Header 
@@ -45,6 +45,18 @@
       <img v-if="nodes[7].active" id="Xavi" src="../assets/marathon/Xavi.png" draggable="true" @click="selectItem($event,'Xavi')" @dragstart="drag($event)" width="336" height="69">
       </div>
 
+      <p v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used()">Folgende Person zu früh gewählt: </p>
+      <p>
+        <img v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Anna'" src="../assets/marathon/Anna.png" />
+        <img v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Dennis'" src="../assets/marathon/Dennis.png" />
+        <img v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Jacqueline'" src="../assets/marathon/Jacqueline.png" />
+        <img v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Michelle'" src="../assets/marathon/Michelle.png" />
+        <img v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Otso'" src="../assets/marathon/Otso.png" />
+        <img v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Peter'" src="../assets/marathon/Peter.png" />
+        <img v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Ulla'" src="../assets/marathon/Ulla.png" />
+        <img v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Xavi'" src="../assets/marathon/Xavi.png" />
+      </p>
+      
     <br v-if="!submitted">
     <Footer
         @next_task="reloadPage()"
@@ -71,6 +83,7 @@ export default defineComponent({
   data() {
     return {
       submitted: false,
+      submitted_: false,
       result: "falsch.",
       Q: [],
       canvas: null,
@@ -154,6 +167,12 @@ export default defineComponent({
     reloadPage(){
       this.$router.go(0)
     },
+    hint(){
+      if(this.submitted_ && this.result=='falsch.' && !this.all_slots_used()){
+        return "Bitte fülle alle Lücken aus."
+      }
+      //<p v-if="submitted_ && result=='falsch.' && !all_slots_used()">Bitte fülle alle Lücken aus.</p>
+    },
     deselectAll(){
       for(let i = 0; i < this.previously_selected_items.length; i++){
         document.getElementById(this.previously_selected_items[i]).style.border = "none"
@@ -184,6 +203,9 @@ export default defineComponent({
         document.getElementById("start-area").appendChild(curr_slot.childNodes[0])
         curr_slot.innerHTML = ""
       }
+      for(let i = 0; i < this.answers.length; i++){
+        this.answers[i] = -1
+      }
       this.reset = true
     },
     pasteItem(event, target){
@@ -192,7 +214,7 @@ export default defineComponent({
         this.result = ""
         var item = document.getElementById(this.selectedItem)
         var targetplace = document.getElementById(target)
-        var cloth_number = this.get_id_by_name(item)
+        var cloth_number = this.get_id_by_name(item.id)
         console.log("the targetplace is: ",targetplace)
         targetplace.appendChild(item)
         this.selected = false
@@ -216,7 +238,7 @@ export default defineComponent({
       }
     },
     submitAnswer(){
-      if(this.check_ordering(this.answers) && this.all_slots_used()){
+      if(this.check_ordering(this.answers)){
         this.result = "korrekt."
       } else {
         this.result = "falsch."
@@ -225,14 +247,16 @@ export default defineComponent({
         this.result = "falsch."
       }
       this.submitted = true
+      this.submitted_ = true
     },
     
     all_slots_used(){
-      if(this.answers.length < this.top_ordering.length || this.reset){
-        return false
-      } else {
-        return true
+      for(let i = 0; i < this.answers.length; i++){
+        if(this.answers[i]==-1){
+          return false
+        }
       }
+      return true
     },
     drag(event){
       event.dataTransfer.setData("text", event.target.id);

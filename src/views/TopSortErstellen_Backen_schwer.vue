@@ -3,7 +3,7 @@
     <Verifier 
         :correctSolution="this.result == 'korrekt.'"
         v-if="this.submitted" 
-        :tip="''"
+        :tip="hint()"
         @close-verifier="this.submitted = false" />
 
     <Header 
@@ -42,6 +42,18 @@
       <img v-if="nodes[8].active" id="o_vorheizen" src="../assets/backen/o_vorheizen.png" draggable="true" @click="selectItem($event,'o_vorheizen')" @dragstart="drag($event)" width="336" height="69">
     </div>
 
+    <p v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used()">Folgende Aktivität zu früh gewählt: </p>
+        <p>
+        <img v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='k_auftischen'" src="../assets/backen/k_auftischen.png" />
+        <img v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='b_lassen'" src="../assets/backen/b_lassen.png" />
+        <img v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='bm_fuellen'" src="../assets/backen/bm_fuellen.png" />
+        <img v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='bm_vorbereiten'" src="../assets/backen/bm_vorbereiten.png" />
+        <img v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='freunde_einladen'" src="../assets/backen/freunde_einladen.png" />
+        <img v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='essen'" src="../assets/backen/essen.png" />
+        <img v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='e_guete'" src="../assets/backen/e_guete.png" />
+        <img v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='t_decken'" src="../assets/backen/t_decken.png" />
+        <img v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='o_vorheizen'" src="../assets/backen/o_vorheizen.png" />
+      </p>
     <br>
     <Footer
         @next_task="reloadPage()"
@@ -67,6 +79,7 @@ export default defineComponent({
   data() {
     return {
       submitted: false,
+      submitted_: false,
       result: "falsch.",
       Q: [],
       canvas: null,
@@ -151,6 +164,12 @@ export default defineComponent({
     reloadPage(){
       this.$router.go(0)
     },
+    hint(){
+      if(this.submitted_ && this.result=='falsch.' && !this.all_slots_used()){
+        return "Bitte fülle alle Lücken aus."
+      }
+      //<p v-if="submitted_ && result=='falsch.' && !all_slots_used()">Bitte fülle alle Lücken aus.</p>
+    },  
     deselectAll(){
       for(let i = 0; i < this.previously_selected_items.length; i++){
         document.getElementById(this.previously_selected_items[i]).style.border = "none"
@@ -181,6 +200,9 @@ export default defineComponent({
         document.getElementById("start-area").appendChild(curr_slot.childNodes[0])
         curr_slot.innerHTML = ""
       }
+      for(let i = 0; i < this.answers.length; i++){
+        this.answers[i] = -1
+      }
       this.reset = true
     },
     pasteItem(event, target){
@@ -189,7 +211,7 @@ export default defineComponent({
         this.result = ""
         var item = document.getElementById(this.selectedItem)
         var targetplace = document.getElementById(target)
-        var cloth_number = this.get_id_by_name(item)
+        var cloth_number = this.get_id_by_name(item.id)
         console.log("the targetplace is: ",targetplace)
         targetplace.appendChild(item)
         this.selected = false
@@ -214,7 +236,7 @@ export default defineComponent({
       }
     },
     submitAnswer(){
-      if(this.check_ordering(this.answers) && this.all_slots_used()){
+      if(this.check_ordering(this.answers)){
         this.result = "korrekt."
       } else {
         this.result = "falsch."
@@ -223,15 +245,16 @@ export default defineComponent({
         this.result = "falsch."
       }
       this.submitted = true
-      
+      this.submitted_ = true
     },
     
     all_slots_used(){
-      if(this.answers.length < this.top_ordering.length || this.reset){
-        return false
-      } else {
-        return true
+      for(let i = 0; i < this.answers.length; i++){
+        if(this.answers[i]==-1){
+          return false
+        }
       }
+      return true
     },
     drag(event){
       event.dataTransfer.setData("text", event.target.id);
@@ -535,23 +558,23 @@ export default defineComponent({
     get_text(id){
       switch (id) {
         case 0:
-          return "Kuchen auftischen"
+          return "k_auftischen"
         case 1:
-          return "Backen lassen"
+          return "b_lassen"
         case 2:
-          return "Backmasse in die Form füllen"
+          return "bm_fuellen"
         case 3:
-          return "Backmasse vorbereiten"
+          return "bm_vorbereiten"
         case 4:
-          return "Freunde einladen"
+          return "freunde_einladen"
         case 5:
-          return "Essen"
+          return "essen"
         case 6:
-          return "Guten Appetit wünschen"
+          return "e_guete"
         case 7:
-          return "Tisch decken"
+          return "t_decken"
         case 8:
-          return "Ofen vorheizen"
+          return "o_vorheizen"
       }
     },
     /**
@@ -568,6 +591,7 @@ export default defineComponent({
         var node = ordering[i]
         if(in_degrees[node]>0){   //wenns eine kante auf sich zeigen hat, darf knoten noch nicht genommen werden
           this.wrong_cloth = this.get_text(node)
+          console.log("wrong cloth: ", this.wrong_cloth)
           return false
         }
         for(let j = 0; j < this.adj_list[node].length; j++){

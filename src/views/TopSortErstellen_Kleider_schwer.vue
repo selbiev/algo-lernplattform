@@ -3,7 +3,7 @@
     <Verifier 
         :correctSolution="this.result == 'korrekt.'"
         v-if="this.submitted" 
-        :tip="''"
+        :tip="hint()"
         @close-verifier="this.submitted = false" />
 
     <Header 
@@ -44,6 +44,21 @@
       <img v-if="nodes[9].active" class="kleider-bild" id="Sonnenbrille" src="../assets/kleider/Sonnenbrille.png" @click="selectItem($event,'Sonnenbrille')" draggable="true" @dragstart="drag($event)" width="336" height="69">
       <img v-if="nodes[3].active" class="kleider-bild" id="T-Shirt" src="../assets/kleider/T-Shirt.png" draggable="true" @click="selectItem($event,'T-Shirt')" @dragstart="drag($event)" width="336" height="69">
     </div>
+
+    <p v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used()">Folgendes Kleidungsstück zu früh gewählt: </p>
+        <p>
+        <img v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Handschuhe'" src="../assets/kleider/Handschuhe.png" />
+        <img v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Socken'" src="../assets/kleider/Socken.png" />
+        <img v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Gürtel'" src="../assets/kleider/Gürtel.png" />
+        <img v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Schuhe'" src="../assets/kleider/Schuhe.png" />
+        <img v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Jacke'" src="../assets/kleider/Jacke.png" />
+        <img v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Mütze'" src="../assets/kleider/Mütze.png" />
+        <img v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Pullover'" src="../assets/kleider/Pullover.png" />
+        <img v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Unterhose'" src="../assets/kleider/Unterhose.png" />
+        <img v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Hose'" src="../assets/kleider/Hose.png" />
+        <img v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='Sonnenbrille'" src="../assets/kleider/Sonnenbrille.png" />
+        <img v-if="submitted_ && result=='falsch.' && !this.reset && !check_ordering(this.answers) && all_slots_used() && wrong_cloth=='T-Shirt'" src="../assets/kleider/T-Shirt.png" />
+      </p>
     
     <br v-if="!submitted">
     <Footer
@@ -71,6 +86,7 @@ export default defineComponent({
   data() {
     return {
       submitted: false,
+      submitted_: false,
       result: "falsch.",
       Q: [],
       canvas: null,
@@ -165,6 +181,11 @@ export default defineComponent({
         document.getElementById(this.previously_selected_items[i]).style.border = "none"
       }
     },
+    hint(){
+      if(this.submitted_ && this.result=='falsch.' && !this.all_slots_used()){
+        return "Bitte fülle alle Lücken aus."
+      }
+    },
     selectItem(event, id){
       event.stopPropagation()
       console.log("selectItem() ",id)
@@ -191,6 +212,9 @@ export default defineComponent({
         document.getElementById("start-area").appendChild(curr_slot.childNodes[0])
         curr_slot.innerHTML = ""
       }
+      for(let i = 0; i < this.answers.length; i++){
+        this.answers[i] = -1
+      }
       this.reset = true
     },
     pasteItem(event, target){
@@ -199,7 +223,7 @@ export default defineComponent({
         this.result = ""
         var item = document.getElementById(this.selectedItem)
         var targetplace = document.getElementById(target)
-        var cloth_number = this.get_id_by_name(item)
+        var cloth_number = this.get_id_by_name(item.id)
         console.log("the targetplace is: ",targetplace)
         targetplace.appendChild(item)
         this.selected = false
@@ -233,14 +257,16 @@ export default defineComponent({
         this.result = "falsch."
       }
       this.submitted = true
+      this.submitted_ = true
     },
     
     all_slots_used(){
-      if(this.answers.length < this.top_ordering.length || this.reset){
-        return false
-      } else {
-        return true
+      for(let i = 0; i < this.answers.length; i++){
+        if(this.answers[i]==-1){
+          return false
+        }
       }
+      return true
     },
     drag(event){
       event.dataTransfer.setData("text", event.target.id);
