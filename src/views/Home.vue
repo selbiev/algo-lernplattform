@@ -1,7 +1,6 @@
 <template>
   <div class="home">
-    <h1>Willkommen in der Lernumgebung <br>
-    Einfach Informatik 3/4</h1>
+    <h1>Die Welt symbolisch und zeichnerisch darstellen</h1>
     <p> 
       <img src="../assets/home.png"/>
     </p>
@@ -11,7 +10,8 @@
         <router-link :to="{name: tasks[i-1].route}" style="text-decoration: none; color: black">
           <div class="card">
             <span>{{i}}. {{tasks[i-1].description}} </span> <br> <br>
-            <img :src="getImage(i-1)" /> 
+            <img :src="getImage(i-1)" style="height: 180px; width: auto"/> <br>
+            <span>{{tasks[i-1].class}}</span>
             
           </div>
         </router-link>
@@ -33,20 +33,20 @@ export default defineComponent({
   data() {
     return {
       tasks: [
-        {description: "Kodierung erkennen", route: "SfErkennen_leicht", image: "../assets/home/SfErkennen_leicht.png"},
-        {description: "Kodierung ergänzen", route: "SfErgaenzen_leicht", image: "../assets/home/bauen.png"},
-        {description: "Kodierung Anzahl Lösungen", route: "SfAnzahlLoesungen_leicht", image: "../assets/home/bauen.png"},
-        {description: "Kodierung Fehler korrigieren", route: "SfFehlerhafteFolge", image: "../assets/home/bauen.png"},
-        {description: "Kodierung Abstände", route: "SfAbstaende_mittel", image: "../assets/home/bauen.png"},
-        {description: "Kodierung erstellen", route: "SfErstellen_leicht", image: "../assets/home/bauen.png"},
-        {description: "Bauteile bestellen", route: "SfBauen_bestellen_leicht", image: "../assets/home/bauen.png"},
-        {description: "Bauteile erkennen", route: "SfBauen_erkennen_leicht", image: "../assets/home/bauen.png"},
-        {description: "Kleider Reihenfolge einstufen", route: "TopSortErkennen_Kleider_leicht", image: "../assets/home/bauen.png"},
-        {description: "Kleider Reihenfolge angeben", route: "TopSortErstellen_Kleider_schwer", image: "../assets/home/bauen.png"},
-        {description: "Marathon Rangliste einstufen", route: "TopSortErkennen_Marathon_schwer", image: "../assets/home/bauen.png"},
-        {description: "Marathon Rangliste angeben", route: "TopSortErstellen_Marathon_schwer", image: "../assets/home/bauen.png"},
-        {description: "Kuchen Backen Reihenfolge einstufen", route: "TopSortErkennen_Backen_schwer", image: "../assets/home/bauen.png"},
-        {description: "Kuchen Backen Reihenfolge angeben", route: "TopSortErstellen_Backen_schwer", image: "../assets/home/bauen.png"},
+        {description: "Kodierung erkennen", class: "1. bis 4. Klasse", route: "SfErkennen_leicht", image: "../assets/home/SfErkennen_leicht.png"},
+        {description: "Kodierung ergänzen", class: "2. bis 4. Klasse", route: "SfErgaenzen_leicht", image: "../assets/home/bauen.png"},
+        {description: "Kodierung Anzahl Lösungen", class: "3. bis 6. Klasse", route: "SfAnzahlLoesungen_leicht", image: "../assets/home/bauen.png"},
+        {description: "Kodierung Fehler korrigieren", class: "4. bis 6. Klasse", route: "SfFehlerhafteFolge", image: "../assets/home/bauen.png"},
+        {description: "Kodierung Abstände", class: "1. bis 6. Klasse", route: "SfAbstaende_mittel", image: "../assets/home/bauen.png"},
+        {description: "Kodierung erstellen", class: "5. bis 6. Klasse", route: "SfErstellen_leicht", image: "../assets/home/bauen.png"},
+        {description: "Bauteile bestellen", class: "1. bis 3. Klasse", route: "SfBauen_bestellen_leicht", image: "../assets/home/bauen.png"},
+        {description: "Bauteile erkennen", class: "1. bis 3. Klasse", route: "SfBauen_erkennen_leicht", image: "../assets/home/bauen.png"},
+        {description: "Kleider Reihenfolge einstufen", class: "3. bis 6. Klasse", route: "TopSortErkennen_Kleider_leicht", image: "../assets/home/bauen.png"},
+        {description: "Kleider Reihenfolge angeben", class: "3. bis 6. Klasse", route: "TopSortErstellen_Kleider_schwer", image: "../assets/home/bauen.png"},
+        {description: "Marathon Rangliste einstufen", class: "5. bis 6. Klasse", route: "TopSortErkennen_Marathon_schwer", image: "../assets/home/bauen.png"},
+        {description: "Marathon Rangliste angeben", class: "5. bis 6. Klasse", route: "TopSortErstellen_Marathon_schwer", image: "../assets/home/bauen.png"},
+        {description: "Kuchen Backen Reihenfolge einstufen", class: "5. bis 6. Klasse", route: "TopSortErkennen_Backen_schwer", image: "../assets/home/bauen.png"},
+        {description: "Kuchen Backen Reihenfolge angeben", class: "5. bis 6. Klasse", route: "TopSortErstellen_Backen_schwer", image: "../assets/home/bauen.png"},
       ],
       asdf: "../assets/home/SfErkennen_leicht.png",
     }
