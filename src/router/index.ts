@@ -7,7 +7,7 @@ import SfErgaenzen_mittel from '../views/SfErgaenzen_mittel.vue'
 import SfErgaenzen_schwer from '../views/SfErgaenzen_schwer.vue'
 import SfAbstaende_mittel from '../views/SfAbstaende_mittel.vue'
 import SfAbstaende_schwer from '../views/SfAbstaende_schwer.vue'
-import SfAnzahlLoesungen_schwer from '../views/SfAnzahlLoesungen_schwer.vue'
+import SfAnzahlLoesungen_mittel from '../views/SfAnzahlLoesungen_mittel.vue'
 import SfAnzahlLoesungen_leicht from '../views/SfAnzahlLoesungen_leicht.vue'
 import SfErstellen_leicht from '../views/SfErstellen_leicht.vue'
 import SfErstellen_mittel from '../views/SfErstellen_mittel.vue'
@@ -21,9 +21,9 @@ import TopSortErstellen_Backen_schwer from '../views/TopSortErstellen_Backen_sch
 import TopSortErkennen_Marathon_schwer from '../views/TopSortErkennen_Marathon_schwer.vue'
 import TopSortErstellen_Marathon_schwer from '../views/TopSortErstellen_Marathon_schwer.vue'
 import SfBauen_bestellen_leicht from '../views/SfBauen_bestellen_leicht.vue'
-import SfBauen_bestellen_schwer from '../views/SfBauen_bestellen_schwer.vue'
+import SfBauen_bestellen_mittel from '../views/SfBauen_bestellen_mittel.vue'
 import SfBauen_erkennen_leicht from '../views/SfBauen_erkennen_leicht.vue'
-import SfBauen_erkennen_schwer from '../views/SfBauen_erkennen_schwer.vue'
+import SfBauen_erkennen_mittel from '../views/SfBauen_erkennen_mittel.vue'
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -83,9 +83,9 @@ const routes: Array<RouteRecordRaw> = [
     component: SfAbstaende_schwer
   },
   {
-    path: '/codes-anz-loesungen-schwer',
-    name: 'SfAnzahlLoesungen_schwer',
-    component: SfAnzahlLoesungen_schwer
+    path: '/codes-anz-loesungen-mittel',
+    name: 'SfAnzahlLoesungen_mittel',
+    component: SfAnzahlLoesungen_mittel
   },
   {
     path: '/codes-anz-loesungen-leicht',
@@ -138,9 +138,9 @@ const routes: Array<RouteRecordRaw> = [
     component: SfBauen_bestellen_leicht
   },
   {
-    path: '/sf-bauen-bestellen-schwer',
-    name: 'SfBauen_bestellen_schwer',
-    component: SfBauen_bestellen_schwer
+    path: '/sf-bauen-bestellen-mittel',
+    name: 'SfBauen_bestellen_mittel',
+    component: SfBauen_bestellen_mittel
   },
   {
     path: '/sf-bauen-erkennen-leicht',
@@ -148,9 +148,9 @@ const routes: Array<RouteRecordRaw> = [
     component: SfBauen_erkennen_leicht
   },
   {
-    path: '/sf-bauen-erkennen-schwer',
-    name: 'SfBauen_erkennen_schwer',
-    component: SfBauen_erkennen_schwer
+    path: '/sf-bauen-erkennen-mittel',
+    name: 'SfBauen_erkennen_mittel',
+    component: SfBauen_erkennen_mittel
   },
 
 ]

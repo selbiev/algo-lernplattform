@@ -7,15 +7,15 @@
         @close-verifier="this.submitted = false" />
 
       <Header 
-        :diff_level="'schwer'" 
+        :diff_level="'mittel'" 
         :task_name="'Kodierung Anzahl Lösungen'" 
         :task_name_code="'SfAnzahlLoesungen'"
         :task_number="'3'" 
         :picture="'rauchzeichen'"
         :has_diff_levels="true"
         :has_leicht="true"
-        :has_mittel="false"
-        :has_schwer="true"
+        :has_mittel="true"
+        :has_schwer="false"
         :next_task="'SfFehlerhafteFolge'"/> <br><br>
       Biber Bob sendet folgende Rauchzeichen, um das Wetter für einen Tag vorauszusagen. <br> <br>
         <!-- Automatisierte Version, man muss einfach den css noch anpassen -->

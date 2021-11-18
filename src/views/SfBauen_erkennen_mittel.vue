@@ -7,15 +7,15 @@
         @close-verifier="this.submitted = false" />
 
         <Header 
-        :diff_level="'schwer'" 
+        :diff_level="'mittel'" 
         :task_name="'Bauteile erkennen'" 
         :task_name_code="'SfBauen_erkennen'"
         :task_number="'8'" 
         :picture="'bauen'"
         :has_diff_levels="true"
         :has_leicht="true"
-        :has_mittel="false"
-        :has_schwer="true"
+        :has_mittel="true"
+        :has_schwer="false"
         :next_task="'TopSortErkennen_Kleider_leicht'"/> <br><br>
       Biberin Bea möchte sich einen Damm bauen. Sie hat einen Katalog, aus dem Sie das nötige Material bestellen kann. <br> <br>
         <!-- Automatisierte Version, man muss einfach den css noch anpassen -->

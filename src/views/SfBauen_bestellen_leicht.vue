@@ -14,9 +14,9 @@
         :picture="'bauen'"
         :has_diff_levels="true"
         :has_leicht="true"
-        :has_mittel="false"
-        :has_schwer="true"
-        :next_task="'SfBauen_bestellen_schwer'"/> <br><br>
+        :has_mittel="true"
+        :has_schwer="false"
+        :next_task="'SfBauen_bestellen_mittel'"/> <br><br>
       Biberin Bea möchte sich einen Damm bauen. Sie hat einen Katalog, aus dem Sie das nötige Material bestellen kann. <br> <br>
         <!-- Automatisierte Version, man muss einfach den css noch anpassen -->
         
