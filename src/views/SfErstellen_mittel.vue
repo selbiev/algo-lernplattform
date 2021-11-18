@@ -7,7 +7,7 @@
         @close-verifier="this.submitted = false" />
         
     <Header 
-        :diff_level="'leicht'" 
+        :diff_level="'mittel'" 
         :task_name="'Kodierung erstellen'" 
         :task_name_code="'SfErstellen'"
         :task_number="'6'" 
@@ -16,8 +16,8 @@
         :has_leicht="true"
         :has_mittel="true"
         :has_schwer="true"
-        :next_task="'SfErstellen_mittel'"/> <br><br>
-      Erstelle für das Wetter eine Kodierung, sodass es zwischen den beiden Kodierungen ein Abstand von mindestens {{abstand}} gibt.
+        :next_task="'SfErstellen_schwer'"/> <br><br>
+      Erstelle für jedes Wetter eine Kodierung, sodass es <span>zwischen jedem Paar</span> von Kodierungen ein Abstand von <span>mindestens {{abstand}}</span> gibt.
        <br> <br>
        Klicke auf eine Rauchwolke, um ihre Grösse zu verändern.
        <br> <br>
@@ -55,9 +55,26 @@
             Es wird regnen.
           </td>
         </tr>
+
+        <tr>
+          <td>
+            <div class="codes">
+              <div v-for='index in 5' :key='index' @click="toggleNumber(2,index-1)">
+                <img v-if="numbers[2][index-1] == 0" src="../assets/small-cloud.png" />
+                <img v-else-if="numbers[2][index-1] == 1" src="../assets/big-cloud.png" />
+                <img v-else src="../assets/empty.png" />
+              </div>
+            </div>
+          </td>
+          <td>
+            Es wird schneien.
+          </td>
+        </tr>
       </table>
 
-      <p style="display:none" id="hint1">Abstand zwischen den beiden Codes: {{abstand_0_1}}</p>
+      <p style="display:none" id="hint1">Abstand zwischen dem ersten und zweiten Code: {{abstand_0_1}}</p>
+      <p style="display:none" id="hint2">Abstand zwischen dem zweiten und dritten Code: {{abstand_1_2}}</p>
+      <p style="display:none" id="hint3">Abstand zwischen dem ersten und dritten Code: {{abstand_0_2}}</p>
 
       <br v-if="!submitted">
       <Footer
@@ -143,7 +160,24 @@ export default defineComponent({
         }
       }
 
-      if(this.abstand_0_1 >= this.abstand){
+      k = 1
+      j = 2
+      this.abstand_1_2 = 0
+      for(let i = 0; i < 5; i++){
+        if(this.numbers[k][i] != this.numbers[j][i]){
+          this.abstand_1_2++
+        }
+      }
+
+      k = 0
+      j = 2
+      this.abstand_0_2 = 0
+      for(let i = 0; i < 5; i++){
+        if(this.numbers[k][i] != this.numbers[j][i]){
+          this.abstand_0_2++
+        }
+      }
+      if(this.abstand_0_1 >= this.abstand && this.abstand_1_2 >= this.abstand && this.abstand_0_2 >= this.abstand){
         this.result = "korrekt."
       }
       else {
@@ -151,11 +185,25 @@ export default defineComponent({
       }
 
       document.getElementById("hint1")!.style.display = "block"
+      document.getElementById("hint2")!.style.display = "block"
+      document.getElementById("hint3")!.style.display = "block"
 
       if(this.abstand_0_1>=this.abstand){
         document.getElementById("hint1")!.style.color = "green"
       } else {
         document.getElementById("hint1")!.style.color = "red"
+      }
+
+      if(this.abstand_1_2>=this.abstand){
+        document.getElementById("hint2")!.style.color = "green"
+      } else {
+        document.getElementById("hint2")!.style.color = "red"
+      }
+
+      if(this.abstand_0_2>=this.abstand){
+        document.getElementById("hint3")!.style.color = "green"
+      } else {
+        document.getElementById("hint3")!.style.color = "red"
       }
     },
 

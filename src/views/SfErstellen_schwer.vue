@@ -14,11 +14,10 @@
         :picture="'rauchzeichen'"
         :has_diff_levels="true"
         :has_leicht="true"
-        :has_mittel="false"
+        :has_mittel="true"
         :has_schwer="true"
         :next_task="'SfBauen_bestellen_leicht'"/> <br><br>
-      Erstelle für jedes Wetter eine Kodierung, sodass es zwischen jedem Paar von Kodierungen ein Abstand von mindestens {{abstand}} gibt.
-       <br> <br>
+Erstelle für jedes Wetter eine Kodierung, sodass es <span>zwischen jedem Paar</span> von Kodierungen ein Abstand von <span>mindestens {{abstand}}</span> gibt.       <br> <br>
        Klicke auf eine Rauchwolke, um ihre Grösse zu verändern.
        <br> <br>
         <!-- Automatisierte Version, man muss einfach den css noch anpassen -->

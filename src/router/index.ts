@@ -10,6 +10,7 @@ import SfAbstaende_schwer from '../views/SfAbstaende_schwer.vue'
 import SfAnzahlLoesungen_schwer from '../views/SfAnzahlLoesungen_schwer.vue'
 import SfAnzahlLoesungen_leicht from '../views/SfAnzahlLoesungen_leicht.vue'
 import SfErstellen_leicht from '../views/SfErstellen_leicht.vue'
+import SfErstellen_mittel from '../views/SfErstellen_mittel.vue'
 import SfErstellen_schwer from '../views/SfErstellen_schwer.vue'
 import SfFehlerhafteFolge from '../views/SfFehlerhafteFolge.vue'
 import TopSortErkennen_Kleider_leicht from '../views/TopSortErkennen_Kleider_leicht.vue'
@@ -45,6 +46,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/codes-erstellen-leicht',
     name: 'SfErstellen_leicht',
     component: SfErstellen_leicht
+  },
+  {
+    path: '/codes-erstellen-mittel',
+    name: 'SfErstellen_mittel',
+    component: SfErstellen_mittel
   },
   {
     path: '/codes-erstellen-schwer',
