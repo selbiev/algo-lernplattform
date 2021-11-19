@@ -3,7 +3,7 @@
       <Verifier 
         :correctSolution="this.result == 'korrekt.'"
         v-if="this.submitted" 
-        :tip="''"
+        :tip="hint()"
         @close-verifier="this.submitted = false" />
         
         <Header 
@@ -263,6 +263,13 @@ export default defineComponent({
   methods : {
     reloadPage(){
       this.$router.go(0)
+    },
+    hint(){
+      for(let i = 1; i <= 3; i++){
+        if(document.getElementById("drop-slot-"+i).childNodes.length <= 0){
+          return "Bitte fülle alle Lücken aus."
+        }
+      }
     },
     translate_ans(answer){
       if(answer.charAt(0)=='s'){

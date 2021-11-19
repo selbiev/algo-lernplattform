@@ -265,6 +265,12 @@ export default defineComponent({
     },
     hint(){
 
+      for(let i = 1; i <= 9; i++){
+        if(document.getElementById("drop-slot-"+i).childNodes.length <= 0){
+          return "Bitte fülle alle Lücken aus."
+        }
+      }
+
       var tip = "Folgende Objekte wurden falsch bestellt: "
       if(!this.falsche_bestellungen[0]){
         tip += "1     "

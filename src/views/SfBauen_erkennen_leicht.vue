@@ -3,7 +3,7 @@
       <Verifier 
         :correctSolution="this.result == 'korrekt.'"
         v-if="this.submitted" 
-        :tip="''"
+        :tip="hint()"
         @close-verifier="this.submitted = false" />
 
         <Header 
@@ -258,6 +258,13 @@ export default defineComponent({
   methods : {
     reloadPage(){
       this.$router.go(0)
+    },
+    hint(){
+      for(let i = 1; i <= 1; i++){
+        if(document.getElementById("drop-slot-"+i).childNodes.length <= 0){
+          return "Bitte fülle die Lücke aus."
+        }
+      }
     },
     deselectAll(){
       document.getElementById("grosser_stein").style.border = "none"

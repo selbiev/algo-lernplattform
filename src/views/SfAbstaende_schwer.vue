@@ -3,7 +3,7 @@
       <Verifier 
         :correctSolution="this.result == 'korrekt.'"
         v-if="this.submitted" 
-        :tip="''"
+        :tip="hint()"
         @close-verifier="this.submitted = false" />
 
       <Header 
@@ -143,7 +143,8 @@ export default defineComponent({
       submitted: false as boolean,
       result: "falsch.",
       ans_abst: [false,false,false,false,false],
-      falsch_beantwortet: [true,true,true,true,true]
+      falsch_beantwortet: [true,true,true,true,true],
+      answered: false,
     }
   },
   created: function(){
@@ -156,8 +157,14 @@ export default defineComponent({
     reloadPage(){
       this.$router.go(0)
     },
+    hint(){
+      if(!this.answered){
+        return "Bitte wähle eine Zahl aus."
+      }
+    },
     reset_all(){
       this.deactivate_all_btns()
+      this.answered = false
       this.submitted = false
       this.answer = -1
       this.result = "falsch."
@@ -173,6 +180,7 @@ export default defineComponent({
     },
     deactivate_all_btns(){
       for(let i = 0; i < 5; i++){
+        this.answered = true
         document.getElementById('btn_'+i)!.style.backgroundColor = "#ffe5b2"
         document.getElementById('btn_'+i)!.style.borderWidth="thin"
         document.getElementById('btn_'+i)!.style.fontWeight="400"

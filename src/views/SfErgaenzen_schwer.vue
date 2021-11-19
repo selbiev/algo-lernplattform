@@ -161,6 +161,14 @@ export default defineComponent({
       this.$router.go(0)
     },
     hint(){
+      var slot1 = document.getElementById("drop-slot-1")
+      var slot2 = document.getElementById("drop-slot-2")
+      var slot3 = document.getElementById("drop-slot-3")
+
+      if(slot1.childNodes.length <= 0 || slot2.childNodes.length <= 0 || slot3.childNodes.length <= 0){
+        return "Bitte fülle alle Lücken aus."
+      }
+
       var tip = "Die folgenden Lücken sind falsch ausgefüllt: "
       if(!this.correct_1){
         tip += "1     "

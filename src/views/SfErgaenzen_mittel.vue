@@ -4,7 +4,7 @@
       <Verifier 
         :correctSolution="this.result == 'korrekt.'"
         v-if="this.submitted" 
-        :tip="this.hint()"
+        :tip="hint()"
         @close-verifier="this.submitted = false" />
 
         <Header 
@@ -152,6 +152,14 @@ export default defineComponent({
       this.$router.go(0)
     },
     hint(){
+
+      var slot1 = document.getElementById("drop-slot-"+(this.gap_1+1))
+      var slot2 = document.getElementById("drop-slot-"+(this.gap_2+1))
+
+      if(slot1.childNodes.length <= 0 || slot2.childNodes.length <= 0){
+        return "Bitte fülle alle Lücken aus."
+      }
+
       var tip = "Die folgenden Lücken sind falsch ausgefüllt: "
       if(!this.gap_1_korr){
         tip += "1     "
@@ -161,6 +169,7 @@ export default defineComponent({
       }
       return tip
     },
+
     translate_ans(answer){
       if(answer.charAt(0)=='s'){
         return 0

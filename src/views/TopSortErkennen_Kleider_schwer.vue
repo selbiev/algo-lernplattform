@@ -173,6 +173,9 @@ export default defineComponent({
 
      */
     hint(){
+      if(!this.answer_given){
+        return "Bitte wähle aus, ob die Reihenfolge korrekt ist."
+      }
       if(this.answer_given && this.submitted && this.result == 'falsch.' && this.check_ordering(this.top_ordering))
       {
         return "Ist diese Reihenfolge wirklich falsch? Schau genauer hin."

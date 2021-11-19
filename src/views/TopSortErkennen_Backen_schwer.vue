@@ -3,7 +3,7 @@
     <Verifier 
         :correctSolution="this.result == 'korrekt.'"
         v-if="this.submitted" 
-        :tip="''"
+        :tip="hint()"
         @close-verifier="this.submitted = false" />
 
     <Header 
@@ -112,6 +112,7 @@ export default defineComponent({
         {id: 1, from_node: 6, to_node: 5},
       ],
       adj_list: [],   //klassische adjazenzliste, d.h. adj_list[i] = liste von nachbarsknoten von knoten i
+      answer_given: false,
     }
   },
   mounted() {
@@ -158,8 +159,14 @@ export default defineComponent({
     reloadPage(){
       this.$router.go(0)
     },
+    hint(){
+      if(!this.answer_given){
+        return "Bitte wähle aus, ob die Reihenfolge möglich ist oder nicht."
+      }
+    },
     give_answer(antwort){
       if(antwort == "ja" || antwort == "nein"){
+        this.answer_given = true
         document.getElementById("ja").style.backgroundColor = "#ffe5b2"
         document.getElementById("ja").style.borderWidth="thin"
         document.getElementById("ja").style.fontWeight="400"
@@ -176,9 +183,9 @@ export default defineComponent({
     },
     submitAnswer(){
       var solution = this.check_ordering(this.top_ordering)
-      if(solution==true && this.answer==true){
+      if(solution==true && this.answer==true && this.answer_given){
         this.result = "korrekt."
-      } else if(solution==false && this.answer==false){
+      } else if(solution==false && this.answer==false && this.answer_given){
         this.result = "korrekt."
       } else {
         this.result = "falsch."

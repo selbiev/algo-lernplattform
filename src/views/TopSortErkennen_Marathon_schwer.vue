@@ -3,7 +3,7 @@
     <Verifier 
         :correctSolution="this.result == 'korrekt.'"
         v-if="this.submitted" 
-        :tip="''"
+        :tip="hint()"
         @close-verifier="this.submitted = false" />
 
     <Header 
@@ -156,6 +156,11 @@ export default defineComponent({
   methods : {
     reloadPage(){
       this.$router.go(0)
+    },
+    hint(){
+      if(!this.answer_given){
+        return "Bitte wähle aus, ob die Rangliste möglich ist oder nicht."
+      }
     },
     give_answer(antwort){
       if(antwort == "ja" || antwort == "nein"){

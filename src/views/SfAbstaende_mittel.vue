@@ -109,11 +109,12 @@
             </div>
           </div>
         </div>
-      <p v-if="submitted_">Der Abstand zwischen den beiden Kodierungen beträgt {{compute_abstand()}}</p>
+      <br v-if="!submitted && !(this.result=='korrekt.')">
+      <p v-if="submitted_ && this.result=='korrekt.'">Der Abstand zwischen den beiden Kodierungen beträgt {{compute_abstand()}}</p>
         
       </div>
 
-      <br>
+      
       
       <Footer
         @next_task="reloadPage()"
@@ -121,8 +122,6 @@
         @reset="''"
         @info="''" />
 
-      
-      <p v-if="submitted">Der Abstand zwischen den beiden Kodierungen beträgt {{compute_abstand()}}</p>
     </div>
 </template>
 

@@ -3,7 +3,7 @@
     <Verifier 
         :correctSolution="this.result == 'korrekt.'"
         v-if="this.submitted" 
-        :tip="''"
+        :tip="hint()"
         @close-verifier="this.submitted = false" />
 
     <Header 
@@ -96,6 +96,11 @@ export default defineComponent({
   methods : {
     reloadPage(){
       this.$router.go(0)
+    },
+    hint(){
+      if(!this.answer_given){
+        return "Bitte wähle aus, ob die Reihenfolge korrekt ist."
+      }
     },
     submitAnswer(){
       if(this.answer_given && ((this.answer==true && this.corr) || (this.answer==false && !this.corr))){

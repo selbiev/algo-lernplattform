@@ -2,7 +2,7 @@
     <div class="CodesErkennen">
       <Verifier 
         :correctSolution="this.result == 'korrekt.'"
-        :tip="''"
+        :tip="hint()"
         v-if="this.submitted" 
         @close-verifier="this.submitted = false" />
 
@@ -138,6 +138,13 @@ export default defineComponent({
   methods : {
     reloadPage(){
       this.$router.go(0)
+    },
+    hint(){
+      if(this.selected_1==""){
+        return "Bitte wähle ein Wetter aus."
+      } else {
+        return ""
+      }
     },
     childMessageReceived(arg1:any){
       console.log(arg1)

@@ -185,6 +185,9 @@ export default defineComponent({
       this.$router.go(0)
     },
     hint(){
+      if(this.selected_1=="" || this.selected_2=="" || this.selected_3==""){
+        return "Bitte gib bei allen Tagen ein Wetter an."
+      }
 
       var tip = "Die folgenden Tage sind falsch eingestuft: "
       if(!this.falsche_tage[0]){
