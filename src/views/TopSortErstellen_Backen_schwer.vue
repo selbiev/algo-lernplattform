@@ -207,7 +207,7 @@ export default defineComponent({
     },
     pasteItem(event, target){
       event.stopPropagation()
-      if(this.selected && document.getElementById(target).childNodes.length <= 0){
+      if((this.selected && document.getElementById(target).childNodes.length <= 0) || event.target.id == 'start-area'){
         this.result = ""
         var item = document.getElementById(this.selectedItem)
         var targetplace = document.getElementById(target)
@@ -265,7 +265,7 @@ export default defineComponent({
       this.reset = false
       var data = event.dataTransfer.getData("text");
       //var node = document.getElementById(data)
-      if(event.target.childNodes.length > 0){
+      if(event.target.childNodes.length > 0 && event.target.id != 'start-area'){  //if not start area and if there's already 1 objekt
         return
       }
       event.target.appendChild(document.getElementById(data));
