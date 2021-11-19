@@ -1,5 +1,11 @@
 <template>
   <div class="CodesErstellen">
+    <Tutorial 
+        :video_name="'TopSortErkennen_Backen'"
+        :description="task_description()"
+        v-if="showTutorial == 'true'"
+        @close-tutorial="showTutorial = 'false'" />
+
     <Verifier 
         :correctSolution="this.result == 'korrekt.'"
         v-if="this.submitted" 
@@ -28,6 +34,8 @@
     <img src="../assets/backen/o_vorheizen.png" id="o_vorheizen" style="display: none;"/>
 
     Du willst einen Kuchen backen und ihn zusammen mit deinen Freunden essen. <br> <br>
+    <img src="../assets/backen/beschreibungs_bild.png" style="width: 350px; height: auto"/> <br> <br>
+    Beim obigen Bild muss man zuerst die linke Aktivität und danach die rechte Aktivität durchführen. <br> <br>
     <canvas id="canvas" width="870" height="500" style="border:1px solid #d3d3d3;"></canvas> <br><br>
     Du möchtest das in der folgenden Reihenfolge machen. Ist das möglich?  <br><br>
     <div class="kleider">
@@ -69,7 +77,7 @@
         @next_task="reloadPage()"
         @check_answer="submitAnswer()"
         @reset="''"
-        @info="''" />
+        @info="showTutorial = 'true'" />
     </div>
 </template>
 
@@ -78,16 +86,19 @@ import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
 import Footer from "../components/Footer.vue"
 import Verifier from "../components/Verifier.vue"
+import Tutorial from "../components/Tutorial.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
     Footer,
-    Verifier
+    Verifier,
+    Tutorial
   },
   data() {
     return {
+      showTutorial: false,
       answer: false,
       submitted: false,
       submitted_: false,
@@ -630,7 +641,12 @@ export default defineComponent({
       ctx.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
       ctx.moveTo(tox, toy);
       ctx.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
-    }
+    },
+    task_description(){
+      return "Regel: Ein Pfeil von einer Aktivität A zu einer Aktivität B bedeutet, dass A früher ausgeführt werden muss als B."+
+        " Versuche mit dieser Regel zu sehen, ob die gegebene Abfolge von Aktivitäten korrekt ist oder nicht. Sie ist genau dann korrekt, "+
+        "wenn die genannte Regel nie verletzt wird."
+    },
   }
 });
 

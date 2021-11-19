@@ -1,5 +1,11 @@
 <template>
     <div class="CodesErgaenzen">
+      <Tutorial 
+        :video_name="'SfBauen_bestellen'"
+        :description="task_description()"
+        v-if="showTutorial == 'true'"
+        @close-tutorial="showTutorial = 'false'" />
+
       <Verifier 
         :correctSolution="this.result == 'korrekt.'"
         v-if="this.submitted" 
@@ -203,7 +209,7 @@
         @next_task="reloadPage()"
         @check_answer="submitAnswer()"
         @reset="clearDropslots()"
-        @info="''" />
+        @info="showTutorial = 'true'" />
         
     </div>
 </template>
@@ -229,16 +235,19 @@ import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
 import Footer from "../components/Footer.vue"
 import Verifier from "../components/Verifier.vue"
+import Tutorial from "../components/Tutorial.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
     Footer,
-    Verifier
+    Verifier,
+    Tutorial
   },
   data() {
     return {
+      showTutorial: false,
       numbers: [],
       submitted: false,
       result: "falsch.",
@@ -575,6 +584,11 @@ export default defineComponent({
       
       
     },
+    task_description(){
+      return "Du hast ein Katalog von Materialien und zu bestellendes Material. Finde im Katalog die Kodierung für das "+
+        "gesuchte Material. Ziehe dazu die Figuren in die Felder. Um eine Figur zu löschen, ziehe sie in die Lücke, wo "+
+        " \"Objekt löschen\" draufsteht."
+    }
   }
 });
 </script>

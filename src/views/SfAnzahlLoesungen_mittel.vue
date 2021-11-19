@@ -1,5 +1,11 @@
 <template>
     <div class="CodesAnzahlLoesungen">  
+      <Tutorial 
+        :video_name="'SfAnzahlLoesungen'"
+        :description="task_description()"
+        v-if="showTutorial == 'true'"
+        @close-tutorial="showTutorial = 'false'" />
+
       <Verifier 
         :correctSolution="this.result == 'korrekt.'"
         v-if="this.submitted" 
@@ -99,7 +105,7 @@
         @next_task="reloadPage()"
         @check_answer="submitAnswer()"
         @reset="''"
-        @info="''" />
+        @info="showTutorial = 'true'" />
         
     </div>
 </template>
@@ -109,16 +115,19 @@ import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
 import Footer from "../components/Footer.vue"
 import Verifier from "../components/Verifier.vue"
+import Tutorial from "../components/Tutorial.vue"
 
 export default defineComponent({
   name: 'SfAbstaende',
   components: {
     Header,
     Footer,
-    Verifier
+    Verifier,
+    Tutorial
   },
   data() {
     return {
+      showTutorial: false,
       numbers: [] as number[][],
       anz_tage: 3,
       seq_numbers: [] as number[][],
@@ -451,6 +460,11 @@ export default defineComponent({
       for(let i = 0; i < arr1.length; i++){
         arr1[i] = arr2[i]
       }
+    },
+    task_description(){
+      return "Du hast unten eine Zeichenfolge, wo ein Zeichen fehlt. Wähle von den oberen Kodierungen diejenige Kodierung oder "+
+        "diejenigen Kodierungen aus, die dieses Zeichen sein könnten. Es gibt eine oder zwei Möglichkeiten. Bei der schwierigeren "+
+        "Version fehlen sogar zwei Zeichen."
     }
   }
 });

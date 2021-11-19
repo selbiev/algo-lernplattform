@@ -1,5 +1,11 @@
 <template>
     <div class="CodesAbstaende">
+      <Tutorial 
+        :video_name="'SfAbstaende'"
+        :description="task_description()"
+        v-if="showTutorial == 'true'"
+        @close-tutorial="showTutorial = 'false'" />
+
       <Verifier 
         :correctSolution="this.result == 'korrekt.'"
         v-if="this.submitted" 
@@ -120,7 +126,7 @@
         @next_task="reloadPage()"
         @check_answer="submitAnswer()"
         @reset="''"
-        @info="''" />
+        @info="showTutorial = 'true'" />
 
     </div>
 </template>
@@ -130,16 +136,19 @@ import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
 import Footer from "../components/Footer.vue"
 import Verifier from "../components/Verifier.vue"
+import Tutorial from "../components/Tutorial.vue"
 
 export default defineComponent({
   name: 'SfAbstaende',
   components: {
     Header,
     Footer,
-    Verifier
+    Verifier,
+    Tutorial,
   },
   data() {
     return {
+      showTutorial: false,
       numbers: [] as number[][],
       anz_tage: 3,
       answer: 0,
@@ -211,6 +220,11 @@ export default defineComponent({
           new_array_o.push(new_array)
         }
         this.numbers = new_array_o
+    },
+    task_description(){
+      return "Bei dieser Aufgabe musst du herausfinden, an welchen Stellen sich die beiden unteren Codes unterscheiden. Klicke dafür "+
+        "auf das jeweilige Pfeil. Bei der schwierigeren Aufgabe (wenn du auf die 3 Biber oder auf \"Nächste Aufgabe\" klickst), "+
+        "musst du angeben, an wie vielen Stellen sich die beiden Codes unterscheiden. Klicke dafür auf eine der Zahlen."
     }
   }
 });

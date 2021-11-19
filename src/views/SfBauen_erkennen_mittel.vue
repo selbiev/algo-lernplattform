@@ -1,5 +1,11 @@
 <template>
     <div class="CodesErgaenzen">
+      <Tutorial 
+        :video_name="'SfBauen_erkennen'"
+        :description="task_description()"
+        v-if="showTutorial == 'true'"
+        @close-tutorial="showTutorial = 'false'" />
+
       <Verifier 
         :correctSolution="this.result == 'korrekt.'"
         v-if="this.submitted" 
@@ -212,7 +218,7 @@
         @next_task="reloadPage()"
         @check_answer="submitAnswer()"
         @reset="clearDropslots()"
-        @info="''" />
+        @info="showTutorial = 'true'" />
   </div>
 </template>
 
@@ -237,16 +243,19 @@ import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
 import Footer from "../components/Footer.vue"
 import Verifier from "../components/Verifier.vue"
+import Tutorial from "../components/Tutorial.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
     Footer,
-    Verifier
+    Verifier,
+    Tutorial,
   },
   data() {
     return {
+      showTutorial: false,
       numbers: [],
       submitted: false,
       result: "falsch.",
@@ -489,9 +498,12 @@ export default defineComponent({
         }
         this.numbers = new_array_o
       } while(!(this.no_duplicates()));
-      
-      
     },
+    task_description(){
+      return "Du hast wieder ein Katalog von Objekten gegeben, diesmal musst du aber verstehen, was bestellt worden ist. Schaue "+
+        "dir die Kodierung der Bestellung an und schaue dann im Katalog, zu welchem Material diese Kodierung gehört. Danach ziehe das gefundene Material "+
+        "in die Lücke."
+    }
   }
 });
 </script>

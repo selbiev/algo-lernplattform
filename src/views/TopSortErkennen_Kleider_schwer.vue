@@ -1,5 +1,11 @@
 <template>
   <div class="CodesErstellen">
+    <Tutorial 
+        :video_name="'TopSortErkennen_Kleider'"
+        :description="task_description()"
+        v-if="showTutorial == 'true'"
+        @close-tutorial="showTutorial = 'false'" />
+
     <Verifier 
         :correctSolution="this.result == 'korrekt.'"
         v-if="this.submitted" 
@@ -76,7 +82,7 @@
         @next_task="reloadPage()"
         @check_answer="submitAnswer()"
         @reset="''"
-        @info="''" />
+        @info="showTutorial = 'true'" />
     </div>
 </template>
 
@@ -85,16 +91,19 @@ import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
 import Footer from "../components/Footer.vue"
 import Verifier from "../components/Verifier.vue"
+import Tutorial from "../components/Tutorial.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
     Footer,
-    Verifier
+    Verifier,
+    Tutorial
   },
   data() {
     return {
+      showTutorial: false,
       answer: false,
       submitted: false,
       submitted_: false,
@@ -590,6 +599,11 @@ export default defineComponent({
       ctx.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
       ctx.moveTo(tox, toy);
       ctx.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
+    },
+    task_description(){
+      return "Regel: Ein Pfeil von T-Shirt zu Jacke bedeutet, dass das T-Shirt vor der Jacke angezogen werden muss. Versuche, mit dieser "+
+        "Regel zu sehen, ob die untere Reihenfolge korrekt ist oder nicht. Sie ist genau dann korrekt, wenn die genannte Regel "+
+        "nie verletzt wird."
     }
   }
 });

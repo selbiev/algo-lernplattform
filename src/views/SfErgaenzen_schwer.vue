@@ -1,5 +1,11 @@
 <template>
     <div class="CodesErgaenzen">
+      <Tutorial 
+        :video_name="'SfErgaenzen'"
+        :description="task_description()"
+        v-if="showTutorial == 'true'"
+        @close-tutorial="showTutorial = 'false'" />
+      
       <Verifier 
         :correctSolution="this.result == 'korrekt.'"
         v-if="this.submitted" 
@@ -106,7 +112,7 @@
         @next_task="reloadPage()"
         @check_answer="submitAnswer()"
         @reset="clearDropslots()"
-        @info="''" />
+        @info="showTutorial = 'true'" />
     </div>
 </template>
 
@@ -115,16 +121,19 @@ import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
 import Footer from "../components/Footer.vue"
 import Verifier from "../components/Verifier.vue"
+import Tutorial from "../components/Tutorial.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
     Footer,
-    Verifier
+    Verifier,
+    Tutorial
   },
   data() {
     return {
+      showTutorial: false,
       numbers: [],
       anz_tage: 3,
       seq_numbers: [],
@@ -421,6 +430,12 @@ export default defineComponent({
       this.seq_numbers.push(this.numbers[this.zahl_2-1])
       this.seq_numbers.push(this.numbers[this.zahl_3-1])
       console.log("zahl_1: %d; zahl_2: %d; zahl_3: %d", this.zahl_1, this.zahl_2, this.zahl_3)
+    },
+    task_description(){
+      return "Die Zeichenfolge unten ist eine oder mehrere Kodierungen von der oberen Tabelle. Jedoch muss man jetzt " + 
+        "auch die Lücke füllen. Um dies zu tun, schaue auf die anderen Zeichen und finde heraus, welche der obigen " + 
+        "Kodierungen zu den anderen Zeichen passt. Hast du die richtigen Kodierungen gefunden, fülle die Lücken mit " + 
+        "den richtigen Zeichen."
     }
   }
 });

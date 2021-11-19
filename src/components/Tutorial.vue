@@ -1,25 +1,30 @@
 <template>
   <div id="tutorial-wrapper" class="modal-mask"
-   @mousedown.stop="showSolution = false; $emit('close-verifier')">
+   @mousedown.stop="showModal = false; $emit('close-tutorial')">
     <div class="modal-wrapper">
       <div class="modal-container" @mousedown.stop>
         <div class="modal-header">
-          <p class="title" v-if="correctSolution">Das ist richtig!</p>
-          <p class="title" v-else>Das ist leider nicht richtig!</p>
-          <button class="exit-button" @click="$emit('close-verifier')">
+          <p class="title">
+            Anleitung zur Aufgabe
+          </p>
+          <button class="exit-button"
+           @click="showModal = false;
+           $emit('close-tutorial')">
            &times;
            </button>
         </div>
-        <div class="flex-item flex-center flex-space-between flex-col">
-          <div class="flex-item flex-center flex-space-between flex-row">
-            <img class="corr_img" v-if="correctSolution" :src="require('@/assets/icons/correct.png')"
-             draggable="false"/>
-            <img class="corr_img" v-else :src="require('@/assets/icons/wrong.png')"
-             draggable="false"/>
-          </div>
-          <hr>
-          <div v-if="!correctSolution">
-            {{ tip }}
+        <div class="body">
+          <div class="description_and_video">
+            <div class="d_and_v" id="d">
+              <slot name="description">{{description}}</slot>
+            </div>
+            <div class="d_and_v" id="v">
+              <slot name="video">
+                <video controls>
+                  <source :src="getSrc()">
+                </video>
+              </slot>
+            </div>
           </div>
         </div>
        </div>
@@ -31,27 +36,53 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'Verifier',
+  name: 'Tutorial',
+  data() {
+    return {
+      
+    }
+  },
   props: [
-    'correctSolution',
-    'tip',
+    'video_name',
+    'description',
   ],
   created: function(){
-    console.log("Verifier activated")
+    console.log("Tutorial activated")
   },
   methods: {
     reloadPage(){
       location.reload()
     },
+    getSrc() {
+        return require( `../assets/videos/${this.video_name}.mp4`);
+    }
 
   }
 });
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+  .description_and_video {
+    display: block;
+  }
+
+  .d_and_v {
+    align-items: center;
+    justify-content: center;
+  }
+
   hr {
     width: 50%;
+  }
+  
+  #d {
+    padding: 0 20px 20px 20px;
+  }
+
+  video {
+    width: 90%;
+    height: auto;
   }
   
   .description > p {
@@ -97,8 +128,8 @@ export default defineComponent({
   .modal-container {
     position: relative;
     margin: 0px auto;
-    width: 40%;
-    min-width: 500px;;
+    width: 60%;
+    min-width: 500px;
     padding: 20px 30px 40px 30px;
     background-color: #fff;
     border-radius: 2px;
@@ -159,5 +190,4 @@ export default defineComponent({
     90% { transform: translate(1px, 2px) rotate(0deg); }
     100% { transform: translate(1px, -2px) rotate(-1deg); }
   }
-
 </style>

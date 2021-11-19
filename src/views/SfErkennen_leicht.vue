@@ -1,5 +1,11 @@
 <template>
     <div class="CodesErkennen">
+      <Tutorial 
+        :video_name="'SfErkennen'"
+        :description="task_description()"
+        v-if="showTutorial == 'true'"
+        @close-tutorial="showTutorial = 'false'" />
+
       <Verifier 
         :correctSolution="this.result == 'korrekt.'"
         :tip="hint()"
@@ -97,7 +103,7 @@
         @next_task="reloadPage()"
         @check_answer="submitAnswer()"
         @reset="''"
-        @info="''" />
+        @info="showTutorial = 'true'" />
 
     </div>
 </template>
@@ -107,11 +113,13 @@ import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
 import Footer from "../components/Footer.vue"
 import Verifier from "../components/Verifier.vue"
+import Tutorial from "../components/Tutorial.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   data() {
     return {
+      showTutorial: false,
       numbers: [] as number[][],
       anz_tage: 3,
       seq_numbers: [] as number[][],
@@ -129,7 +137,8 @@ export default defineComponent({
   components: {
     Header,
     Footer,
-    Verifier
+    Verifier,
+    Tutorial
   },
   created: function(){
     this.createNumbers()
@@ -258,6 +267,11 @@ export default defineComponent({
       this.zahl_1 = Math.floor(1+(Math.random()*3))
       this.seq_numbers.push(this.numbers[this.zahl_1-1])
       console.log("zahl_1: %d", this.zahl_1)
+    },
+    task_description(){
+      return "Zuoberst befinden sich die Kodierungen für das jeweilige Wetter. Bei der unteren Zeichenfolge handelt es sich " + 
+        "um eine oder mehrere der oberen Kodierungen. Finde heraus, um welche(n) Kodierung(en) es sich handelt. Bei der schwierigen " +
+        "Version dieser Aufgabe gilt die Zeichenfolge für drei Tage."
     }
   }
 });

@@ -1,5 +1,12 @@
 <template>
     <div class="CodesErkennen">
+
+      <Tutorial 
+        :video_name="'SfFehlerhafteFolge'"
+        :description="task_description()"
+        v-if="showTutorial == 'true'"
+        @close-tutorial="showTutorial = 'false'" />
+
       <Verifier 
         :correctSolution="this.result == 'korrekt.'"
         v-if="this.submitted" 
@@ -82,7 +89,7 @@
         </tr>
       </table>
       
-      <br> Bei folgender Zeichenfolge ist ein Fehler aufgetreten. Eine Wolke wurde falsch gelesen. <br> Kannst du trotzdem herausfinden, welches Wetter Bob voraussagt? Eine oder zwei Antworten möglich.<br><br>
+      <br> Bei folgender Zeichenfolge ist ein Fehler aufgetreten. Eine Wolke wurde falsch gelesen. <br> Kannst du trotzdem herausfinden, welches Wetter Bob voraussagt? Es sind mehrere Antworten möglich.<br><br>
       
       <div class="zeichenfolge">
         <!--<img v-if="seq_numbers[0][0] == 0" src="../assets/small-cloud.png" />
@@ -114,7 +121,7 @@
         @next_task="reloadPage()"
         @check_answer="submitAnswer()"
         @reset="''"
-        @info="''" />
+        @info="showTutorial = 'true'" />
 
     </div>
 </template>
@@ -124,16 +131,19 @@ import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
 import Footer from "../components/Footer.vue"
 import Verifier from "../components/Verifier.vue"
+import Tutorial from "../components/Tutorial.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
     Footer,
-    Verifier
+    Verifier,
+    Tutorial
   },
   data() {
     return {
+      showTutorial: false,
       numbers: [] as number[][],
       submitted: false as boolean,
       result: "falsch.",
@@ -288,15 +298,6 @@ export default defineComponent({
       }
     },
 
-
-
-
-
-
-
-
-
-
     checkAbstand(arr1: number[], arr2: number[]){
       let countAbstand = 0
       for(let i = 0; i < 5; i++){
@@ -428,6 +429,10 @@ export default defineComponent({
         newArr[i] = arr1[i]
       }
       return newArr
+    },
+    task_description(){
+      return "Du hast unten eine Zeichenfolge, wo ein Zeichen falsch gelesen wurde, du weisst zuerst aber noch nicht welches es ist." +
+      " Überlege dir, welche Kodierungen von oben könnten erstellt werden, indem man bei der unteren Zeichenfolge genau EIN Zeichen vertauscht?"
     }
   }
 });

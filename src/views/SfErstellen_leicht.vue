@@ -1,5 +1,11 @@
 <template>
   <div class="CodesErstellen">
+    <Tutorial 
+        :video_name="'SfErstellen'"
+        :description="task_description()"
+        v-if="showTutorial == 'true'"
+        @close-tutorial="showTutorial = 'false'" />
+
     <Verifier 
         :correctSolution="this.result == 'korrekt.'"
         v-if="this.submitted" 
@@ -64,7 +70,7 @@
         @next_task="reloadPage()"
         @check_answer="submitAnswer()"
         @reset="reloadPage()"
-        @info="''" />
+        @info="showTutorial = 'true'" />
 
     </div>
 </template>
@@ -74,16 +80,19 @@ import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
 import Footer from "../components/Footer.vue"
 import Verifier from "../components/Verifier.vue"
+import Tutorial from "../components/Tutorial.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
     Footer,
-    Verifier
+    Verifier,
+    Tutorial
   },
   data() {
     return {
+      showTutorial: false,
       numbers: [] as number[][],
       anz_tage: 3,
       seq_numbers: [] as number[][],
@@ -195,6 +204,10 @@ export default defineComponent({
         new_array_o.push(new_array)
       }
       this.numbers = new_array_o
+    },
+    task_description(){
+      return "Erstelle 2 Codes, indem du auf die Wolken klickst. Achte darauf, dass zwischen den beiden Kodierungen ein Abstand "+
+      "von mindestens 2 existiert. Das bedeutet, die beiden Kodierungen müssen sich an mindestens 2 Stellen unterscheiden."
     }
   }
 });

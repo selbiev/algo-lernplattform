@@ -1,5 +1,11 @@
 <template>
   <div class="CodesErstellen">
+    <Tutorial 
+        :video_name="'TopSortErstellen_Kleider'"
+        :description="task_description()"
+        v-if="showTutorial == 'true'"
+        @close-tutorial="showTutorial = 'false'" />
+
     <Verifier 
         :correctSolution="this.result == 'korrekt.'"
         v-if="this.submitted" 
@@ -65,7 +71,7 @@
         @next_task="reloadPage()"
         @check_answer="submitAnswer()"
         @reset="clearDropslots()"
-        @info="''" />
+        @info="showTutorial = 'true'" />
 
   </div>
 </template>
@@ -75,16 +81,19 @@ import { defineComponent } from 'vue';
 import Header from "../components/Header.vue"
 import Footer from "../components/Footer.vue"
 import Verifier from "../components/Verifier.vue"
+import Tutorial from "../components/Tutorial.vue"
 
 export default defineComponent({
   name: 'SfErstellen',
   components: {
     Header,
     Footer,
-    Verifier
+    Verifier,
+    Tutorial
   },
   data() {
     return {
+      showTutorial: false,
       submitted: false,
       submitted_: false,
       result: "falsch.",
@@ -676,6 +685,10 @@ export default defineComponent({
       ctx.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
       ctx.moveTo(tox, toy);
       ctx.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
+    },
+    task_description(){
+      return "Regel: Ein Pfeil von T-Shirt zu Jacke bedeutet, dass das T-Shirt vor der Jacke angezogen werden muss. Versuche, mit dieser "+
+        "Regel eine Reihenfolge anzugeben, nach der man die Kleider anziehen könnte. Ziehe dazu die Kleider in die Lücken."
     }
   }
 });
