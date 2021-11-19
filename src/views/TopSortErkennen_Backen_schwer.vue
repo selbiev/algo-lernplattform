@@ -52,7 +52,19 @@
       Nein
     </button>
 
-      <br v-if="!submitted"> <br v-if="!submitted">
+      <p v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers)">Folgende Aktivität zu früh gewählt: </p>
+        <p>
+        <img v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers) && wrong_cloth=='k_auftischen'" src="../assets/backen/k_auftischen.png" />
+        <img v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers) && wrong_cloth=='b_lassen'" src="../assets/backen/b_lassen.png" />
+        <img v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers) && wrong_cloth=='bm_fuellen'" src="../assets/backen/bm_fuellen.png" />
+        <img v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers) && wrong_cloth=='bm_vorbereiten'" src="../assets/backen/bm_vorbereiten.png" />
+        <img v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers) && wrong_cloth=='freunde_einladen'" src="../assets/backen/freunde_einladen.png" />
+        <img v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers) && wrong_cloth=='essen'" src="../assets/backen/essen.png" />
+        <img v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers) && wrong_cloth=='e_guete'" src="../assets/backen/e_guete.png" />
+        <img v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers) && wrong_cloth=='t_decken'" src="../assets/backen/t_decken.png" />
+        <img v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers) && wrong_cloth=='o_vorheizen'" src="../assets/backen/o_vorheizen.png" />
+      </p>
+    <br>
       <Footer
         @next_task="reloadPage()"
         @check_answer="submitAnswer()"
@@ -78,11 +90,13 @@ export default defineComponent({
     return {
       answer: false,
       submitted: false,
+      submitted_: false,
       result: "falsch.",
       Q: [],
       canvas: null,
       ordering_correct: true,
       top_ordering: [],
+      answers: [],
       wrong_cloth: "",
       ctx: null,
       message: "Hello Vue!",
@@ -113,6 +127,7 @@ export default defineComponent({
       ],
       adj_list: [],   //klassische adjazenzliste, d.h. adj_list[i] = liste von nachbarsknoten von knoten i
       answer_given: false,
+      show: false,
     }
   },
   mounted() {
@@ -149,7 +164,7 @@ export default defineComponent({
     this.draw_nodes()
     this.prepare_image_names()
 
-    console.log("Die topologische Sortierung: ",this.top_ordering)
+    this.answers = this.top_ordering
     
   },
   props: {
@@ -165,6 +180,7 @@ export default defineComponent({
       }
     },
     give_answer(antwort){
+      this.show = false
       if(antwort == "ja" || antwort == "nein"){
         this.answer_given = true
         document.getElementById("ja").style.backgroundColor = "#ffe5b2"
@@ -182,6 +198,7 @@ export default defineComponent({
       }
     },
     submitAnswer(){
+      this.show = true
       var solution = this.check_ordering(this.top_ordering)
       if(solution==true && this.answer==true && this.answer_given){
         this.result = "korrekt."
@@ -191,6 +208,7 @@ export default defineComponent({
         this.result = "falsch."
       }
       this.submitted = true
+      this.submitted_ = true
     },
     at_least_one_edge(){
       for(let i = 0; i < this.edges.length; i++){
@@ -464,23 +482,23 @@ export default defineComponent({
     get_text(id){
       switch (id) {
         case 0:
-          return "Kuchen auftischen"
+          return "k_auftischen"
         case 1:
-          return "Backen lassen"
+          return "b_lassen"
         case 2:
-          return "Backmasse in die Form füllen"
+          return "bm_fuellen"
         case 3:
-          return "Backmasse vorbereiten"
+          return "bm_vorbereiten"
         case 4:
-          return "Freunde einladen"
+          return "freunde_einladen"
         case 5:
-          return "Essen"
+          return "essen"
         case 6:
-          return "Guten Appetit wünschen"
+          return "e_guete"
         case 7:
-          return "Tisch decken"
+          return "t_decken"
         case 8:
-          return "Ofen vorheizen"
+          return "o_vorheizen"
       }
     },
     /**

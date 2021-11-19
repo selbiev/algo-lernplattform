@@ -56,8 +56,22 @@
       Nein
     </button>
 
-      
-      <br v-if="!submitted"> <br v-if="!submitted">
+      <p v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers)">Folgendes Kleidungsstück zu früh gewählt: </p>
+        <p>
+        <img v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers) && wrong_cloth=='Handschuhe'" src="../assets/kleider/Handschuhe.png" />
+        <img v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers) && wrong_cloth=='Socken'" src="../assets/kleider/Socken.png" />
+        <img v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers) && wrong_cloth=='Gürtel'" src="../assets/kleider/Gürtel.png" />
+        <img v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers) && wrong_cloth=='Schuhe'" src="../assets/kleider/Schuhe.png" />
+        <img v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers) && wrong_cloth=='Jacke'" src="../assets/kleider/Jacke.png" />
+        <img v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers) && wrong_cloth=='Mütze'" src="../assets/kleider/Mütze.png" />
+        <img v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers) && wrong_cloth=='Pullover'" src="../assets/kleider/Pullover.png" />
+        <img v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers) && wrong_cloth=='Unterhose'" src="../assets/kleider/Unterhose.png" />
+        <img v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers) && wrong_cloth=='Hose'" src="../assets/kleider/Hose.png" />
+        <img v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers) && wrong_cloth=='Sonnenbrille'" src="../assets/kleider/Sonnenbrille.png" />
+        <img v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers) && wrong_cloth=='T-Shirt'" src="../assets/kleider/T-Shirt.png" />
+      </p>
+
+      <br>
       <Footer
         @next_task="reloadPage()"
         @check_answer="submitAnswer()"
@@ -83,11 +97,14 @@ export default defineComponent({
     return {
       answer: false,
       submitted: false,
+      submitted_: false,
       result: "falsch.",
       Q: [],
       canvas: null,
+      reset: true,
       ordering_correct: true,
       top_ordering: [],
+      answers: [],
       wrong_cloth: "",
       ctx: null,
       message: "Hello Vue!",
@@ -122,6 +139,7 @@ export default defineComponent({
       ],
       adj_list: [],   //klassische adjazenzliste, d.h. adj_list[i] = liste von nachbarsknoten von knoten i
       answer_given: false,
+      show: false,
     }
   },
   mounted() {
@@ -156,7 +174,7 @@ export default defineComponent({
     //this.top_ordering = (this.ordering_correct)? this.create_valid_ordering() : this.create_random_ordering()
     this.draw_nodes()
     this.prepare_image_names()
-
+    this.answers = this.top_ordering
     
     
   },
@@ -186,6 +204,7 @@ export default defineComponent({
       return ""
     },
     give_answer(antwort){
+      this.show = false
       if(antwort == "ja" || antwort == "nein"){
         this.answer_given = true
         document.getElementById("ja").style.backgroundColor = "#ffe5b2"
@@ -203,6 +222,7 @@ export default defineComponent({
       }
     },
     submitAnswer(){
+      this.show = true
       var solution = this.check_ordering(this.top_ordering)
       console.log(this.answer)
       console.log(solution)
@@ -214,6 +234,7 @@ export default defineComponent({
         this.result = "falsch."
       }
       this.submitted = true
+      this.submitted_ = true
     },
     prepare_image_names(){
       //console.log("top ord len")

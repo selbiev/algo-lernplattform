@@ -52,6 +52,18 @@
       Nein
     </button>
 
+    <p v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers)">Folgende Person zu früh gewählt: </p>
+      <p>
+        <img v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers) && wrong_cloth=='Anna'" src="../assets/marathon/Anna.png" />
+        <img v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers) && wrong_cloth=='Dennis'" src="../assets/marathon/Dennis.png" />
+        <img v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers) && wrong_cloth=='Jacqueline'" src="../assets/marathon/Jacqueline.png" />
+        <img v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers) && wrong_cloth=='Michelle'" src="../assets/marathon/Michelle.png" />
+        <img v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers) && wrong_cloth=='Otso'" src="../assets/marathon/Otso.png" />
+        <img v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers) && wrong_cloth=='Peter'" src="../assets/marathon/Peter.png" />
+        <img v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers) && wrong_cloth=='Ulla'" src="../assets/marathon/Ulla.png" />
+        <img v-if="submitted_ && result=='falsch.' && this.show && this.answer_given && !check_ordering(this.answers) && wrong_cloth=='Xavi'" src="../assets/marathon/Xavi.png" />
+      </p>
+
     <br><br>
     <Footer
         @next_task="reloadPage()"
@@ -84,6 +96,7 @@ export default defineComponent({
       canvas: null,
       ordering_correct: true,
       top_ordering: [],
+      answers: [],
       wrong_cloth: "",
       ctx: null,
       message: "Hello Vue!",
@@ -114,6 +127,7 @@ export default defineComponent({
       ],
       adj_list: [],   //klassische adjazenzliste, d.h. adj_list[i] = liste von nachbarsknoten von knoten i
       answer_given: false,
+      show: false,
     }
   },
   mounted() {
@@ -149,6 +163,7 @@ export default defineComponent({
     //this.top_ordering = (this.ordering_correct)? this.create_valid_ordering() : this.create_random_ordering()
     this.draw_nodes()
     this.prepare_image_names()
+    this.answers = this.top_ordering
   },
   props: {
 
@@ -163,6 +178,7 @@ export default defineComponent({
       }
     },
     give_answer(antwort){
+      this.show = false
       if(antwort == "ja" || antwort == "nein"){
         this.answer_given = true
         document.getElementById("ja").style.backgroundColor = "#ffe5b2"
@@ -180,6 +196,7 @@ export default defineComponent({
       }
     },
     submitAnswer(){
+      this.show = true
       var solution = this.check_ordering(this.top_ordering)
       console.log(this.answer)
       console.log(solution)
