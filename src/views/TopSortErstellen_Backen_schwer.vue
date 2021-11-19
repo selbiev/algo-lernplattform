@@ -205,34 +205,48 @@ export default defineComponent({
       }
       this.reset = true
     },
-    pasteItem(event, target){
+    move_item(targetplace_id,item_id){
+      console.log("targetplace_id = ", targetplace_id, "   item_id = ", item_id)
+      var item_to_move_nr = this.get_id_by_name(item_id)
+
+      //räume den alten slot im antworten-array auf, falls es das item enthielt
+      for(let i = 0; i < this.answers.length; i++){
+        if(this.answers[i]==item_to_move_nr){
+          this.answers[i] = -1
+          console.log("the objekt ", item_to_move_nr, " was before in slot ", i, " and now answers[",i,"] has been cleared")
+        }
+      }
+
+      //nun verschieben wir effektiv das objekt
+      document.getElementById(targetplace_id).appendChild(document.getElementById(item_id))
+
+      //nun machen wir fallunterscheidung: was ist targetplace?
+      if(targetplace_id=='start-area'){   //es ist start-area
+        this.reset = true
+      } else if(isNaN(parseInt(targetplace_id))){   //es ist ein anderes bild
+        console.log("falscher slot, das objekt wird in nun in das start-area gelegt")
+        document.getElementById("start-area").appendChild(document.getElementById(targetplace_id).childNodes[0])   //verschiebe es in das start-area
+        document.getElementById(targetplace_id).innerHTML = ""
+        this.reset = true   //immer wenn wir etwas ins start-area schieben, setzen wir das auf true
+      } else {    //es ist ein slot
+        this.reset = false
+        this.answers[parseInt(targetplace_id)] = item_to_move_nr  //answers-array anpassen mit neuem objekt
+      }
+    },
+    pasteItem(event, target){   //target ist der ORT wo ein neues objekt eingefügt wurde, z.B. start-area oder zahl zwischen 0 und #slots-1
       event.stopPropagation()
+      //nur handeln in einem der folgenden fälle: element wurde ausgewählt und target enthält noch kein element
+      //ODER target ist start-area. in allen anderen fällen mache gar nichts.
       if((this.selected && document.getElementById(target).childNodes.length <= 0) || event.target.id == 'start-area'){
         this.result = ""
-        var item = document.getElementById(this.selectedItem)
-        var targetplace = document.getElementById(target)
-        var cloth_number = this.get_id_by_name(item.id)
-        console.log("the targetplace is: ",targetplace)
-        targetplace.appendChild(item)
-        this.selected = false
-        if(event.target.id=='start-area'){
-          console.log("cloth_name: ",cloth_number)
-          console.log("target name: ",event.target.id)
-          for(let i = 0; i < this.answers.length; i++){
-            if(this.answers[i]==cloth_number){
-              this.answers[i] = -1
-            }
-          }
-        } else {
-          this.answers[parseInt(targetplace.id)] = this.get_id_by_name(item.id)
-        }
 
+        var targetplace_id = target
+        var item_id = this.selectedItem
+
+        this.move_item(targetplace_id,item_id)   //die ganze move-logik ist in dieser methode enthalten
         
-        document.getElementById(item.id).style.border = "none"
-        this.reset = false
-        if(event.target.id=="start-area"){
-          this.reset = true;
-        }
+        this.selected = false
+        document.getElementById(item_id).style.border = "none"
       }
     },
     submitAnswer(){
@@ -265,41 +279,12 @@ export default defineComponent({
       this.reset = false
       var data = event.dataTransfer.getData("text");
       //var node = document.getElementById(data)
-      if(event.target.childNodes.length > 0 && event.target.id != 'start-area'){  //if not start area and if there's already 1 objekt
+      if(event.target.childNodes.length > 0 && event.target.id != 'start-area'){
         return
       }
-      event.target.appendChild(document.getElementById(data));
-      var slot = parseInt(event.target.id)
-      var cloth_name = event.dataTransfer.getData("text")
-      var cloth_number = this.get_id_by_name(cloth_name)
-
-      if(event.target.id=='start-area'){
-        console.log("cloth_name: ",cloth_number)
-        console.log("target name: ",event.target.id)
-        for(let i = 0; i < this.answers.length; i++){
-          if(this.answers[i]==cloth_number){
-            this.answers[i] = -1
-          }
-        }
-      } else{
-        this.answers[slot] = this.get_id_by_name(cloth_name)
-
-        if(isNaN(slot) && !(event.target.id=="start-area")){  //wenn ein bild auf ein anderes gelegt wird anstatt in ein slot
-          console.log("falscher slot")
-          document.getElementById("start-area").appendChild(document.getElementById(event.target.id).childNodes[0])
-          document.getElementById(event.target.id).innerHTML = ""
-          this.reset = true;
-          for(let i = 0; i < this.answers.length; i++){
-            if(this.answers[i]==cloth_number){
-              this.answers[i] = -1
-            }
-          }
-        }
-      }
-      
-      if(event.target.id=="start-area"){
-        this.reset = true;
-      }
+      var targetplace_id = event.target.id
+      var item_id = data
+      this.move_item(targetplace_id,item_id)
     },
     allowDrop(event) {
       event.preventDefault();
@@ -831,7 +816,7 @@ export default defineComponent({
 
     .start-area{
       width: 60%;
-      min-height: 30px;
+      min-height: 60px;
       border: 1px solid black;
       margin: 0 auto;
     }
