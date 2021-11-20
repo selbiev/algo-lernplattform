@@ -1,5 +1,11 @@
 <template>
   <div class="home">
+    <router-link :to="{name: 'About'}" >
+      <button class="btn_info">
+        <img src="../assets/icons/info.png" /><br>
+        Information
+      </button>
+    </router-link>
     <h1>Die Welt symbolisch und zeichnerisch darstellen</h1>
     <p> 
       <img src="../assets/home.png"/>
@@ -114,6 +120,22 @@ export default defineComponent({
     background-color: black;
   }
 
-  
+  .btn_info {
+    margin: 5px 13px 0 0;
+    cursor: pointer;
+    min-height: 60px;
+    min-width: 60px;
+    background-color: #ffe5b2;
+    border-radius: 10px;
+    border: solid black;
+    border-width: thin;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+  }
+
+  .btn_info:hover {
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 90%);
+  }
 
 </style>

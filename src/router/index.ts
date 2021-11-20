@@ -24,6 +24,7 @@ import SfBauen_bestellen_leicht from '../views/SfBauen_bestellen_leicht.vue'
 import SfBauen_bestellen_mittel from '../views/SfBauen_bestellen_mittel.vue'
 import SfBauen_erkennen_leicht from '../views/SfBauen_erkennen_leicht.vue'
 import SfBauen_erkennen_mittel from '../views/SfBauen_erkennen_mittel.vue'
+import About from '../views/About.vue'
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -31,6 +32,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/about',
+    name: 'About',
+    component: About
   },
   {
     path: '/codes-erkennen-leicht',
