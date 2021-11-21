@@ -23,7 +23,7 @@
         :has_mittel="true"
         :has_schwer="true"
         :next_task="'SfErstellen_leicht'"/> <br><br>
-      Betrachten wir uns mal zwei Kodierungen. Sie unterscheiden sich an 2 Stellen, die je mit einem Pfeil markiert sind. <br> <br>
+      Betrachten wir uns mal zwei Kodierungen. Sie unterscheiden sich an 2 Stellen, die je mit einem farbigen Pfeil markiert sind. <br> <br>
         <!-- Automatisierte Version, man muss einfach den css noch anpassen -->
         
       
