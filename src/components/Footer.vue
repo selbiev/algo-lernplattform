@@ -18,8 +18,8 @@
     </button>
 
     <button class="button" id="info" @click="info()">
-        <img src="../assets/icons/info.png" />
-        <br> <span> Anleitung </span>
+        <img src="../assets/icons/help.png" />
+        <br> <span> Hilfe </span>
     </button>
     
   </div>
