@@ -270,8 +270,7 @@ export default defineComponent({
     },
     task_description(){
       return "Zuoberst befinden sich die Kodierungen für das jeweilige Wetter. Bei der unteren Zeichenfolge handelt es sich " + 
-        "um eine oder mehrere der oberen Kodierungen. Finde heraus, um welche(n) Kodierung(en) es sich handelt. Bei der schwierigen " +
-        "Version dieser Aufgabe gilt die Zeichenfolge für drei Tage."
+        "um eine oder mehrere der oberen Kodierungen. Finde heraus, um welche Kodierung(en) es sich handelt."
     }
   }
 });
