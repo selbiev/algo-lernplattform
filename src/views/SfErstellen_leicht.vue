@@ -23,7 +23,7 @@
         :has_mittel="true"
         :has_schwer="true"
         :next_task="'SfErstellen_mittel'"/> <br><br>
-      Erstelle für das Wetter eine Kodierung, sodass es zwischen den beiden Kodierungen ein Abstand von mindestens {{abstand}} gibt.
+      Erstelle für das Wetter zwei Kodierungen, sodass es zwischen den beiden Kodierungen ein Abstand von mindestens {{abstand}} gibt.
        <br> <br>
        Klicke auf einen Rauchzeichen, um seine Grösse zu verändern.
        <br> <br>
