@@ -432,7 +432,7 @@ export default defineComponent({
     },
     task_description(){
       return "Du hast unten eine Zeichenfolge, wo ein Zeichen falsch gelesen wurde, du weisst zuerst aber noch nicht welches es ist." +
-      " Überlege dir, welche Kodierungen von oben könnten erstellt werden, indem man bei der unteren Zeichenfolge genau EIN Zeichen vertauscht?"
+      " Überlege dir: welche Kodierungen von oben könnten erstellt werden, indem man bei der unteren Zeichenfolge genau EIN Zeichen vertauscht?"
     }
   }
 });

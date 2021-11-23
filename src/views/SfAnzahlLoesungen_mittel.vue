@@ -462,9 +462,8 @@ export default defineComponent({
       }
     },
     task_description(){
-      return "Du hast unten eine Zeichenfolge, wo ein Zeichen fehlt. Wähle von den oberen Kodierungen diejenige Kodierung oder "+
-        "diejenigen Kodierungen aus, die dieses Zeichen sein könnten. Es gibt eine oder zwei Möglichkeiten. Bei der schwierigeren "+
-        "Version fehlen sogar zwei Zeichen."
+      return "Du hast unten eine Zeichenfolge, wo ein Zeichen fehlt. Wähle diejenige Kodierung oder "+
+        "diejenigen Kodierungen aus, welche am besten zur Zeichenfolge passen."
     }
   }
 });
