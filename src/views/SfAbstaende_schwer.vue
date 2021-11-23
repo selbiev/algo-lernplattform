@@ -243,7 +243,7 @@ export default defineComponent({
     },
     task_description(){
       return "Bei dieser Aufgabe musst du herausfinden, an welchen Stellen sich die beiden unteren Codes unterscheiden. Klicke dafür "+
-        "auf das jeweilige Pfeil. Bei der schwierigeren Aufgabe (wenn du auf die 3 Biber oder auf \"Nächste Aufgabe\" klickst), "+
+        "auf den jeweiligen Pfeil. Bei der schwierigeren Aufgabe (wenn du auf die 3 Biber oder auf \"Nächste Aufgabe\" klickst), "+
         "musst du angeben, an wie vielen Stellen sich die beiden Codes unterscheiden. Klicke dafür auf eine der Zahlen."
     }
   }
