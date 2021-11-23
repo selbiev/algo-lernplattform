@@ -414,7 +414,7 @@ export default defineComponent({
       console.log("zahl_1: %d", this.zahl_1)
     },
     task_description(){
-      return "Die Zeichenfolge ganz unten entspricht einer oder mehrerer Kodierungen von der oberen Tabelle. Du musst herausfinden, " + 
+      return "Die Zeichenfolge unten entspricht einer oder mehreren Kodierungen von der oberen Tabelle. Du musst herausfinden, " + 
         "welche Kodierung(en) es darstellt und die fehlenden Zeichen in die Lücken ziehen."
     }
   }
