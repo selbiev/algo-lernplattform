@@ -206,8 +206,8 @@ export default defineComponent({
       this.numbers = new_array_o
     },
     task_description(){
-      return "Erstelle 2 Codes, indem du auf die Rauchzeichen klickst. Achte darauf, dass zwischen den beiden Kodierungen ein Abstand "+
-      "von mindestens 2 existiert. Das bedeutet, die beiden Kodierungen müssen sich an mindestens 2 Stellen unterscheiden."
+      return "Erstelle 2 Kodierungen, indem du auf die Rauchzeichen klickst. Achte darauf, dass zwischen den beiden Kodierungen ein Abstand "+
+      "von mindestens 2 existieren muss. Das bedeutet, die beiden Kodierungen müssen sich an mindestens 2 Stellen unterscheiden."
     }
   }
 });
