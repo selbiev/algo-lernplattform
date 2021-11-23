@@ -25,7 +25,7 @@
         :next_task="'SfErstellen_schwer'"/> <br><br>
       Erstelle für jedes Wetter eine Kodierung, sodass es <span>zwischen jedem Paar</span> von Kodierungen ein Abstand von <span>mindestens {{abstand}}</span> gibt.
        <br> <br>
-       Klicke auf eine Rauchwolke, um ihre Grösse zu verändern.
+       Klicke auf ein Rauchzeichen, um seine Grösse zu verändern.
        <br> <br>
        
         <!-- Automatisierte Version, man muss einfach den css noch anpassen -->

@@ -25,7 +25,7 @@
         :next_task="'SfErstellen_mittel'"/> <br><br>
       Erstelle für das Wetter eine Kodierung, sodass es zwischen den beiden Kodierungen ein Abstand von mindestens {{abstand}} gibt.
        <br> <br>
-       Klicke auf eine Rauchwolke, um ihre Grösse zu verändern.
+       Klicke auf einen Rauchzeichen, um seine Grösse zu verändern.
        <br> <br>
        
         <!-- Automatisierte Version, man muss einfach den css noch anpassen -->
@@ -206,7 +206,7 @@ export default defineComponent({
       this.numbers = new_array_o
     },
     task_description(){
-      return "Erstelle 2 Codes, indem du auf die Wolken klickst. Achte darauf, dass zwischen den beiden Kodierungen ein Abstand "+
+      return "Erstelle 2 Codes, indem du auf die Rauchzeichen klickst. Achte darauf, dass zwischen den beiden Kodierungen ein Abstand "+
       "von mindestens 2 existiert. Das bedeutet, die beiden Kodierungen müssen sich an mindestens 2 Stellen unterscheiden."
     }
   }

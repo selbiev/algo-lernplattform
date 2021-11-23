@@ -88,7 +88,7 @@
         </div>
       </div>
 
-      <br> Ziehe ein Rauchzeichen in die Lücke. Falls du ein Tablet benutzt, klicke zuerst auf eine Wolke und danach auf eine Lücke. <br> <br>
+      <br> Ziehe ein Rauchzeichen in die Lücke. Falls du ein Tablet benutzt, klicke zuerst auf ein Rauchzeichen und danach auf eine Lücke. <br> <br>
       
       <div class="start-area" id="start-area" @dragover="allowDrop($event)" @drop="drop($event, '1')">
         <img id="big-cloud-1" src="../assets/big-cloud.png" @click="selectItem($event,'big-cloud-1')" draggable="true" @dragstart="drag($event)" width="336" height="69">
